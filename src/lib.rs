@@ -7,8 +7,11 @@ extern crate num;
 
 extern crate "fftw3-sys" as ffi;
 
-pub mod plan;
-pub mod mem;
+pub use mem::FftwVec;
+pub use plan::{Plan, RawPlan};
+
+mod plan;
+mod mem;
 pub mod wisdom;
 pub mod lock;
 

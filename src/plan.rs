@@ -3,6 +3,8 @@ use mem::FftwVec;
 
 use num::complex::Complex64;
 
+/// A thin wrapper around the internal FFTW plan type. Prefer `Plan`
+/// if possible.
 pub struct RawPlan {
     plan: ffi::fftw_plan
 }
@@ -42,6 +44,7 @@ impl Drop for RawPlan {
     }
 }
 
+/// The structure representing the computation of an FFT.
 pub struct Plan<In, Out> {
     raw: RawPlan,
     in_: In,
