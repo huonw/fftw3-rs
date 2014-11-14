@@ -1,5 +1,5 @@
 use {ffi, lock};
-use mem::{BackingStorage, FFTWVec};
+use mem::FFTWVec;
 
 use num::complex::Complex64;
 
@@ -58,37 +58,34 @@ impl<In, Out> Plan<In, Out> {
     }
 }
 
-impl<I, In: BackingStorage<I>, Out> Plan<In, Out> {
+impl<I, In: DerefMut<[I]>, Out> Plan<In, Out> {
     pub fn input<'a>(&'a mut self) -> &'a mut [I] {
-        self.in_.storage_slice()
+        &mut *self.in_
     }
 }
 
-impl<In, O, Out: BackingStorage<O>> Plan<In, Out> {
+impl<In, O, Out: DerefMut<[O]>> Plan<In, Out> {
     pub fn execute<'a>(&'a mut self) -> &'a mut [O] {
         unsafe {
             self.raw.execute()
         }
 
-        self.out.storage_slice()
+        &mut *self.out
     }
 }
 
-impl<In: BackingStorage<f64>, Out: BackingStorage<Complex64>> Plan<In, Out> {
+impl<In: DerefMut<[f64]>, Out: DerefMut<[Complex64]>> Plan<In, Out> {
     pub fn r2c_1d_prealloc(mut in_: In, mut out: Out) -> Plan<In, Out> {
         let plan = {
-            let islice = in_.storage_slice();
-            let oslice = out.storage_slice();
-
-            let n = islice.len();
-            if oslice.len() < n / 2 + 1 {
+            let n = in_.len();
+            if out.len() < n / 2 + 1 {
                 panic!("Plan::r2c_prealloc: `out` has length {}, but requires at least {}",
-                      oslice.len(), n / 2 + 1)
+                      out.len(), n / 2 + 1)
             }
             RawPlan::new(|| unsafe {
                     ffi::fftw_plan_dft_r2c_1d(n as i32,
-                                              islice.as_mut_ptr(),
-                                              oslice.as_mut_ptr() as *mut ffi::fftw_complex,
+                                              in_.as_mut_ptr(),
+                                              out.as_mut_ptr() as *mut ffi::fftw_complex,
                                               //ffi::FFTW_MEASURE
                                               ffi::FFTW_ESTIMATE
                                               )
@@ -106,21 +103,18 @@ impl Plan<FFTWVec<f64>, FFTWVec<Complex64>> {
         }
     }
 }
-impl<In: BackingStorage<Complex64>, Out: BackingStorage<f64>> Plan<In, Out> {
+impl<In: DerefMut<[Complex64]>, Out: DerefMut<[f64]>> Plan<In, Out> {
     pub fn c2r_1d_prealloc(mut in_: In, mut out: Out) -> Plan<In, Out> {
         let plan = {
-            let islice = in_.storage_slice();
-            let oslice = out.storage_slice();
-
-            let n = oslice.len();
-            if islice.len() > n / 2 + 1 {
+            let n = out.len();
+            if in_.len() > n / 2 + 1 {
                 panic!("Plan::r2c_prealloc: `in_` has length {}, but requires at most {}",
-                      islice.len(), n / 2 + 1)
+                      in_.len(), n / 2 + 1)
             }
             RawPlan::new(|| unsafe {
                     ffi::fftw_plan_dft_c2r_1d(n as i32,
-                                              islice.as_mut_ptr() as *mut ffi::fftw_complex,
-                                              oslice.as_mut_ptr(),
+                                              in_.as_mut_ptr() as *mut ffi::fftw_complex,
+                                              out.as_mut_ptr(),
                                               ffi::FFTW_ESTIMATE)
                 })
         };
@@ -137,21 +131,18 @@ impl Plan<FFTWVec<Complex64>, FFTWVec<f64>> {
     }
 }
 
-impl<In: BackingStorage<Complex64>, Out: BackingStorage<Complex64>> Plan<In, Out> {
+impl<In: DerefMut<[Complex64]>, Out: DerefMut<[Complex64]>> Plan<In, Out> {
     pub fn c2c_1d_prealloc(mut in_: In, mut out: Out) -> Plan<In, Out> {
         let plan = {
-            let islice = in_.storage_slice();
-            let oslice = out.storage_slice();
-
-            let n = islice.len();
-            if oslice.len() < n {
+            let n = in_.len();
+            if out.len() < n {
                 panic!("Plan::r2c_prealloc: `out` has length {}, but requires at least {}",
-                      oslice.len(), n)
+                      out.len(), n)
             }
             RawPlan::new(|| unsafe {
                     ffi::fftw_plan_dft_1d(n as i32,
-                                          islice.as_mut_ptr() as *mut ffi::fftw_complex,
-                                          oslice.as_mut_ptr() as *mut ffi::fftw_complex,
+                                          in_.as_mut_ptr() as *mut ffi::fftw_complex,
+                                          out.as_mut_ptr() as *mut ffi::fftw_complex,
                                           ffi::FFTW_FORWARD,
                                           ffi::FFTW_ESTIMATE
                                           //ffi::FFTW_MEASURE

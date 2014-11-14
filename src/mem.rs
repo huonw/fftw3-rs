@@ -2,22 +2,7 @@
 
 use ffi;
 use libc;
-use std::{mem, num, ptr, raw};
-
-
-
-/// Types that can be used as to store data passed to and from FFTW.
-pub trait BackingStorage<T> {
-    /// Get a pointer to that data.
-    fn storage_slice<'a>(&'a mut self) -> &'a mut [T];
-}
-
-impl<'x, T> BackingStorage<T> for &'x mut [T] {
-    fn storage_slice<'a>(&'a mut self) -> &'a mut [T] { self.as_mut_slice() }
-}
-impl<T> BackingStorage<T> for Vec<T> {
-    fn storage_slice<'a>(&'a mut self) -> &'a mut [T] { self.as_mut_slice() }
-}
+use std::{mem, num, ops, ptr, raw};
 
 struct RawVec<T> {
     dat: *mut T,
@@ -34,11 +19,15 @@ impl<T> RawVec<T> {
 
         RawVec { dat: dat as *mut T, len: n }
     }
+}
 
-    fn as_slice(&self) -> &[T] {
+impl<T> Deref<[T]> for RawVec<T> {
+    fn deref(&self) -> &[T] {
         unsafe {mem::transmute(raw::Slice { data: self.dat as *const T, len: self.len })}
     }
-    fn as_slice_mut(&mut self) -> &mut [T] {
+}
+impl<T> DerefMut<[T]> for RawVec<T> {
+    fn deref_mut(&mut self) -> &mut [T] {
         unsafe {mem::transmute(raw::Slice { data: self.dat as *const T, len: self.len })}
     }
 }
@@ -50,8 +39,10 @@ impl<T> Drop for RawVec<T> {
     }
 }
 
-
 /// A non-resizable vector allocated using FFTWs allocator.
+///
+/// This implements `Deref<[T]>` and `DerefMut<[T]>` and so can be
+/// used nearly-interchangeably with slices.
 pub struct FFTWVec<T> {
     dat: RawVec<T>
 }
@@ -61,23 +52,64 @@ impl<T> FFTWVec<T> {
     pub unsafe fn uninit(n: uint) -> FFTWVec<T> {
         FFTWVec { dat: RawVec::uninit(n) }
     }
-
-    /// View the contents as an immutable slice.
-    pub fn as_slice<'a>(&'a self) -> &'a [T] {
-        self.dat.as_slice()
+}
+impl<T> Deref<[T]> for FFTWVec<T> {
+    fn deref(&self) -> &[T] {
+        &*self.dat
     }
-    /// View the contents as a mutable slice.
-    pub fn as_mut_slice<'a>(&'a mut self) -> &'a mut [T] {
-        self.dat.as_slice_mut()
+}
+impl<T> DerefMut<[T]> for FFTWVec<T> {
+    fn deref_mut(&mut self) -> &mut [T] {
+        &mut *self.dat
     }
 }
 
+impl<T> ops::Slice<uint, [T]> for FFTWVec<T> {
+    #[inline]
+    fn as_slice_<'a>(&'a self) -> &'a [T] {
+        &**self
+    }
+
+    #[inline]
+    fn slice_from_or_fail<'a>(&'a self, start: &uint) -> &'a [T] {
+        (**self).slice_from_or_fail(start)
+    }
+
+    #[inline]
+    fn slice_to_or_fail<'a>(&'a self, end: &uint) -> &'a [T] {
+        (**self).slice_to_or_fail(end)
+    }
+    #[inline]
+    fn slice_or_fail<'a>(&'a self, start: &uint, end: &uint) -> &'a [T] {
+        (**self).slice_or_fail(start, end)
+    }
+}
+impl<T> ops::SliceMut<uint, [T]> for FFTWVec<T> {
+    #[inline]
+    fn as_mut_slice_<'a>(&'a mut self) -> &'a mut [T] {
+        &mut **self
+    }
+
+    #[inline]
+    fn slice_from_or_fail_mut<'a>(&'a mut self, start: &uint) -> &'a mut [T] {
+        (**self).slice_from_or_fail_mut(start)
+    }
+
+    #[inline]
+    fn slice_to_or_fail_mut<'a>(&'a mut self, end: &uint) -> &'a mut [T] {
+        (**self).slice_to_or_fail_mut(end)
+    }
+    #[inline]
+    fn slice_or_fail_mut<'a>(&'a mut self, start: &uint, end: &uint) -> &'a mut [T] {
+        (**self).slice_or_fail_mut(start, end)
+    }
+}
 
 #[unsafe_destructor]
 impl<T> Drop for FFTWVec<T> {
     fn drop(&mut self) {
         // free everything
-        for p in self.as_slice().iter() {
+        for p in self.iter() {
             unsafe {ptr::read(p);}
         }
     }
@@ -119,12 +151,6 @@ impl<T> Drop for PartialVec<T> {
         for p in self.dat.as_slice().slice_to(self.idx).iter() {
             unsafe {ptr::read(p);}
         }
-    }
-}
-
-impl<T> BackingStorage<T> for FFTWVec<T> {
-    fn storage_slice<'a>(&'a mut self) -> &'a mut [T] {
-        self.as_mut_slice()
     }
 }
 
