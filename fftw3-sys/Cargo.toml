@@ -1,0 +1,15 @@
+[package]
+
+name = "fftw3-sys"
+version = "0.1.0"
+authors = [ "Huon Wilson <dbau.pp@gmail.com>" ]
+
+build = "build.rs"
+links = "fftw3"
+
+[build-dependencies]
+pkg-config = "~0.0.1"
+
+[lib]
+name = "fftw3-sys"
+path = "lib.rs"
