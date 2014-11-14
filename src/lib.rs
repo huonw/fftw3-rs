@@ -12,6 +12,9 @@ pub use plan::{Plan, RawPlan};
 
 mod plan;
 mod mem;
+
+pub mod builder;
+
 pub mod wisdom;
 pub mod lock;
 
