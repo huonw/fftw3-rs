@@ -1,0 +1,8 @@
+[package]
+
+name = "fftw"
+version = "0.1.0"
+authors = [ "Huon Wilson <dbau.pp@gmail.com>" ]
+
+[dependencies]
+num = ">= 0.0.0"
