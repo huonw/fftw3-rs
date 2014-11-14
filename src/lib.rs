@@ -5,7 +5,8 @@ extern crate libc;
 extern crate sync;
 extern crate num;
 
-pub mod ffi;
+extern crate "fftw3-sys" as ffi;
+
 pub mod plan;
 pub mod mem;
 pub mod wisdom;

@@ -6,3 +6,6 @@ authors = [ "Huon Wilson <dbau.pp@gmail.com>" ]
 
 [dependencies]
 num = ">= 0.0.0"
+
+[dependencies.fftw3-sys]
+path = "fftw3-sys"
