@@ -1,5 +1,5 @@
 use {ffi, lock};
-use mem::FFTWVec;
+use mem::FftwVec;
 
 use num::complex::Complex64;
 
@@ -94,10 +94,10 @@ impl<In: DerefMut<[f64]>, Out: DerefMut<[Complex64]>> Plan<In, Out> {
         Plan { raw: plan, in_: in_, out: out }
     }
 }
-impl Plan<FFTWVec<f64>, FFTWVec<Complex64>> {
-    pub fn r2c_1d(n: uint) -> Plan<FFTWVec<f64>, FFTWVec<Complex64>> {
+impl Plan<FftwVec<f64>, FftwVec<Complex64>> {
+    pub fn r2c_1d(n: uint) -> Plan<FftwVec<f64>, FftwVec<Complex64>> {
         unsafe {
-            let (in_, out) = (FFTWVec::uninit(n), FFTWVec::uninit(n / 2 + 1));
+            let (in_, out) = (FftwVec::uninit(n), FftwVec::uninit(n / 2 + 1));
 
             Plan::r2c_1d_prealloc(in_, out)
         }
@@ -121,10 +121,10 @@ impl<In: DerefMut<[Complex64]>, Out: DerefMut<[f64]>> Plan<In, Out> {
         Plan { raw: plan, in_: in_, out: out }
     }
 }
-impl Plan<FFTWVec<Complex64>, FFTWVec<f64>> {
-    pub fn c2r_1d(n: uint) -> Plan<FFTWVec<Complex64>, FFTWVec<f64>> {
+impl Plan<FftwVec<Complex64>, FftwVec<f64>> {
+    pub fn c2r_1d(n: uint) -> Plan<FftwVec<Complex64>, FftwVec<f64>> {
         unsafe {
-            let (in_, out) = (FFTWVec::uninit(n / 2 + 1), FFTWVec::uninit(n));
+            let (in_, out) = (FftwVec::uninit(n / 2 + 1), FftwVec::uninit(n));
 
             Plan::c2r_1d_prealloc(in_, out)
         }
@@ -152,10 +152,10 @@ impl<In: DerefMut<[Complex64]>, Out: DerefMut<[Complex64]>> Plan<In, Out> {
         Plan { raw: plan, in_: in_, out: out }
     }
 }
-impl Plan<FFTWVec<Complex64>, FFTWVec<Complex64>> {
-    pub fn c2c_1d(n: uint) -> Plan<FFTWVec<Complex64>, FFTWVec<Complex64>> {
+impl Plan<FftwVec<Complex64>, FftwVec<Complex64>> {
+    pub fn c2c_1d(n: uint) -> Plan<FftwVec<Complex64>, FftwVec<Complex64>> {
         unsafe {
-            let (in_, out) = (FFTWVec::uninit(n), FFTWVec::uninit(n));
+            let (in_, out) = (FftwVec::uninit(n), FftwVec::uninit(n));
 
             Plan::c2c_1d_prealloc(in_, out)
         }

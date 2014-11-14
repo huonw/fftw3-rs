@@ -10,11 +10,11 @@ struct RawVec<T> {
 }
 impl<T> RawVec<T> {
     unsafe fn uninit(n: uint) -> RawVec<T> {
-        let size = n.checked_mul(&mem::size_of::<T>()).expect("FFTWVec::uninit: size overflow");
+        let size = n.checked_mul(&mem::size_of::<T>()).expect("FftwVec::uninit: size overflow");
         let dat = ffi::fftw_malloc(size as libc::size_t);
 
         if dat.is_null() {
-            panic!("FFTWVec::uninit: fftw_malloc failed");
+            panic!("FftwVec::uninit: fftw_malloc failed");
         }
 
         RawVec { dat: dat as *mut T, len: n }
@@ -43,28 +43,28 @@ impl<T> Drop for RawVec<T> {
 ///
 /// This implements `Deref<[T]>` and `DerefMut<[T]>` and so can be
 /// used nearly-interchangeably with slices.
-pub struct FFTWVec<T> {
+pub struct FftwVec<T> {
     dat: RawVec<T>
 }
 
-impl<T> FFTWVec<T> {
-    /// Allocate a `FFTWVec` without initialising the elements at all.
-    pub unsafe fn uninit(n: uint) -> FFTWVec<T> {
-        FFTWVec { dat: RawVec::uninit(n) }
+impl<T> FftwVec<T> {
+    /// Allocate a `FftwVec` without initialising the elements at all.
+    pub unsafe fn uninit(n: uint) -> FftwVec<T> {
+        FftwVec { dat: RawVec::uninit(n) }
     }
 }
-impl<T> Deref<[T]> for FFTWVec<T> {
+impl<T> Deref<[T]> for FftwVec<T> {
     fn deref(&self) -> &[T] {
         &*self.dat
     }
 }
-impl<T> DerefMut<[T]> for FFTWVec<T> {
+impl<T> DerefMut<[T]> for FftwVec<T> {
     fn deref_mut(&mut self) -> &mut [T] {
         &mut *self.dat
     }
 }
 
-impl<T> ops::Slice<uint, [T]> for FFTWVec<T> {
+impl<T> ops::Slice<uint, [T]> for FftwVec<T> {
     #[inline]
     fn as_slice_<'a>(&'a self) -> &'a [T] {
         &**self
@@ -84,7 +84,7 @@ impl<T> ops::Slice<uint, [T]> for FFTWVec<T> {
         (**self).slice_or_fail(start, end)
     }
 }
-impl<T> ops::SliceMut<uint, [T]> for FFTWVec<T> {
+impl<T> ops::SliceMut<uint, [T]> for FftwVec<T> {
     #[inline]
     fn as_mut_slice_<'a>(&'a mut self) -> &'a mut [T] {
         &mut **self
@@ -106,7 +106,7 @@ impl<T> ops::SliceMut<uint, [T]> for FFTWVec<T> {
 }
 
 #[unsafe_destructor]
-impl<T> Drop for FFTWVec<T> {
+impl<T> Drop for FftwVec<T> {
     fn drop(&mut self) {
         // free everything
         for p in self.iter() {
@@ -120,9 +120,9 @@ struct PartialVec<T> {
     idx: uint
 }
 
-impl<T: num::Zero> FFTWVec<T> {
-    /// Allocate a `FFTWVec` of length `n` containing zeros.
-    pub fn zeros(n: uint) -> FFTWVec<T> {
+impl<T: num::Zero> FftwVec<T> {
+    /// Allocate a `FftwVec` of length `n` containing zeros.
+    pub fn zeros(n: uint) -> FftwVec<T> {
         let mut v = PartialVec {
             dat: unsafe {RawVec::uninit(n)},
             idx: 0,
@@ -136,7 +136,7 @@ impl<T: num::Zero> FFTWVec<T> {
         }
 
         unsafe {
-            let ret = FFTWVec {
+            let ret = FftwVec {
                 dat: ptr::read(&v.dat)
             };
             mem::forget(v);
@@ -156,11 +156,11 @@ impl<T> Drop for PartialVec<T> {
 
 #[cfg(test)]
 mod tests {
-    use mem::FFTWVec;
+    use mem::FftwVec;
 
     #[test]
     fn fftw_vec() {
-        let mut v = FFTWVec::<uint>::zeros(100);
+        let mut v = FftwVec::<uint>::zeros(100);
         for (i, x) in v.as_mut_slice().iter_mut().enumerate() {
             *x = i;
         }
