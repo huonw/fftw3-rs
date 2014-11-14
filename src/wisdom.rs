@@ -37,7 +37,7 @@ impl Drop for WisdomGuard {
 
 #[macro_export]
 macro_rules! wisdom {
-    ($p: expr) => { let _guard = fftw::wisdom::WisdomGuard::import($p); }
+    ($p: expr) => { let _guard = fftw3::wisdom::WisdomGuard::import($p); }
 }
 
 

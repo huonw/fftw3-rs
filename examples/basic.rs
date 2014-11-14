@@ -1,6 +1,6 @@
-extern crate fftw;
+extern crate fftw3;
 
-use fftw::{wisdom, plan};
+use fftw3::{wisdom, plan};
 
 fn main() {
     let n: uint = from_str(std::os::args()[1].as_slice()).expect("./basic integer");
