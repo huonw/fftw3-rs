@@ -1,8 +1,16 @@
 [package]
 
 name = "fftw3-sys"
-version = "0.1.0"
+version = "0.0.1"
 authors = [ "Huon Wilson <dbau.pp@gmail.com>" ]
+
+homepage = "https://github.com/huonw/fftw3-rs"
+repository = "https://github.com/huonw/fftw3-rs"
+license = "MIT/Apache-2.0"
+keywords = []
+description = """
+Low-level bindings to the FFTW3 library.
+"""
 
 build = "build.rs"
 links = "fftw3"
