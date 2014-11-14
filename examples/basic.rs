@@ -1,9 +1,9 @@
-extern mod fftw;
+extern crate fftw;
 
 use fftw::{wisdom, plan};
 
 fn main() {
-    let n: uint = from_str(*std::os::args().get(1).expect("./basic integer")).expect("./basic integer");
+    let n: uint = from_str(std::os::args()[1].as_slice()).expect("./basic integer");
     let p = Path::new(format!("wisdom-{}.fftw", n));
     let loaded = wisdom::import_from_file(p.clone());
 

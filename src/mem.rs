@@ -1,6 +1,6 @@
 use ffi;
-use std::{mem, libc, cast, num, ptr, vec_ng};
-use std::unstable::raw;
+use libc;
+use std::{mem, num, ptr, raw};
 
 /// Types that can be used as to store data passed to and from FFTW.
 pub trait BackingStorage<T> {
@@ -11,17 +11,14 @@ pub trait BackingStorage<T> {
 impl<'x, T> BackingStorage<T> for &'x mut [T] {
     fn storage_slice<'a>(&'a mut self) -> &'a mut [T] { self.as_mut_slice() }
 }
-impl<T> BackingStorage<T> for ~[T] {
-    fn storage_slice<'a>(&'a mut self) -> &'a mut [T] { self.as_mut_slice() }
-}
-impl<T> BackingStorage<T> for vec_ng::Vec<T> {
+impl<T> BackingStorage<T> for Vec<T> {
     fn storage_slice<'a>(&'a mut self) -> &'a mut [T] { self.as_mut_slice() }
 }
 
 /// A non-resizable vector allocated using FFTWs allocator.
 pub struct FFTWVec<T> {
-    priv dat: *mut T,
-    priv len: uint
+    dat: *mut T,
+    len: uint
 }
 
 impl<T> FFTWVec<T> {
@@ -31,7 +28,7 @@ impl<T> FFTWVec<T> {
         let dat = ffi::fftw_malloc(size as libc::size_t);
 
         if dat.is_null() {
-            fail!("FFTWVec::uninit: fftw_malloc failed");
+            panic!("FFTWVec::uninit: fftw_malloc failed");
         }
 
         FFTWVec { dat: dat as *mut T, len: n }
@@ -39,11 +36,11 @@ impl<T> FFTWVec<T> {
 
     /// View the contents as an immutable slice.
     pub fn as_slice<'a>(&'a self) -> &'a [T] {
-        unsafe {cast::transmute(raw::Slice { data: self.dat as *T, len: self.len })}
+        unsafe {mem::transmute(raw::Slice { data: self.dat as *const T, len: self.len })}
     }
     /// View the contents as a mutable slice.
     pub fn as_mut_slice<'a>(&'a mut self) -> &'a mut [T] {
-        unsafe {cast::transmute(raw::Slice { data: self.dat as *T, len: self.len })}
+        unsafe {mem::transmute(raw::Slice { data: self.dat as *const T, len: self.len })}
     }
 }
 
@@ -51,7 +48,7 @@ impl<T: num::Zero> FFTWVec<T> {
     /// Allocate a `FFTWVec` of length `n` containing zeros.
     pub fn zeros(n: uint) -> FFTWVec<T> {
         let mut v = unsafe {FFTWVec::uninit(n)};
-        for elem in v.as_mut_slice().mut_iter() {
+        for elem in v.as_mut_slice().iter_mut() {
             *elem = num::zero();
         }
 
@@ -63,7 +60,7 @@ impl<T> Drop for FFTWVec<T> {
     fn drop(&mut self) {
         // free everything
         for p in self.as_slice().iter() {
-            unsafe {ptr::read_ptr(p);}
+            unsafe {ptr::read(p);}
         }
         unsafe {ffi::fftw_free(self.dat as *mut libc::c_void)}
     }
@@ -82,7 +79,7 @@ mod tests {
     #[test]
     fn fftw_vec() {
         let mut v = FFTWVec::<uint>::zeros(100);
-        for (i, x) in v.as_mut_slice().mut_iter().enumerate() {
+        for (i, x) in v.as_mut_slice().iter_mut().enumerate() {
             *x = i;
         }
         let mut i = 0;

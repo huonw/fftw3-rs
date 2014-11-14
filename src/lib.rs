@@ -1,25 +1,15 @@
-#[crate_id="fftw"];
-#[crate_type="lib"];
-#[feature(globs)];
+#![crate_type="lib"]
+#![feature(globs, macro_rules, unsafe_destructor)]
 
-extern mod extra;
+extern crate libc;
+extern crate sync;
+extern crate num;
 
 pub mod ffi;
 pub mod plan;
 pub mod mem;
 pub mod wisdom;
-
-pub mod lock {
-    use std::unstable::finally::Finally;
-    use std::unstable::mutex::{Mutex, MUTEX_INIT};
-
-    static mut LOCK: Mutex = MUTEX_INIT;
-
-    pub fn run<A>(f: || -> A) -> A {
-        unsafe {LOCK.lock();}
-        f.finally(|| unsafe {LOCK.unlock()})
-    }
-}
+pub mod lock;
 
 
 #[test]
@@ -28,5 +18,5 @@ fn test() {
     p.input()[0] = 1.0;
     p.input()[1] = 1.0;
 
-    println!("{:?}", p.execute());
+    println!("{}", p.execute());
 }
