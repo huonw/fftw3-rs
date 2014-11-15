@@ -2,6 +2,8 @@ use ffi;
 use libc::{c_uint, c_int, c_void};
 use num::complex::Complex64;
 
+use plan::RawPlan;
+
 /// How much effort FFTW should put into computing the best strategy
 /// to use.
 ///
@@ -166,31 +168,30 @@ pub struct PlanMem<I, O> {
 
 impl<X, Y, I: DerefMut<[X]>, O: DerefMut<[Y]>> PlanMem<I, O> {
     pub fn plan(mut self) -> Result<Planned<I, O>, PlanMem<I, O>> {
+        let in_ptr = self.in_.as_mut_ptr() as *mut c_void;
         let out_ptr = match self.out {
-            None => self.in_.as_mut_ptr() as *mut c_void,
+            None => in_ptr,
             Some(ref mut o) => o.as_mut_ptr() as *mut c_void,
         };
 
-        // FIXME: this cast could overflow
-        let plan = unsafe {
+        let plan = RawPlan::new(|| unsafe {
             (self.planner)(self.n,
-                           self.in_.as_mut_ptr() as *mut c_void,
+                           in_ptr,
                            out_ptr,
                            self.plan.dir(),
                            self.plan.flags())
-        };
+        });
 
-        if plan.is_null() {
-            Err(self)
-        } else {
-            Ok(Planned { mem: self, plan: plan })
+        match plan {
+            None => Err(self),
+            Some(p) => Ok(Planned { mem: self, plan: p })
         }
     }
 }
 
 pub struct Planned<I, O> {
     mem: PlanMem<I, O>,
-    plan: ffi::fftw_plan,
+    plan: RawPlan,
 }
 
 impl<X, Y, I: DerefMut<[X]>, O: DerefMut<[Y]>> Planned<I, O> {
@@ -203,7 +204,7 @@ impl<X, Y, I: DerefMut<[X]>, O: DerefMut<[Y]>> Planned<I, O> {
 
     pub fn execute(&mut self) {
         unsafe {
-            ffi::fftw_execute(self.plan)
+            self.plan.execute()
         }
     }
 }
