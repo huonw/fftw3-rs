@@ -88,6 +88,7 @@ impl Planner {
     pub fn c2c<I, O>(&self, in_: I, out: O) -> PlanMem<I, O>
         where I: DerefMut<[Complex64]>, O: DerefMut<[Complex64]>
     {
+        assert!(in_.len() <= 0x7F_FF_FF_FF);
         assert!(in_.len() <= out.len());
         PlanMem {
             plan: *self,
@@ -100,6 +101,7 @@ impl Planner {
     pub fn c2r<I, O>(&self, in_: I, out: O) -> PlanMem<I, O>
         where I: DerefMut<[Complex64]>, O: DerefMut<[f64]>
     {
+        assert!(in_.len() <= 0x7F_FF_FF_FF);
         assert!(in_.len() <= out.len() / 2 + 1);
         PlanMem {
             plan: *self,
@@ -112,6 +114,7 @@ impl Planner {
     pub fn r2c<I, O>(&self, in_: I, out: O) -> PlanMem<I, O>
         where I: DerefMut<[f64]>, O: DerefMut<[Complex64]>
     {
+        assert!(in_.len() <= 0x7F_FF_FF_FF);
         assert!(in_.len() / 2 + 1 <= out.len());
         PlanMem {
             plan: *self,
@@ -125,6 +128,7 @@ impl Planner {
     pub fn r2r<I, O>(&self, in_: I, out: O) -> PlanMem<I, O>
         where I: DerefMut<[f64]>, O: DerefMut<[f64]>
     {
+        assert!(in_.len() <= 0x7F_FF_FF_FF);
         assert!(in_.len() <= out.len());
         PlanMem {
             plan: *self,
@@ -144,7 +148,7 @@ impl InPlacePlanner {
     pub fn c2c<I>(&self, in_: I) -> PlanMem<I, I>
         where I: DerefMut<[Complex64]>
     {
-        assert!(in_.len() <= 0xFF_FF_FF_FF);
+        assert!(in_.len() <= 0x7F_FF_FF_FF);
         PlanMem {
             plan: self.plan,
             n: in_.len() as c_int,
