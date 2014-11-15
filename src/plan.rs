@@ -13,13 +13,14 @@ impl RawPlan {
     ///
     /// This executes `f` inside a lock since FFTW plan creation is
     /// not threadsafe.
-    pub fn new(f: || -> ffi::fftw_plan) -> RawPlan {
+    pub fn new(f: || -> ffi::fftw_plan) -> Option<RawPlan> {
         let plan = lock::run(f);
-        if plan.is_null() {
-            panic!("RawPlan::new: created a NULL plan");
-        }
 
-        RawPlan { plan: plan }
+        if plan.is_null() {
+            None
+        } else {
+            Some(RawPlan { plan: plan })
+        }
     }
 
     /// Create a `RawPlan` directly from an `fftw_plan`, with no
@@ -92,7 +93,7 @@ impl<In: DerefMut<[f64]>, Out: DerefMut<[Complex64]>> Plan<In, Out> {
                                               //ffi::FFTW_MEASURE
                                               ffi::FFTW_ESTIMATE
                                               )
-                })
+                }).unwrap()
         };
         Plan { raw: plan, in_: in_, out: out }
     }
@@ -119,7 +120,7 @@ impl<In: DerefMut<[Complex64]>, Out: DerefMut<[f64]>> Plan<In, Out> {
                                               in_.as_mut_ptr() as *mut ffi::fftw_complex,
                                               out.as_mut_ptr(),
                                               ffi::FFTW_ESTIMATE)
-                })
+                }).unwrap()
         };
         Plan { raw: plan, in_: in_, out: out }
     }
@@ -150,7 +151,7 @@ impl<In: DerefMut<[Complex64]>, Out: DerefMut<[Complex64]>> Plan<In, Out> {
                                           ffi::FFTW_ESTIMATE
                                           //ffi::FFTW_MEASURE
                                           )
-                })
+                }).unwrap()
         };
         Plan { raw: plan, in_: in_, out: out }
     }
