@@ -81,6 +81,10 @@ impl Planner {
         }
     }
 
+    pub fn inplace(&self) -> InPlacePlanner {
+        InPlacePlanner { plan: *self }
+    }
+
     pub fn c2c<I, O>(&self, in_: I, out: O) -> PlanMem<I, O>
         where I: DerefMut<[Complex64]>, O: DerefMut<[Complex64]>
     {
@@ -128,6 +132,25 @@ impl Planner {
             in_: in_,
             out: Some(out),
             planner: r2r,
+        }
+    }
+}
+
+pub struct InPlacePlanner {
+    plan: Planner
+}
+
+impl InPlacePlanner {
+    pub fn c2c<I>(&self, in_: I) -> PlanMem<I, I>
+        where I: DerefMut<[Complex64]>
+    {
+        assert!(in_.len() <= 0xFF_FF_FF_FF);
+        PlanMem {
+            plan: self.plan,
+            n: in_.len() as c_int,
+            in_: in_,
+            out: None,
+            planner: c2c,
         }
     }
 }
