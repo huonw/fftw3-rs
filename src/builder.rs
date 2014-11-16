@@ -35,6 +35,11 @@ pub struct Planner {
     rigor: Rigor,
     wisdom_restriction: bool,
     direction: Direction,
+
+    #[allow(dead_code)]
+    dims: Vec<Dim>,
+    #[allow(dead_code)]
+    howmany: Vec<Dim>,
 }
 
 impl Planner {
@@ -46,24 +51,46 @@ impl Planner {
             rigor: Estimate,
             wisdom_restriction: false,
             direction: Forward,
+            dims: vec![],
+            howmany: vec![],
         }
     }
 
     /// Set the rigor to use for this plan.
-    pub fn rigor(&mut self, r: Rigor) -> &mut Planner {
+    pub fn rigor(mut self, r: Rigor) -> Planner {
         self.rigor = r;
         self
     }
     /// Set whether the planner should only be successfully created if
     /// there exists wisdom created with at least the rigor level set.
-    pub fn wisdom_restriction(&mut self, wisdom_only: bool) -> &mut Planner {
+    pub fn wisdom_restriction(mut self, wisdom_only: bool) -> Planner {
         self.wisdom_restriction = wisdom_only;
         self
     }
 
     /// Set the direction of the transform to perform.
-    pub fn direction(&mut self, direction: Direction) -> &mut Planner {
+    pub fn direction(mut self, direction: Direction) -> Planner {
         self.direction = direction;
+        self
+    }
+
+    #[cfg(higher_dim_is_hard)]
+    pub fn dims_row_major(mut self, dims: Vec<uint>) -> Planner {
+        assert!(dims.len() >= 1);
+
+        self.dims = dims.iter().map(|n| Dim { n: *n, in_stride: 1, out_stride: 1 });
+        for i in range(0, self.dims.len() - 1).rev() {
+            let stride = self.dims[i + 1].n * self.dims[i + 1].in_stride;
+            self.dims[i].in_stride = stride;
+            self.dims[i].out_stride = stride;
+        }
+
+        self
+    }
+    #[cfg(higher_dim_is_hard)]
+    pub fn multiples(mut self, number: uint) -> PlanMem<I, O> {
+        unimplemented!()
+        self.how_many = Contiguous(vec![number]);
         self
     }
 
@@ -81,66 +108,65 @@ impl Planner {
         }
     }
 
-    pub fn inplace(&self) -> InPlacePlanner {
-        InPlacePlanner { plan: *self }
+    pub fn inplace(self) -> InPlacePlanner {
+        InPlacePlanner { plan: self }
     }
 
-    pub fn c2c<I, O>(&self, in_: I, out: O) -> PlanMem<I, O>
+    pub fn c2c<I, O>(self, in_: I, out: O) -> PlanMem<I, O>
         where I: DerefMut<[Complex64]>, O: DerefMut<[Complex64]>
     {
         assert!(in_.len() <= 0x7F_FF_FF_FF);
         assert!(in_.len() <= out.len());
-        let dims = Detailed(vec![Dim { n: in_.len(), in_stride: 1, out_stride: 1 }]);
+        let dims = vec![Dim { n: in_.len(), in_stride: 1, out_stride: 1 }];
         PlanMem {
-            plan: *self,
+            plan: self,
             in_: in_,
             out: Some(out),
             planner: c2c,
 
             dims: dims,
-            how_many: Contiguous(vec![1]),
+            how_many: vec![],
         }
     }
-    pub fn c2r<I, O>(&self, in_: I, out: O) -> PlanMem<I, O>
+    pub fn c2r<I, O>(self, in_: I, out: O) -> PlanMem<I, O>
         where I: DerefMut<[Complex64]>, O: DerefMut<[f64]>
     {
         assert!(in_.len() <= 0x7F_FF_FF_FF);
         assert!(in_.len() <= out.len() / 2 + 1);
-        let dims = Detailed(vec![Dim { n: 2 * (in_.len() - 1),
-                                       in_stride: 1, out_stride: 1 }]);
+        let dims = vec![Dim { n: 2 * (in_.len() - 1), in_stride: 1, out_stride: 1 }];
         PlanMem {
-            plan: *self,
+            plan: self,
             in_: in_,
             out: Some(out),
             planner: c2r,
 
             dims: dims,
-            how_many: Contiguous(vec![1]),
+            how_many: vec![],
         }
     }
-    pub fn r2c<I, O>(&self, in_: I, out: O) -> PlanMem<I, O>
+    pub fn r2c<I, O>(self, in_: I, out: O) -> PlanMem<I, O>
         where I: DerefMut<[f64]>, O: DerefMut<[Complex64]>
     {
         assert!(in_.len() <= 0x7F_FF_FF_FF);
         assert!(in_.len() / 2 + 1 <= out.len());
-        let dims = Detailed(vec![Dim { n: in_.len(), in_stride: 1, out_stride: 1 }]);
+        let dims = vec![Dim { n: in_.len(), in_stride: 1, out_stride: 1 }];
         PlanMem {
-            plan: *self,
+            plan: self,
             in_: in_,
             out: Some(out),
             planner: r2c,
 
             dims: dims,
-            how_many: Contiguous(vec![1]),
+            how_many: vec![],
         }
     }
     #[cfg(r2r_is_hard)]
-    pub fn r2r<I, O>(&self, in_: I, out: O) -> PlanMem<I, O>
+    pub fn r2r<I, O>(self, in_: I, out: O) -> PlanMem<I, O>
         where I: DerefMut<[f64]>, O: DerefMut<[f64]>
     {
         assert!(in_.len() <= 0x7F_FF_FF_FF);
         assert!(in_.len() <= out.len());
-        let dims = Detailed(vec![Dim { n: in_.len(), in_stride: 1, out_stride: 1 }]);
+        let dims = vec![Dim { n: in_.len(), in_stride: 1, out_stride: 1 }];
         PlanMem {
             plan: *self,
             in_: in_,
@@ -148,7 +174,7 @@ impl Planner {
             planner: r2r,
 
             dims: dims,
-            how_many: Contiguous(vec![1]),
+            how_many: vec![],
         }
     }
 }
@@ -158,11 +184,11 @@ pub struct InPlacePlanner {
 }
 
 impl InPlacePlanner {
-    pub fn c2c<I>(&self, in_: I) -> PlanMem<I, I>
+    pub fn c2c<I>(self, in_: I) -> PlanMem<I, I>
         where I: DerefMut<[Complex64]>
     {
         assert!(in_.len() <= 0x7F_FF_FF_FF);
-        let dims = Detailed(vec![Dim { n: in_.len(), in_stride: 1, out_stride: 1 }]);
+        let dims = vec![Dim { n: in_.len(), in_stride: 1, out_stride: 1 }];
         PlanMem {
             plan: self.plan,
             in_: in_,
@@ -170,7 +196,7 @@ impl InPlacePlanner {
             planner: c2c,
 
             dims: dims,
-            how_many: Contiguous(vec![1]),
+            how_many: vec![],
         }
     }
 }
@@ -225,31 +251,17 @@ pub struct Dim {
     pub out_stride: uint,
 }
 
-enum Dims {
-    Contiguous(Vec<uint>),
-    Detailed(Vec<Dim>),
-}
-
 pub struct PlanMem<I, O> {
     plan: Planner,
-    dims: Dims,
-    how_many: Dims,
+    dims: Vec<Dim>,
+    #[allow(dead_code)]
+    how_many: Vec<Dim>,
     in_: I,
     out: Option<O>,
     planner: GuruPlanner
 }
 
 impl<X, Y, I: DerefMut<[X]>, O: DerefMut<[Y]>> PlanMem<I, O> {
-    pub fn dimensions(mut self, dims: Vec<uint>) -> PlanMem<I, O> {
-        unimplemented!()
-        self.dims = Contiguous(dims);
-        self
-    }
-    pub fn multiples(mut self, number: uint) -> PlanMem<I, O> {
-        unimplemented!()
-        self.how_many = Contiguous(vec![number]);
-        self
-    }
     pub fn plan(mut self) -> Result<Planned<I, O>, PlanMem<I, O>> {
         let plan;
         {
@@ -258,15 +270,12 @@ impl<X, Y, I: DerefMut<[X]>, O: DerefMut<[Y]>> PlanMem<I, O> {
                 None => in_ptr,
                 Some(ref mut o) => o.as_mut_ptr() as *mut c_void,
             };
-            let dims = match self.dims {
-                Contiguous(_) => unimplemented!(),
-                Detailed(ref v) => v.as_slice()
-            };
-            assert!(dims.len() == 1);
+            assert!(self.dims.len() == 1);
 
             plan = RawPlan::new(|| unsafe {
                 (self.planner)(
-                    dims.len() as c_int, dims.as_ptr() as *const ffi::fftw_iodim64,
+                    self.dims.len() as c_int,
+                    self.dims.as_ptr() as *const ffi::fftw_iodim64,
                     0, [].as_ptr(),
                     in_ptr,
                     out_ptr,
