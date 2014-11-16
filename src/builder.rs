@@ -300,3 +300,28 @@ impl<X, Y, I: DerefMut<[X]>, O: DerefMut<[Y]>> Planned<I, O> {
         }
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use std::mem;
+    use libc::ptrdiff_t;
+    use ffi::Struct_fftw_iodim64_do_not_use_me;
+    use super::Dim;
+
+    #[test]
+    fn iodims_are_compatible() {
+        // handle 32-bit and 64-bit platforms properly
+        let n = 0x0102_0304_0506_0708u64 as uint;
+        let is = 0x090A_0B0C_0D0E_0F00u64 as uint;
+        let os = 0x1122_3344_5566_7788u64 as uint;
+
+        let d = Dim { n: n, in_stride: is, out_stride: os };
+        let f = Struct_fftw_iodim64_do_not_use_me {
+            n: n as ptrdiff_t, is: is as ptrdiff_t, os: os as ptrdiff_t
+        };
+        type T = (uint, uint, uint);
+        unsafe {
+            assert_eq!(mem::transmute::<_, T>(d), mem::transmute::<_, T>(f));
+        }
+    }
+}
