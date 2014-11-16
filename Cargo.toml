@@ -4,8 +4,11 @@ name = "fftw3"
 version = "0.0.1"
 authors = [ "Huon Wilson <dbau.pp@gmail.com>" ]
 
-[dependencies]
-num = ">= 0.0.0"
+#[dependencies]
+#num = ">= 0.0.0"
 
 [dependencies.fftw3-sys]
 path = "fftw3-sys"
+
+[dependencies.num]
+git = "https://github.com/rust-lang/num"

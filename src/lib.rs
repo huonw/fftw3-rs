@@ -18,6 +18,7 @@ pub mod builder;
 pub mod wisdom;
 pub mod lock;
 
+pub mod traits;
 
 #[test]
 fn test() {

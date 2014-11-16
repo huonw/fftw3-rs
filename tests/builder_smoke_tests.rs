@@ -3,6 +3,7 @@ extern crate fftw3;
 
 extern crate num;
 use std::rand::random;
+use std::num::Float;
 use num::Complex;
 use fftw3::builder::{Planner, Backward, Estimate, Measure, Patient, Exhaustive};
 

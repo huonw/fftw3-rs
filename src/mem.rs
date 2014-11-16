@@ -1,8 +1,10 @@
 //! Memory backing.
 
 use ffi;
+use traits::Zero;
 use libc;
-use std::{mem, num, ops, ptr, raw};
+use std::{mem, ops, ptr, raw};
+use std::num::Int;
 
 struct RawVec<T> {
     dat: *mut T,
@@ -10,7 +12,7 @@ struct RawVec<T> {
 }
 impl<T> RawVec<T> {
     unsafe fn uninit(n: uint) -> RawVec<T> {
-        let size = n.checked_mul(&mem::size_of::<T>()).expect("FftwVec::uninit: size overflow");
+        let size = n.checked_mul(mem::size_of::<T>()).expect("FftwVec::uninit: size overflow");
         let dat = ffi::fftw_malloc(size as libc::size_t);
 
         if dat.is_null() {
@@ -120,7 +122,7 @@ struct PartialVec<T> {
     idx: uint
 }
 
-impl<T: num::Zero> FftwVec<T> {
+impl<T: Zero> FftwVec<T> {
     /// Allocate a `FftwVec` of length `n` containing zeros.
     pub fn zeros(n: uint) -> FftwVec<T> {
         let mut v = PartialVec {
@@ -130,7 +132,7 @@ impl<T: num::Zero> FftwVec<T> {
 
         while v.idx < n {
             unsafe {
-                ptr::write(v.dat.dat.offset(v.idx as int), num::zero());
+                ptr::write(v.dat.dat.offset(v.idx as int), Zero::zero());
             }
             v.idx += 1
         }
