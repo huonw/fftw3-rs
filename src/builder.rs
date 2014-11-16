@@ -90,7 +90,7 @@ impl Planner {
     {
         assert!(in_.len() <= 0x7F_FF_FF_FF);
         assert!(in_.len() <= out.len());
-        let dims = Detailed(vec![Dim { n: in_.len() as c_int, in_stride: 1, out_stride: 1 }]);
+        let dims = Detailed(vec![Dim { n: in_.len(), in_stride: 1, out_stride: 1 }]);
         PlanMem {
             plan: *self,
             in_: in_,
@@ -106,7 +106,7 @@ impl Planner {
     {
         assert!(in_.len() <= 0x7F_FF_FF_FF);
         assert!(in_.len() <= out.len() / 2 + 1);
-        let dims = Detailed(vec![Dim { n: 2 * (in_.len() as c_int - 1),
+        let dims = Detailed(vec![Dim { n: 2 * (in_.len() - 1),
                                        in_stride: 1, out_stride: 1 }]);
         PlanMem {
             plan: *self,
@@ -123,7 +123,7 @@ impl Planner {
     {
         assert!(in_.len() <= 0x7F_FF_FF_FF);
         assert!(in_.len() / 2 + 1 <= out.len());
-        let dims = Detailed(vec![Dim { n: in_.len() as c_int, in_stride: 1, out_stride: 1 }]);
+        let dims = Detailed(vec![Dim { n: in_.len(), in_stride: 1, out_stride: 1 }]);
         PlanMem {
             plan: *self,
             in_: in_,
@@ -140,7 +140,7 @@ impl Planner {
     {
         assert!(in_.len() <= 0x7F_FF_FF_FF);
         assert!(in_.len() <= out.len());
-        let dims = Detailed(vec![Dim { n: in_.len() as c_int, in_stride: 1, out_stride: 1 }]);
+        let dims = Detailed(vec![Dim { n: in_.len(), in_stride: 1, out_stride: 1 }]);
         PlanMem {
             plan: *self,
             in_: in_,
@@ -162,7 +162,7 @@ impl InPlacePlanner {
         where I: DerefMut<[Complex64]>
     {
         assert!(in_.len() <= 0x7F_FF_FF_FF);
-        let dims = Detailed(vec![Dim { n: in_.len() as c_int, in_stride: 1, out_stride: 1 }]);
+        let dims = Detailed(vec![Dim { n: in_.len(), in_stride: 1, out_stride: 1 }]);
         PlanMem {
             plan: self.plan,
             in_: in_,
@@ -176,35 +176,35 @@ impl InPlacePlanner {
 }
 
 type GuruPlanner =
-    unsafe fn(rank: c_int, dims: *const ffi::fftw_iodim,
-              howmany_rank: c_int, howmany_dims: *const ffi::fftw_iodim,
+    unsafe fn(rank: c_int, dims: *const ffi::fftw_iodim64,
+              howmany_rank: c_int, howmany_dims: *const ffi::fftw_iodim64,
               in_: *mut c_void, out: *mut c_void,
               sign: c_int, flags: c_uint) -> ffi::fftw_plan;
 
-unsafe fn c2c(rank: c_int, dims: *const ffi::fftw_iodim,
-              howmany_rank: c_int, howmany_dims: *const ffi::fftw_iodim,
+unsafe fn c2c(rank: c_int, dims: *const ffi::fftw_iodim64,
+              howmany_rank: c_int, howmany_dims: *const ffi::fftw_iodim64,
               in_: *mut c_void, out: *mut c_void,
               sign: c_int, flags: c_uint) -> ffi::fftw_plan {
-    ffi::fftw_plan_guru_dft(rank, dims,
+    ffi::fftw_plan_guru64_dft(rank, dims,
                             howmany_rank, howmany_dims,
                             in_ as *mut _, out as *mut _,
                             sign, flags)
 }
 
-unsafe fn r2c(rank: c_int, dims: *const ffi::fftw_iodim,
-              howmany_rank: c_int, howmany_dims: *const ffi::fftw_iodim,
+unsafe fn r2c(rank: c_int, dims: *const ffi::fftw_iodim64,
+              howmany_rank: c_int, howmany_dims: *const ffi::fftw_iodim64,
               in_: *mut c_void, out: *mut c_void,
               _sign: c_int, flags: c_uint) -> ffi::fftw_plan {
-    ffi::fftw_plan_guru_dft_r2c(rank, dims,
+    ffi::fftw_plan_guru64_dft_r2c(rank, dims,
                                 howmany_rank, howmany_dims,
                                 in_ as *mut _, out as *mut _,
                                 flags)
 }
-unsafe fn c2r(rank: c_int, dims: *const ffi::fftw_iodim,
-              howmany_rank: c_int, howmany_dims: *const ffi::fftw_iodim,
+unsafe fn c2r(rank: c_int, dims: *const ffi::fftw_iodim64,
+              howmany_rank: c_int, howmany_dims: *const ffi::fftw_iodim64,
               in_: *mut c_void, out: *mut c_void,
               _sign: c_int, flags: c_uint) -> ffi::fftw_plan {
-    ffi::fftw_plan_guru_dft_c2r(rank, dims,
+    ffi::fftw_plan_guru64_dft_c2r(rank, dims,
                                 howmany_rank, howmany_dims,
                                 in_ as *mut _, out as *mut _,
                                 flags)
@@ -220,13 +220,13 @@ unsafe fn r2r(n: c_int, in_: *mut c_void, out: *mut c_void,
 
 #[repr(C)]
 pub struct Dim {
-    pub n: c_int,
-    pub in_stride: c_int,
-    pub out_stride: c_int,
+    pub n: uint,
+    pub in_stride: uint,
+    pub out_stride: uint,
 }
 
 enum Dims {
-    Contiguous(Vec<c_int>),
+    Contiguous(Vec<uint>),
     Detailed(Vec<Dim>),
 }
 
@@ -240,12 +240,12 @@ pub struct PlanMem<I, O> {
 }
 
 impl<X, Y, I: DerefMut<[X]>, O: DerefMut<[Y]>> PlanMem<I, O> {
-    pub fn dimensions(mut self, dims: Vec<c_int>) -> PlanMem<I, O> {
+    pub fn dimensions(mut self, dims: Vec<uint>) -> PlanMem<I, O> {
         unimplemented!()
         self.dims = Contiguous(dims);
         self
     }
-    pub fn multiples(mut self, number: c_int) -> PlanMem<I, O> {
+    pub fn multiples(mut self, number: uint) -> PlanMem<I, O> {
         unimplemented!()
         self.how_many = Contiguous(vec![number]);
         self
@@ -266,7 +266,7 @@ impl<X, Y, I: DerefMut<[X]>, O: DerefMut<[Y]>> PlanMem<I, O> {
 
             plan = RawPlan::new(|| unsafe {
                 (self.planner)(
-                    dims.len() as c_int, dims.as_ptr() as *const ffi::fftw_iodim,
+                    dims.len() as c_int, dims.as_ptr() as *const ffi::fftw_iodim64,
                     0, [].as_ptr(),
                     in_ptr,
                     out_ptr,
