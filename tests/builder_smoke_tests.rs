@@ -1,0 +1,95 @@
+#![feature(macro_rules)]
+extern crate fftw3;
+
+extern crate num;
+use std::rand::random;
+use num::Complex;
+use fftw3::builder::{Planner, Backward, Estimate, Measure, Patient, Exhaustive};
+
+fn almost_eq(x: &[f64], y: &[f64]) -> bool {
+    x.len() == y.len() &&
+        x.iter().zip(y.iter()).all(|(a,b)| (*a - *b).abs() <= 1e-5)
+}
+fn almost_eq_c(x: &[Complex<f64>], y: &[Complex<f64>]) -> bool {
+    x.len() == y.len() &&
+        x.iter().zip(y.iter()).all(|(a,b)| (*a - *b).norm() <= 1e-5)
+}
+
+const N: uint = 32;
+
+macro_rules! smoke_test {
+    ($forward: ident, $inverse: ident, $ctor: expr,
+     $n: expr,
+     $scale: expr,
+     $cmp: expr) => {{
+        for &rigor in [Estimate, Measure, Patient, Exhaustive].iter() {
+            let in_ = fftw3::FftwVec::zeros(N);
+            let out = fftw3::FftwVec::zeros(N * 10);
+            let mut plan = Planner::new()
+                .rigor(rigor)
+                .$forward(in_, out)
+                .plan().ok().unwrap();
+            let in_ = fftw3::FftwVec::zeros($n);
+            let out = fftw3::FftwVec::zeros(N * 10);
+            let mut inv = Planner::new()
+                .direction(Backward)
+                .rigor(rigor)
+                .$inverse(in_, out)
+                .plan().ok().unwrap();
+
+            for x in plan.input().iter_mut() {
+                *x = $ctor
+            }
+
+            plan.execute();
+
+            inv.input().clone_from_slice(plan.output().unwrap());
+            inv.execute();
+            let scale = 1.0 / plan.input().len() as f64;
+            for x in inv.output().unwrap().iter_mut() {
+                *x = $scale(x, scale)
+            }
+            assert!($cmp(plan.input(), inv.output().unwrap().slice_to(N)))
+        }
+    }}
+}
+
+#[test]
+fn c2c_smoke_test() {
+    smoke_test!(c2c, c2c, Complex::new(random(), random()), N,
+                |x: &Complex<_>, scale| x.scale(scale), almost_eq_c)
+}
+#[test]
+fn r2c_c2r_smoke_test() {
+    smoke_test!(r2c, c2r, random(), N / 2 + 1, |x: &f64, scale| *x * scale, almost_eq)
+}
+
+#[test]
+fn c2c_inplace_smoke_test() {
+    for &rigor in [Estimate, Measure, Patient, Exhaustive].iter() {
+        let data = Vec::from_fn(N, |_| Complex::new(random(), random()));
+        let a = fftw3::FftwVec::zeros(N);
+        let b = fftw3::FftwVec::zeros(N);
+        let mut plan = Planner::new()
+            .rigor(rigor)
+            .inplace()
+            .c2c(a)
+            .plan().ok().unwrap();
+        plan.input().clone_from_slice(&*data);
+        plan.execute();
+
+        let mut inv = Planner::new()
+            .rigor(rigor)
+            .direction(Backward)
+            .inplace()
+            .c2c(b)
+            .plan().ok().unwrap();
+        inv.input().clone_from_slice(plan.input());
+
+        inv.execute();
+        for x in inv.input().iter_mut() {
+            *x = x.unscale(N as f64);
+        }
+        assert!(almost_eq_c(inv.input(), &*data));
+    }
+}
