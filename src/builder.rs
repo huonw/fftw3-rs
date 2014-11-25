@@ -48,9 +48,9 @@ impl Planner {
     /// This defaults to a forward transform with estimate rigor.
     pub fn new() -> Planner {
         Planner {
-            rigor: Estimate,
+            rigor: Rigor::Estimate,
             wisdom_restriction: false,
-            direction: Forward,
+            direction: Direction::Forward,
             dims: vec![],
             howmany: vec![],
         }
