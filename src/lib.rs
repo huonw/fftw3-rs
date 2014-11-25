@@ -1,9 +1,13 @@
 #![crate_type="lib"]
-#![feature(globs, macro_rules, unsafe_destructor)]
+#![feature(default_type_params, associated_types)]
+#![feature(globs, macro_rules, unsafe_destructor, tuple_indexing, phase)]
 
+#[phase(plugin, link)]
+extern crate log;
 extern crate libc;
 extern crate sync;
 extern crate num;
+extern crate strided;
 
 extern crate "fftw3-sys" as ffi;
 
@@ -14,6 +18,7 @@ mod plan;
 mod mem;
 
 pub mod builder;
+pub mod builder2;
 
 pub mod wisdom;
 pub mod lock;

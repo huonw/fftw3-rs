@@ -12,3 +12,6 @@ path = "fftw3-sys"
 
 [dependencies.num]
 git = "https://github.com/rust-lang/num"
+
+[dependencies.strided]
+git = "https://github.com/huonw/strided-rs"
