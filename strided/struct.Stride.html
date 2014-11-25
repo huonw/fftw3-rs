@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `Stride` struct in crate `strided`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, Stride">
+
+    <title>strided::Stride - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../main.css">
+
+    
+    
+</head>
+<body class="rustdoc">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <section class="sidebar">
+        
+        <p class='location'><a href='index.html'>strided</a></p><div class='block struct'><h2>Structs</h2><a class='struct ' href='struct.Items.html'>Items</a><a class='struct ' href='struct.MutItems.html'>MutItems</a><a class='struct ' href='struct.MutStride.html'>MutStride</a><a class='struct ' href='struct.MutSubstrides.html'>MutSubstrides</a><a class='struct current' href='struct.Stride.html'>Stride</a><a class='struct ' href='struct.Substrides.html'>Substrides</a></div><div class='block trait'><h2>Traits</h2><a class='trait ' href='trait.MutStrided.html'>MutStrided</a><a class='trait ' href='trait.Strided.html'>Strided</a></div>
+    </section>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press 'S' to search, '?' for more options..."
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content struct">
+<h1 class='fqn'><span class='in-band'>Struct <a href='index.html'>strided</a>::<wbr><a class='struct' href=''>Stride</a><wbr></span><span class='out-of-band'><span id='render-detail'>
+            <a id="collapse-all" href="#">[-]
+            </a>&nbsp;<a id="expand-all" href="#">[+]</a>
+        </span><a id='src-2513' href='../src/strided/home/huon/.cargo/registry/src/github.com-1ecc6299db9ec823/strided-0.2.1/src/imm.rs.html#10-12'>[src]</a></span></h1>
+<pre class='rust struct'>pub struct Stride&lt;'a, T: 'a&gt; {
+    // some fields omitted
+}</pre><div class='docblock'><p>A shared strided slice. This is equivalent to a <code>&amp;[T]</code> that only
+refers to every <code>n</code>th <code>T</code>.</p>
+</div><h2 id='methods'>Methods</h2><h3 class='impl'><a class='stability Unmarked' title='No stability level'></a><code>impl&lt;'a, T&gt; <a class='struct' href='../strided/struct.Stride.html' title='strided::Stride'>Stride</a>&lt;'a, T&gt;</code></h3><div class='impl-methods'><h4 id='method.new' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.new' class='fnname'>new</a>(x: <a href='http://doc.rust-lang.org/nightly/std/primitive.slice.html'>&amp;'a [T]</a>) -&gt; <a class='struct' href='../strided/struct.Stride.html' title='strided::Stride'>Stride</a>&lt;'a, T&gt;</code></h4>
+<div class='docblock'><p>Creates a new strided slice directly from a conventional
+slice. The return value has stride 1.</p>
+</div><h4 id='method.len' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.len' class='fnname'>len</a>(&amp;self) -&gt; <a href='http://doc.rust-lang.org/nightly/std/primitive.uint.html'>uint</a></code></h4>
+<div class='docblock'><p>Returns the number of elements accessible in <code>self</code>.</p>
+</div><h4 id='method.stride' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.stride' class='fnname'>stride</a>(&amp;self) -&gt; <a href='http://doc.rust-lang.org/nightly/std/primitive.uint.html'>uint</a></code></h4>
+<div class='docblock'><p>Returns the offset between successive elements of <code>self</code> as a
+count of <em>elements</em>, not bytes.</p>
+</div><h4 id='method.as_ptr' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.as_ptr' class='fnname'>as_ptr</a>(&amp;self) -&gt; *const T</code></h4>
+<div class='docblock'><p>Returns a pointer to the first element of this strided slice.</p>
+
+<p>NB. one must be careful since only every <code>self.stride()</code>th
+element is guaranteed to have unique access via this object;
+the others may be under the control of some other strided
+slice.</p>
+</div><h4 id='method.substrides2' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.substrides2' class='fnname'>substrides2</a>(&amp;self) -&gt; <a href='http://doc.rust-lang.org/nightly/std/primitive.tuple.html'>(<a class='struct' href='../strided/struct.Stride.html' title='strided::Stride'>Stride</a>&lt;'a, T&gt;, <a class='struct' href='../strided/struct.Stride.html' title='strided::Stride'>Stride</a>&lt;'a, T&gt;)</a></code></h4>
+<div class='docblock'><p>Breaks this strided slice into two strided slices pointing to
+alternate elements.</p>
+
+<p>That is, it doubles the stride and (approximately) halves the
+length. A slice pointing to values <code>[1, 2, 3, 4, 5]</code> becomes
+two slices <code>[1, 3, 5]</code> and <code>[2, 4]</code>. This is guaranteed to
+succeed even for mismatched lengths, and even if <code>self</code> has
+only zero or one elements.</p>
+</div><h4 id='method.substrides' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.substrides' class='fnname'>substrides</a>(&amp;self, n: <a href='http://doc.rust-lang.org/nightly/std/primitive.uint.html'>uint</a>) -&gt; <a class='struct' href='../strided/struct.Substrides.html' title='strided::Substrides'>Substrides</a>&lt;'a, T&gt;</code></h4>
+<div class='docblock'><p>Returns an iterator over <code>n</code> strided subslices of <code>self</code> each
+pointing to every <code>n</code>th element, starting at successive
+offsets.</p>
+
+<p>Calling <code>substrides(3)</code> on a slice pointing to <code>[1, 2, 3, 4, 5, 6,
+7]</code> will yield, in turn, <code>[1, 4, 7]</code>, <code>[2, 5]</code> and finally
+<code>[3, 6]</code>. Like with <code>split2</code> this is guaranteed to succeed
+(return <code>n</code> strided slices) even if <code>self</code> has fewer than <code>n</code>
+elements.</p>
+</div><h4 id='method.get' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.get' class='fnname'>get</a>(&amp;self, n: <a href='http://doc.rust-lang.org/nightly/std/primitive.uint.html'>uint</a>) -&gt; <a class='enum' href='http://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;&amp;'a T&gt;</code></h4>
+<div class='docblock'><p>Returns a reference to the <code>n</code>th element of <code>self</code>, or <code>None</code>
+if <code>n</code> is out-of-bounds.</p>
+</div><h4 id='method.iter' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.iter' class='fnname'>iter</a>(&amp;self) -&gt; <a class='struct' href='../strided/struct.Items.html' title='strided::Items'>Items</a>&lt;'a, T&gt;</code></h4>
+<div class='docblock'><p>Returns an iterator over references to each successive element
+of <code>self</code>.</p>
+
+<p>Unlike <code>MutStrides</code>, this can return references with the
+maximum lifetime without consuming <code>self</code> and so an
+<code>into_iter</code> equivalent is unnecessary.</p>
+</div><h4 id='method.slice' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.slice' class='fnname'>slice</a>(&amp;self, from: <a href='http://doc.rust-lang.org/nightly/std/primitive.uint.html'>uint</a>, to: <a href='http://doc.rust-lang.org/nightly/std/primitive.uint.html'>uint</a>) -&gt; <a class='struct' href='../strided/struct.Stride.html' title='strided::Stride'>Stride</a>&lt;'a, T&gt;</code></h4>
+<div class='docblock'><p>Returns a strided slice containing only the elements from
+indices <code>from</code> (inclusive) to <code>to</code> (exclusive).</p>
+
+<h1 id="panic" class='section-header'><a
+                           href="#panic">Panic</a></h1>
+<p>Panics if <code>from &gt; to</code> or if <code>to &gt; self.len()</code>.</p>
+</div><h4 id='method.slice_from' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.slice_from' class='fnname'>slice_from</a>(&amp;self, from: <a href='http://doc.rust-lang.org/nightly/std/primitive.uint.html'>uint</a>) -&gt; <a class='struct' href='../strided/struct.Stride.html' title='strided::Stride'>Stride</a>&lt;'a, T&gt;</code></h4>
+<div class='docblock'><p>Returns a strided slice containing only the elements from
+index <code>from</code> (inclusive).</p>
+
+<h1 id="panic-1" class='section-header'><a
+                           href="#panic-1">Panic</a></h1>
+<p>Panics if <code>from &gt; self.len()</code>.</p>
+</div><h4 id='method.slice_to' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.slice_to' class='fnname'>slice_to</a>(&amp;self, to: <a href='http://doc.rust-lang.org/nightly/std/primitive.uint.html'>uint</a>) -&gt; <a class='struct' href='../strided/struct.Stride.html' title='strided::Stride'>Stride</a>&lt;'a, T&gt;</code></h4>
+<div class='docblock'><p>Returns a strided slice containing only the elements to
+index <code>to</code> (exclusive).</p>
+
+<h1 id="panic-2" class='section-header'><a
+                           href="#panic-2">Panic</a></h1>
+<p>Panics if <code>to &gt; self.len()</code>.</p>
+</div><h4 id='method.split_at' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.split_at' class='fnname'>split_at</a>(&amp;self, idx: <a href='http://doc.rust-lang.org/nightly/std/primitive.uint.html'>uint</a>) -&gt; <a href='http://doc.rust-lang.org/nightly/std/primitive.tuple.html'>(<a class='struct' href='../strided/struct.Stride.html' title='strided::Stride'>Stride</a>&lt;'a, T&gt;, <a class='struct' href='../strided/struct.Stride.html' title='strided::Stride'>Stride</a>&lt;'a, T&gt;)</a></code></h4>
+<div class='docblock'><p>Returns two strided slices, the first with elements up to
+<code>idx</code> (exclusive) and the second with elements from <code>idx</code>.</p>
+
+<p>This is semantically equivalent to <code>(self.slice_to(idx),
+self.slice_from(idx))</code>.</p>
+
+<h1 id="panic-3" class='section-header'><a
+                           href="#panic-3">Panic</a></h1>
+<p>Panics if <code>idx &gt; self.len()</code>.</p>
+</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><a class='stability Unmarked' title='No stability level'></a><code>impl&lt;'a, T: <a class='trait' href='http://doc.rust-lang.org/nightly/core/fmt/trait.Show.html' title='core::fmt::Show'>Show</a>&gt; <a class='trait' href='http://doc.rust-lang.org/nightly/core/fmt/trait.Show.html' title='core::fmt::Show'>Show</a> for <a class='struct' href='../strided/struct.Stride.html' title='strided::Stride'>Stride</a>&lt;'a, T&gt;</code></h3><div class='impl-methods'><h4 id='method.fmt' class='method'><a class='stability Unstable' title='Unstable: I/O and core have yet to be reconciled'></a><code>fn <a href='#method.fmt' class='fnname'>fmt</a>(&amp;self, f: &amp;mut <a class='struct' href='http://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html' title='core::fmt::Formatter'>Formatter</a>) -&gt; <a class='type' href='http://doc.rust-lang.org/nightly/core/fmt/type.Result.html' title='core::fmt::Result'>Result</a></code></h4>
+</div><h3 class='impl'><a class='stability Unmarked' title='No stability level'></a><code>impl&lt;'a, T&gt; <a class='trait' href='http://doc.rust-lang.org/nightly/core/ops/trait.Index.html' title='core::ops::Index'>Index</a>&lt;<a href='http://doc.rust-lang.org/nightly/std/primitive.uint.html'>uint</a>, T&gt; for <a class='struct' href='../strided/struct.Stride.html' title='strided::Stride'>Stride</a>&lt;'a, T&gt;</code></h3><div class='impl-methods'><h4 id='method.index' class='method'><a class='stability Experimental' title='Experimental'></a><code>fn <a href='#method.index' class='fnname'>index</a>&lt;'b&gt;(&amp;'b self, n: &amp;<a href='http://doc.rust-lang.org/nightly/std/primitive.uint.html'>uint</a>) -&gt; &amp;'b T</code></h4>
+</div><h3 class='impl'><a class='stability Unmarked' title='No stability level'></a><code>impl&lt;'a, T&gt; <a class='trait' href='../strided/trait.Strided.html' title='strided::Strided'>Strided</a>&lt;T&gt; for <a class='struct' href='../strided/struct.Stride.html' title='strided::Stride'>Stride</a>&lt;'a, T&gt;</code></h3><div class='impl-methods'><h4 id='method.as_stride' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.as_stride' class='fnname'>as_stride</a>(&amp;self) -&gt; <a class='struct' href='../strided/struct.Stride.html' title='strided::Stride'>Stride</a>&lt;T&gt;</code></h4>
+<h4 id='method.stride' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.stride' class='fnname'>stride</a>(&amp;self) -&gt; <a href='http://doc.rust-lang.org/nightly/std/primitive.uint.html'>uint</a></code></h4>
+</div><h3 id='derived_implementations'>Derived Implementations </h3><h3 class='impl'><a class='stability Unmarked' title='No stability level'></a><code>impl&lt;'a, T: <a class='trait' href='http://doc.rust-lang.org/nightly/core/cmp/trait.Ord.html' title='core::cmp::Ord'>Ord</a> + 'a&gt; <a class='trait' href='http://doc.rust-lang.org/nightly/core/cmp/trait.Ord.html' title='core::cmp::Ord'>Ord</a> for <a class='struct' href='../strided/struct.Stride.html' title='strided::Stride'>Stride</a>&lt;'a, T&gt;</code></h3><div class='impl-methods'><h4 id='method.cmp' class='method'><a class='stability Unstable' title='Unstable: Definition may change slightly after trait reform'></a><code>fn <a href='#method.cmp' class='fnname'>cmp</a>(&amp;self, __arg_0: &amp;<a class='struct' href='../strided/struct.Stride.html' title='strided::Stride'>Stride</a>&lt;'a, T&gt;) -&gt; <a class='enum' href='http://doc.rust-lang.org/nightly/core/cmp/enum.Ordering.html' title='core::cmp::Ordering'>Ordering</a></code></h4>
+</div><h3 class='impl'><a class='stability Unmarked' title='No stability level'></a><code>impl&lt;'a, T: <a class='trait' href='http://doc.rust-lang.org/nightly/core/cmp/trait.PartialOrd.html' title='core::cmp::PartialOrd'>PartialOrd</a> + 'a&gt; <a class='trait' href='http://doc.rust-lang.org/nightly/core/cmp/trait.PartialOrd.html' title='core::cmp::PartialOrd'>PartialOrd</a> for <a class='struct' href='../strided/struct.Stride.html' title='strided::Stride'>Stride</a>&lt;'a, T&gt;</code></h3><div class='impl-methods'><h4 id='method.partial_cmp' class='method'><a class='stability Unstable' title='Unstable: Definition may change slightly after trait reform'></a><code>fn <a href='#method.partial_cmp' class='fnname'>partial_cmp</a>(&amp;self, __arg_0: &amp;<a class='struct' href='../strided/struct.Stride.html' title='strided::Stride'>Stride</a>&lt;'a, T&gt;) -&gt; <a class='enum' href='http://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='enum' href='http://doc.rust-lang.org/nightly/core/cmp/enum.Ordering.html' title='core::cmp::Ordering'>Ordering</a>&gt;</code></h4>
+<h4 id='method.lt' class='method'><a class='stability Unstable' title='Unstable: Definition may change slightly after trait reform'></a><code>fn <a href='#method.lt' class='fnname'>lt</a>(&amp;self, __arg_0: &amp;<a class='struct' href='../strided/struct.Stride.html' title='strided::Stride'>Stride</a>&lt;'a, T&gt;) -&gt; <a href='http://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></h4>
+<h4 id='method.le' class='method'><a class='stability Unstable' title='Unstable: Definition may change slightly after trait reform'></a><code>fn <a href='#method.le' class='fnname'>le</a>(&amp;self, __arg_0: &amp;<a class='struct' href='../strided/struct.Stride.html' title='strided::Stride'>Stride</a>&lt;'a, T&gt;) -&gt; <a href='http://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></h4>
+<h4 id='method.gt' class='method'><a class='stability Unstable' title='Unstable: Definition may change slightly after trait reform'></a><code>fn <a href='#method.gt' class='fnname'>gt</a>(&amp;self, __arg_0: &amp;<a class='struct' href='../strided/struct.Stride.html' title='strided::Stride'>Stride</a>&lt;'a, T&gt;) -&gt; <a href='http://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></h4>
+<h4 id='method.ge' class='method'><a class='stability Unstable' title='Unstable: Definition may change slightly after trait reform'></a><code>fn <a href='#method.ge' class='fnname'>ge</a>(&amp;self, __arg_0: &amp;<a class='struct' href='../strided/struct.Stride.html' title='strided::Stride'>Stride</a>&lt;'a, T&gt;) -&gt; <a href='http://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></h4>
+</div><h3 class='impl'><a class='stability Unmarked' title='No stability level'></a><code>impl&lt;'a, T: <a class='trait' href='http://doc.rust-lang.org/nightly/core/cmp/trait.Eq.html' title='core::cmp::Eq'>Eq</a> + 'a&gt; <a class='trait' href='http://doc.rust-lang.org/nightly/core/cmp/trait.Eq.html' title='core::cmp::Eq'>Eq</a> for <a class='struct' href='../strided/struct.Stride.html' title='strided::Stride'>Stride</a>&lt;'a, T&gt;</code></h3><div class='impl-methods'><h4 id='method.assert_receiver_is_total_eq' class='method'><a class='stability Unstable' title='Unstable: Definition may change slightly after trait reform'></a><code>fn <a href='#tymethod.assert_receiver_is_total_eq' class='fnname'>assert_receiver_is_total_eq</a>(&amp;self)</code></h4>
+</div><h3 class='impl'><a class='stability Unmarked' title='No stability level'></a><code>impl&lt;'a, T: <a class='trait' href='http://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html' title='core::cmp::PartialEq'>PartialEq</a> + 'a&gt; <a class='trait' href='http://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html' title='core::cmp::PartialEq'>PartialEq</a> for <a class='struct' href='../strided/struct.Stride.html' title='strided::Stride'>Stride</a>&lt;'a, T&gt;</code></h3><div class='impl-methods'><h4 id='method.eq' class='method'><a class='stability Unstable' title='Unstable: Definition may change slightly after trait reform'></a><code>fn <a href='#method.eq' class='fnname'>eq</a>(&amp;self, __arg_0: &amp;<a class='struct' href='../strided/struct.Stride.html' title='strided::Stride'>Stride</a>&lt;'a, T&gt;) -&gt; <a href='http://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></h4>
+<h4 id='method.ne' class='method'><a class='stability Unstable' title='Unstable: Definition may change slightly after trait reform'></a><code>fn <a href='#method.ne' class='fnname'>ne</a>(&amp;self, __arg_0: &amp;<a class='struct' href='../strided/struct.Stride.html' title='strided::Stride'>Stride</a>&lt;'a, T&gt;) -&gt; <a href='http://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></h4>
+</div><h3 class='impl'><a class='stability Unmarked' title='No stability level'></a><code>impl&lt;'a, T: <a class='trait' href='http://doc.rust-lang.org/nightly/core/clone/trait.Clone.html' title='core::clone::Clone'>Clone</a> + 'a&gt; <a class='trait' href='http://doc.rust-lang.org/nightly/core/clone/trait.Clone.html' title='core::clone::Clone'>Clone</a> for <a class='struct' href='../strided/struct.Stride.html' title='strided::Stride'>Stride</a>&lt;'a, T&gt;</code></h3><div class='impl-methods'><h4 id='method.clone' class='method'><a class='stability Unstable' title='Unstable'></a><code>fn <a href='#method.clone' class='fnname'>clone</a>(&amp;self) -&gt; <a class='struct' href='../strided/struct.Stride.html' title='strided::Stride'>Stride</a>&lt;'a, T&gt;</code></h4>
+<h4 id='method.clone_from' class='method'><a class='stability Experimental' title='Experimental: this function is mostly unused'></a><code>fn <a href='#tymethod.clone_from' class='fnname'>clone_from</a>(&amp;mut self, source: &amp;Self)</code></h4>
+</div></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <div id="help" class="hidden">
+        <div class="shortcuts">
+            <h1>Keyboard shortcuts</h1>
+            <dl>
+                <dt>?</dt>
+                <dd>Show this help dialog</dd>
+                <dt>S</dt>
+                <dd>Focus the search field</dd>
+                <dt>&larrb;</dt>
+                <dd>Move up in search results</dd>
+                <dt>&rarrb;</dt>
+                <dd>Move down in search results</dd>
+                <dt>&#9166;</dt>
+                <dd>Go to active search result</dd>
+            </dl>
+        </div>
+        <div class="infos">
+            <h1>Search tricks</h1>
+            <p>
+                Prefix searches with a type followed by a colon (e.g.
+                <code>fn:</code>) to restrict the search to a given type.
+            </p>
+            <p>
+                Accepted types are: <code>fn</code>, <code>mod</code>,
+                <code>struct</code>, <code>enum</code>,
+                <code>trait</code>, <code>typedef</code> (or
+                <code>tdef</code>).
+            </p>
+        </div>
+    </div>
+
+    
+
+    <script>
+        window.rootPath = "../";
+        window.currentCrate = "strided";
+        window.playgroundUrl = "";
+    </script>
+    <script src="../jquery.js"></script>
+    <script src="../main.js"></script>
+    
+    <script async src="../search-index.js"></script>
+</body>
+</html>

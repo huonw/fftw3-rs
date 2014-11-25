@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `Planner` struct in crate `fftw3`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, Planner">
+
+    <title>fftw3::builder2::Planner - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../../main.css">
+
+    
+    
+</head>
+<body class="rustdoc">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <section class="sidebar">
+        
+        <p class='location'><a href='../index.html'>fftw3</a>::<wbr><a href='index.html'>builder2</a></p><div class='block struct'><h2>Structs</h2><a class='struct ' href='struct.Begin.html'>Begin</a><a class='struct ' href='struct.Dim.html'>Dim</a><a class='struct ' href='struct.Inplace.html'>Inplace</a><a class='struct ' href='struct.Input.html'>Input</a><a class='struct ' href='struct.Io.html'>Io</a><a class='struct ' href='struct.Plan.html'>Plan</a><a class='struct current' href='struct.Planner.html'>Planner</a></div><div class='block enum'><h2>Enums</h2><a class='enum ' href='enum.Direction.html'>Direction</a><a class='enum ' href='enum.PlanningError.html'>PlanningError</a><a class='enum ' href='enum.Rigor.html'>Rigor</a></div><div class='block trait'><h2>Traits</h2><a class='trait ' href='trait.FftData.html'>FftData</a><a class='trait ' href='trait.FftSpec.html'>FftSpec</a></div>
+    </section>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press 'S' to search, '?' for more options..."
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content struct">
+<h1 class='fqn'><span class='in-band'>Struct <a href='../index.html'>fftw3</a>::<wbr><a href='index.html'>builder2</a>::<wbr><a class='struct' href=''>Planner</a><wbr></span><span class='out-of-band'><span id='render-detail'>
+            <a id="collapse-all" href="#">[-]
+            </a>&nbsp;<a id="expand-all" href="#">[+]</a>
+        </span><a id='src-4660' href='../../src/fftw3/home/huon/projects/fftw-rs/src/builder2/mod.rs.html#107-110'>[src]</a></span></h1>
+<pre class='rust struct'>pub struct Planner&lt;Stage&gt; {
+    // some fields omitted
+}</pre><h2 id='methods'>Methods</h2><h3 class='impl'><a class='stability Unmarked' title='No stability level'></a><code>impl <a class='struct' href='../../fftw3/builder2/struct.Planner.html' title='fftw3::builder2::Planner'>Planner</a>&lt;<a class='struct' href='../../fftw3/builder2/struct.Begin.html' title='fftw3::builder2::Begin'>Begin</a>&gt;</code></h3><div class='impl-methods'><h4 id='method.new' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.new' class='fnname'>new</a>() -&gt; <a class='struct' href='../../fftw3/builder2/struct.Planner.html' title='fftw3::builder2::Planner'>Planner</a>&lt;<a class='struct' href='../../fftw3/builder2/struct.Begin.html' title='fftw3::builder2::Begin'>Begin</a>&gt;</code></h4>
+<h4 id='method.input' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.input' class='fnname'>input</a>&lt;T, I: <a class='trait' href='../../strided/traits/trait.MutStrided.html' title='strided::traits::MutStrided'>MutStrided</a>&lt;T&gt;&gt;(self, in_: I) -&gt; <a class='struct' href='../../fftw3/builder2/struct.Planner.html' title='fftw3::builder2::Planner'>Planner</a>&lt;<a class='struct' href='../../fftw3/builder2/struct.Input.html' title='fftw3::builder2::Input'>Input</a>&lt;I&gt;&gt;</code></h4>
+</div><h3 class='impl'><a class='stability Unmarked' title='No stability level'></a><code>impl <a class='struct' href='../../fftw3/builder2/struct.Planner.html' title='fftw3::builder2::Planner'>Planner</a>&lt;<a class='struct' href='../../fftw3/builder2/struct.Begin.html' title='fftw3::builder2::Begin'>Begin</a>&gt;</code></h3><div class='impl-methods'><h4 id='method.rigor' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.rigor' class='fnname'>rigor</a>(self, r: <a class='enum' href='../../fftw3/builder2/enum.Rigor.html' title='fftw3::builder2::Rigor'>Rigor</a>) -&gt; <a class='struct' href='../../fftw3/builder2/struct.Planner.html' title='fftw3::builder2::Planner'>Planner</a>&lt;<a class='struct' href='../../fftw3/builder2/struct.Begin.html' title='fftw3::builder2::Begin'>Begin</a>&gt;</code></h4>
+<div class='docblock'><p>Set the rigor to use for this plan.</p>
+</div><h4 id='method.wisdom_restriction' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.wisdom_restriction' class='fnname'>wisdom_restriction</a>(self, wisdom_only: <a href='http://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a>) -&gt; <a class='struct' href='../../fftw3/builder2/struct.Planner.html' title='fftw3::builder2::Planner'>Planner</a>&lt;<a class='struct' href='../../fftw3/builder2/struct.Begin.html' title='fftw3::builder2::Begin'>Begin</a>&gt;</code></h4>
+<div class='docblock'><p>Set whether the planner should only be successfully created if
+there exists wisdom created with at least the rigor level set.</p>
+</div><h4 id='method.direction' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.direction' class='fnname'>direction</a>(self, direction: <a class='enum' href='../../fftw3/builder2/enum.Direction.html' title='fftw3::builder2::Direction'>Direction</a>) -&gt; <a class='struct' href='../../fftw3/builder2/struct.Planner.html' title='fftw3::builder2::Planner'>Planner</a>&lt;<a class='struct' href='../../fftw3/builder2/struct.Begin.html' title='fftw3::builder2::Begin'>Begin</a>&gt;</code></h4>
+<div class='docblock'><p>Set the direction of the transform to perform.</p>
+</div><h4 id='method._1d' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method._1d' class='fnname'>_1d</a>(self, n: <a href='http://doc.rust-lang.org/nightly/std/primitive.uint.html'>uint</a>) -&gt; <a class='struct' href='../../fftw3/builder2/struct.Planner.html' title='fftw3::builder2::Planner'>Planner</a>&lt;<a class='struct' href='../../fftw3/builder2/struct.Begin.html' title='fftw3::builder2::Begin'>Begin</a>&gt;</code></h4>
+<h4 id='method._2d' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method._2d' class='fnname'>_2d</a>(self, n0: <a href='http://doc.rust-lang.org/nightly/std/primitive.uint.html'>uint</a>, n1: <a href='http://doc.rust-lang.org/nightly/std/primitive.uint.html'>uint</a>) -&gt; <a class='struct' href='../../fftw3/builder2/struct.Planner.html' title='fftw3::builder2::Planner'>Planner</a>&lt;<a class='struct' href='../../fftw3/builder2/struct.Begin.html' title='fftw3::builder2::Begin'>Begin</a>&gt;</code></h4>
+<h4 id='method._3d' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method._3d' class='fnname'>_3d</a>(self, n0: <a href='http://doc.rust-lang.org/nightly/std/primitive.uint.html'>uint</a>, n1: <a href='http://doc.rust-lang.org/nightly/std/primitive.uint.html'>uint</a>, n2: <a href='http://doc.rust-lang.org/nightly/std/primitive.uint.html'>uint</a>) -&gt; <a class='struct' href='../../fftw3/builder2/struct.Planner.html' title='fftw3::builder2::Planner'>Planner</a>&lt;<a class='struct' href='../../fftw3/builder2/struct.Begin.html' title='fftw3::builder2::Begin'>Begin</a>&gt;</code></h4>
+<h4 id='method.nd' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.nd' class='fnname'>nd</a>(self, dims: <a href='http://doc.rust-lang.org/nightly/std/primitive.slice.html'>&amp;[</a><a href='http://doc.rust-lang.org/nightly/std/primitive.uint.html'>uint</a><a href='http://doc.rust-lang.org/nightly/std/primitive.slice.html'>]</a>) -&gt; <a class='struct' href='../../fftw3/builder2/struct.Planner.html' title='fftw3::builder2::Planner'>Planner</a>&lt;<a class='struct' href='../../fftw3/builder2/struct.Begin.html' title='fftw3::builder2::Begin'>Begin</a>&gt;</code></h4>
+</div><h3 class='impl'><a class='stability Unmarked' title='No stability level'></a><code>impl&lt;T, I: <a class='trait' href='../../strided/traits/trait.MutStrided.html' title='strided::traits::MutStrided'>MutStrided</a>&lt;T&gt;&gt; <a class='struct' href='../../fftw3/builder2/struct.Planner.html' title='fftw3::builder2::Planner'>Planner</a>&lt;<a class='struct' href='../../fftw3/builder2/struct.Input.html' title='fftw3::builder2::Input'>Input</a>&lt;I&gt;&gt;</code></h3><div class='impl-methods'><h4 id='method.output' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.output' class='fnname'>output</a>&lt;U: <a class='trait' href='../../fftw3/builder2/trait.FftData.html' title='fftw3::builder2::FftData'>FftData</a>&lt;T&gt;, O: <a class='trait' href='../../strided/traits/trait.MutStrided.html' title='strided::traits::MutStrided'>MutStrided</a>&lt;U&gt;&gt;(self, out: O) -&gt; <a class='struct' href='../../fftw3/builder2/struct.Planner.html' title='fftw3::builder2::Planner'>Planner</a>&lt;<a class='struct' href='../../fftw3/builder2/struct.Io.html' title='fftw3::builder2::Io'>Io</a>&lt;I, O&gt;&gt;</code></h4>
+</div><h3 class='impl'><a class='stability Unmarked' title='No stability level'></a><code>impl&lt;T: <a class='trait' href='../../fftw3/builder2/trait.FftData.html' title='fftw3::builder2::FftData'>FftData</a>&lt;T&gt;, I: <a class='trait' href='../../strided/traits/trait.MutStrided.html' title='strided::traits::MutStrided'>MutStrided</a>&lt;T&gt;&gt; <a class='struct' href='../../fftw3/builder2/struct.Planner.html' title='fftw3::builder2::Planner'>Planner</a>&lt;<a class='struct' href='../../fftw3/builder2/struct.Input.html' title='fftw3::builder2::Input'>Input</a>&lt;I&gt;&gt;</code></h3><div class='impl-methods'><h4 id='method.inplace' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.inplace' class='fnname'>inplace</a>(self) -&gt; <a class='struct' href='../../fftw3/builder2/struct.Planner.html' title='fftw3::builder2::Planner'>Planner</a>&lt;<a class='struct' href='../../fftw3/builder2/struct.Inplace.html' title='fftw3::builder2::Inplace'>Inplace</a>&lt;I&gt;&gt;</code></h4>
+</div><h3 class='impl'><a class='stability Unmarked' title='No stability level'></a><code>impl&lt;X: <a class='trait' href='../../fftw3/builder2/trait.FftSpec.html' title='fftw3::builder2::FftSpec'>FftSpec</a>&gt; <a class='struct' href='../../fftw3/builder2/struct.Planner.html' title='fftw3::builder2::Planner'>Planner</a>&lt;X&gt;</code></h3><div class='impl-methods'><h4 id='method.plan' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.plan' class='fnname'>plan</a>(self) -&gt; <a class='enum' href='http://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='struct' href='../../fftw3/builder2/struct.Plan.html' title='fftw3::builder2::Plan'>Plan</a>&lt;X&gt;, <a class='enum' href='../../fftw3/builder2/enum.PlanningError.html' title='fftw3::builder2::PlanningError'>PlanningError</a>&gt;</code></h4>
+</div></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <div id="help" class="hidden">
+        <div class="shortcuts">
+            <h1>Keyboard shortcuts</h1>
+            <dl>
+                <dt>?</dt>
+                <dd>Show this help dialog</dd>
+                <dt>S</dt>
+                <dd>Focus the search field</dd>
+                <dt>&larrb;</dt>
+                <dd>Move up in search results</dd>
+                <dt>&rarrb;</dt>
+                <dd>Move down in search results</dd>
+                <dt>&#9166;</dt>
+                <dd>Go to active search result</dd>
+            </dl>
+        </div>
+        <div class="infos">
+            <h1>Search tricks</h1>
+            <p>
+                Prefix searches with a type followed by a colon (e.g.
+                <code>fn:</code>) to restrict the search to a given type.
+            </p>
+            <p>
+                Accepted types are: <code>fn</code>, <code>mod</code>,
+                <code>struct</code>, <code>enum</code>,
+                <code>trait</code>, <code>typedef</code> (or
+                <code>tdef</code>).
+            </p>
+        </div>
+    </div>
+
+    
+
+    <script>
+        window.rootPath = "../../";
+        window.currentCrate = "fftw3";
+        window.playgroundUrl = "";
+    </script>
+    <script src="../../jquery.js"></script>
+    <script src="../../main.js"></script>
+    
+    <script async src="../../search-index.js"></script>
+</body>
+</html>

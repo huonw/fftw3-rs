@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `Planner` struct in crate `fftw3`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, Planner">
+
+    <title>fftw3::builder::Planner - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../../main.css">
+
+    
+    
+</head>
+<body class="rustdoc">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <section class="sidebar">
+        
+        <p class='location'><a href='../index.html'>fftw3</a>::<wbr><a href='index.html'>builder</a></p><div class='block struct'><h2>Structs</h2><a class='struct ' href='struct.Dim.html'>Dim</a><a class='struct ' href='struct.InPlacePlanner.html'>InPlacePlanner</a><a class='struct ' href='struct.PlanMem.html'>PlanMem</a><a class='struct ' href='struct.Planned.html'>Planned</a><a class='struct current' href='struct.Planner.html'>Planner</a></div><div class='block enum'><h2>Enums</h2><a class='enum ' href='enum.Direction.html'>Direction</a><a class='enum ' href='enum.Rigor.html'>Rigor</a></div>
+    </section>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press 'S' to search, '?' for more options..."
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content struct">
+<h1 class='fqn'><span class='in-band'>Struct <a href='../index.html'>fftw3</a>::<wbr><a href='index.html'>builder</a>::<wbr><a class='struct' href=''>Planner</a><wbr></span><span class='out-of-band'><span id='render-detail'>
+            <a id="collapse-all" href="#">[-]
+            </a>&nbsp;<a id="expand-all" href="#">[+]</a>
+        </span><a id='src-1545' href='../../src/fftw3/home/huon/projects/fftw-rs/src/builder.rs.html#34-43'>[src]</a></span></h1>
+<pre class='rust struct'>pub struct Planner {
+    // some fields omitted
+}</pre><div class='docblock'><p>Control the basic properties of a set of transforms.</p>
+</div><h2 id='methods'>Methods</h2><h3 class='impl'><a class='stability Unmarked' title='No stability level'></a><code>impl <a class='struct' href='../../fftw3/builder/struct.Planner.html' title='fftw3::builder::Planner'>Planner</a></code></h3><div class='impl-methods'><h4 id='method.new' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.new' class='fnname'>new</a>() -&gt; <a class='struct' href='../../fftw3/builder/struct.Planner.html' title='fftw3::builder::Planner'>Planner</a></code></h4>
+<div class='docblock'><p>Construct a new planner with default values.</p>
+
+<p>This defaults to a forward transform with estimate rigor.</p>
+</div><h4 id='method.rigor' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.rigor' class='fnname'>rigor</a>(self, r: <a class='enum' href='../../fftw3/builder/enum.Rigor.html' title='fftw3::builder::Rigor'>Rigor</a>) -&gt; <a class='struct' href='../../fftw3/builder/struct.Planner.html' title='fftw3::builder::Planner'>Planner</a></code></h4>
+<div class='docblock'><p>Set the rigor to use for this plan.</p>
+</div><h4 id='method.wisdom_restriction' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.wisdom_restriction' class='fnname'>wisdom_restriction</a>(self, wisdom_only: <a href='http://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a>) -&gt; <a class='struct' href='../../fftw3/builder/struct.Planner.html' title='fftw3::builder::Planner'>Planner</a></code></h4>
+<div class='docblock'><p>Set whether the planner should only be successfully created if
+there exists wisdom created with at least the rigor level set.</p>
+</div><h4 id='method.direction' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.direction' class='fnname'>direction</a>(self, direction: <a class='enum' href='../../fftw3/builder/enum.Direction.html' title='fftw3::builder::Direction'>Direction</a>) -&gt; <a class='struct' href='../../fftw3/builder/struct.Planner.html' title='fftw3::builder::Planner'>Planner</a></code></h4>
+<div class='docblock'><p>Set the direction of the transform to perform.</p>
+</div><h4 id='method.inplace' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.inplace' class='fnname'>inplace</a>(self) -&gt; <a class='struct' href='../../fftw3/builder/struct.InPlacePlanner.html' title='fftw3::builder::InPlacePlanner'>InPlacePlanner</a></code></h4>
+<h4 id='method.c2c' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.c2c' class='fnname'>c2c</a>&lt;I, O&gt;(self, in_: I, out: O) -&gt; <a class='struct' href='../../fftw3/builder/struct.PlanMem.html' title='fftw3::builder::PlanMem'>PlanMem</a>&lt;I, O&gt; where I: <a class='trait' href='http://doc.rust-lang.org/nightly/core/ops/trait.DerefMut.html' title='core::ops::DerefMut'>DerefMut</a>&lt;<a href='http://doc.rust-lang.org/nightly/std/primitive.slice.html'>[<a class='type' href='../../num/complex/type.Complex64.html' title='num::complex::Complex64'>Complex64</a>]</a>&gt;, O: <a class='trait' href='http://doc.rust-lang.org/nightly/core/ops/trait.DerefMut.html' title='core::ops::DerefMut'>DerefMut</a>&lt;<a href='http://doc.rust-lang.org/nightly/std/primitive.slice.html'>[<a class='type' href='../../num/complex/type.Complex64.html' title='num::complex::Complex64'>Complex64</a>]</a>&gt;</code></h4>
+<h4 id='method.c2r' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.c2r' class='fnname'>c2r</a>&lt;I, O&gt;(self, in_: I, out: O) -&gt; <a class='struct' href='../../fftw3/builder/struct.PlanMem.html' title='fftw3::builder::PlanMem'>PlanMem</a>&lt;I, O&gt; where I: <a class='trait' href='http://doc.rust-lang.org/nightly/core/ops/trait.DerefMut.html' title='core::ops::DerefMut'>DerefMut</a>&lt;<a href='http://doc.rust-lang.org/nightly/std/primitive.slice.html'>[<a class='type' href='../../num/complex/type.Complex64.html' title='num::complex::Complex64'>Complex64</a>]</a>&gt;, O: <a class='trait' href='http://doc.rust-lang.org/nightly/core/ops/trait.DerefMut.html' title='core::ops::DerefMut'>DerefMut</a>&lt;<a href='http://doc.rust-lang.org/nightly/std/primitive.slice.html'>[<a href='http://doc.rust-lang.org/nightly/std/primitive.f64.html'>f64</a>]</a>&gt;</code></h4>
+<h4 id='method.r2c' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.r2c' class='fnname'>r2c</a>&lt;I, O&gt;(self, in_: I, out: O) -&gt; <a class='struct' href='../../fftw3/builder/struct.PlanMem.html' title='fftw3::builder::PlanMem'>PlanMem</a>&lt;I, O&gt; where I: <a class='trait' href='http://doc.rust-lang.org/nightly/core/ops/trait.DerefMut.html' title='core::ops::DerefMut'>DerefMut</a>&lt;<a href='http://doc.rust-lang.org/nightly/std/primitive.slice.html'>[<a href='http://doc.rust-lang.org/nightly/std/primitive.f64.html'>f64</a>]</a>&gt;, O: <a class='trait' href='http://doc.rust-lang.org/nightly/core/ops/trait.DerefMut.html' title='core::ops::DerefMut'>DerefMut</a>&lt;<a href='http://doc.rust-lang.org/nightly/std/primitive.slice.html'>[<a class='type' href='../../num/complex/type.Complex64.html' title='num::complex::Complex64'>Complex64</a>]</a>&gt;</code></h4>
+</div></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <div id="help" class="hidden">
+        <div class="shortcuts">
+            <h1>Keyboard shortcuts</h1>
+            <dl>
+                <dt>?</dt>
+                <dd>Show this help dialog</dd>
+                <dt>S</dt>
+                <dd>Focus the search field</dd>
+                <dt>&larrb;</dt>
+                <dd>Move up in search results</dd>
+                <dt>&rarrb;</dt>
+                <dd>Move down in search results</dd>
+                <dt>&#9166;</dt>
+                <dd>Go to active search result</dd>
+            </dl>
+        </div>
+        <div class="infos">
+            <h1>Search tricks</h1>
+            <p>
+                Prefix searches with a type followed by a colon (e.g.
+                <code>fn:</code>) to restrict the search to a given type.
+            </p>
+            <p>
+                Accepted types are: <code>fn</code>, <code>mod</code>,
+                <code>struct</code>, <code>enum</code>,
+                <code>trait</code>, <code>typedef</code> (or
+                <code>tdef</code>).
+            </p>
+        </div>
+    </div>
+
+    
+
+    <script>
+        window.rootPath = "../../";
+        window.currentCrate = "fftw3";
+        window.playgroundUrl = "";
+    </script>
+    <script src="../../jquery.js"></script>
+    <script src="../../main.js"></script>
+    
+    <script async src="../../search-index.js"></script>
+</body>
+</html>

@@ -1,0 +1,1673 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `fftw3-sys` crate.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, fftw3-sys">
+
+    <title>fftw3-sys - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../main.css">
+
+    
+    
+</head>
+<body class="rustdoc">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <section class="sidebar">
+        
+        <p class='location'></p>
+    </section>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press 'S' to search, '?' for more options..."
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content mod">
+<h1 class='fqn'><span class='in-band'>Crate <a class='mod' href=''>fftw3-sys</a><wbr></span><span class='out-of-band'><a href='stability.html'>[stability]</a> <span id='render-detail'>
+            <a id="collapse-all" href="#">[-]
+            </a>&nbsp;<a id="expand-all" href="#">[+]</a>
+        </span><a id='src-0' href='../src/fftw3-sys/lib.rs.html#2-688'>[src]</a></span></h1>
+<h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
+<table>
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='struct' href='struct.Struct_fftw_iodim64_do_not_use_me.html'
+                               title='fftw3-sys::Struct_fftw_iodim64_do_not_use_me'>Struct_fftw_iodim64_do_not_use_me</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='struct' href='struct.Struct_fftw_iodim_do_not_use_me.html'
+                               title='fftw3-sys::Struct_fftw_iodim_do_not_use_me'>Struct_fftw_iodim_do_not_use_me</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                </table><h2 id='statics' class='section-header'><a href="#statics">Statics</a></h2>
+<table>
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='static' href='static.FFTW_BACKWARD.html'
+                               title='fftw3-sys::FFTW_BACKWARD'>FFTW_BACKWARD</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='static' href='static.FFTW_CONSERVE_MEMORY.html'
+                               title='fftw3-sys::FFTW_CONSERVE_MEMORY'>FFTW_CONSERVE_MEMORY</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='static' href='static.FFTW_DESTROY_INPUT.html'
+                               title='fftw3-sys::FFTW_DESTROY_INPUT'>FFTW_DESTROY_INPUT</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='static' href='static.FFTW_DHT.html'
+                               title='fftw3-sys::FFTW_DHT'>FFTW_DHT</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='static' href='static.FFTW_ESTIMATE.html'
+                               title='fftw3-sys::FFTW_ESTIMATE'>FFTW_ESTIMATE</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='static' href='static.FFTW_EXHAUSTIVE.html'
+                               title='fftw3-sys::FFTW_EXHAUSTIVE'>FFTW_EXHAUSTIVE</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='static' href='static.FFTW_FORWARD.html'
+                               title='fftw3-sys::FFTW_FORWARD'>FFTW_FORWARD</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='static' href='static.FFTW_HC2R.html'
+                               title='fftw3-sys::FFTW_HC2R'>FFTW_HC2R</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='static' href='static.FFTW_MEASURE.html'
+                               title='fftw3-sys::FFTW_MEASURE'>FFTW_MEASURE</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='static' href='static.FFTW_NO_TIMELIMIT.html'
+                               title='fftw3-sys::FFTW_NO_TIMELIMIT'>FFTW_NO_TIMELIMIT</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='static' href='static.FFTW_PATIENT.html'
+                               title='fftw3-sys::FFTW_PATIENT'>FFTW_PATIENT</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='static' href='static.FFTW_PRESERVE_INPUT.html'
+                               title='fftw3-sys::FFTW_PRESERVE_INPUT'>FFTW_PRESERVE_INPUT</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='static' href='static.FFTW_R2HC.html'
+                               title='fftw3-sys::FFTW_R2HC'>FFTW_R2HC</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='static' href='static.FFTW_REDFT00.html'
+                               title='fftw3-sys::FFTW_REDFT00'>FFTW_REDFT00</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='static' href='static.FFTW_REDFT01.html'
+                               title='fftw3-sys::FFTW_REDFT01'>FFTW_REDFT01</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='static' href='static.FFTW_REDFT10.html'
+                               title='fftw3-sys::FFTW_REDFT10'>FFTW_REDFT10</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='static' href='static.FFTW_REDFT11.html'
+                               title='fftw3-sys::FFTW_REDFT11'>FFTW_REDFT11</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='static' href='static.FFTW_RODFT00.html'
+                               title='fftw3-sys::FFTW_RODFT00'>FFTW_RODFT00</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='static' href='static.FFTW_RODFT01.html'
+                               title='fftw3-sys::FFTW_RODFT01'>FFTW_RODFT01</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='static' href='static.FFTW_RODFT10.html'
+                               title='fftw3-sys::FFTW_RODFT10'>FFTW_RODFT10</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='static' href='static.FFTW_RODFT11.html'
+                               title='fftw3-sys::FFTW_RODFT11'>FFTW_RODFT11</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='static' href='static.FFTW_UNALIGNED.html'
+                               title='fftw3-sys::FFTW_UNALIGNED'>FFTW_UNALIGNED</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='static' href='static.FFTW_WISDOM_ONLY.html'
+                               title='fftw3-sys::FFTW_WISDOM_ONLY'>FFTW_WISDOM_ONLY</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                </table><h2 id='ffi-fns' class='section-header'><a href="#ffi-fns">Foreign Functions</a></h2>
+<table>
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftw_alloc_complex.html'
+                               title='fftw3-sys::fftw_alloc_complex'>fftw_alloc_complex</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftw_alloc_real.html'
+                               title='fftw3-sys::fftw_alloc_real'>fftw_alloc_real</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftw_cleanup.html'
+                               title='fftw3-sys::fftw_cleanup'>fftw_cleanup</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftw_cleanup_threads.html'
+                               title='fftw3-sys::fftw_cleanup_threads'>fftw_cleanup_threads</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftw_cost.html'
+                               title='fftw3-sys::fftw_cost'>fftw_cost</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftw_destroy_plan.html'
+                               title='fftw3-sys::fftw_destroy_plan'>fftw_destroy_plan</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftw_estimate_cost.html'
+                               title='fftw3-sys::fftw_estimate_cost'>fftw_estimate_cost</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftw_execute.html'
+                               title='fftw3-sys::fftw_execute'>fftw_execute</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftw_execute_dft.html'
+                               title='fftw3-sys::fftw_execute_dft'>fftw_execute_dft</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftw_execute_dft_c2r.html'
+                               title='fftw3-sys::fftw_execute_dft_c2r'>fftw_execute_dft_c2r</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftw_execute_dft_r2c.html'
+                               title='fftw3-sys::fftw_execute_dft_r2c'>fftw_execute_dft_r2c</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftw_execute_r2r.html'
+                               title='fftw3-sys::fftw_execute_r2r'>fftw_execute_r2r</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftw_execute_split_dft.html'
+                               title='fftw3-sys::fftw_execute_split_dft'>fftw_execute_split_dft</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftw_execute_split_dft_c2r.html'
+                               title='fftw3-sys::fftw_execute_split_dft_c2r'>fftw_execute_split_dft_c2r</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftw_execute_split_dft_r2c.html'
+                               title='fftw3-sys::fftw_execute_split_dft_r2c'>fftw_execute_split_dft_r2c</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftw_export_wisdom.html'
+                               title='fftw3-sys::fftw_export_wisdom'>fftw_export_wisdom</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftw_export_wisdom_to_file.html'
+                               title='fftw3-sys::fftw_export_wisdom_to_file'>fftw_export_wisdom_to_file</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftw_export_wisdom_to_filename.html'
+                               title='fftw3-sys::fftw_export_wisdom_to_filename'>fftw_export_wisdom_to_filename</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftw_export_wisdom_to_string.html'
+                               title='fftw3-sys::fftw_export_wisdom_to_string'>fftw_export_wisdom_to_string</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftw_flops.html'
+                               title='fftw3-sys::fftw_flops'>fftw_flops</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftw_forget_wisdom.html'
+                               title='fftw3-sys::fftw_forget_wisdom'>fftw_forget_wisdom</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftw_fprint_plan.html'
+                               title='fftw3-sys::fftw_fprint_plan'>fftw_fprint_plan</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftw_free.html'
+                               title='fftw3-sys::fftw_free'>fftw_free</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftw_import_system_wisdom.html'
+                               title='fftw3-sys::fftw_import_system_wisdom'>fftw_import_system_wisdom</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftw_import_wisdom.html'
+                               title='fftw3-sys::fftw_import_wisdom'>fftw_import_wisdom</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftw_import_wisdom_from_file.html'
+                               title='fftw3-sys::fftw_import_wisdom_from_file'>fftw_import_wisdom_from_file</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftw_import_wisdom_from_filename.html'
+                               title='fftw3-sys::fftw_import_wisdom_from_filename'>fftw_import_wisdom_from_filename</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftw_import_wisdom_from_string.html'
+                               title='fftw3-sys::fftw_import_wisdom_from_string'>fftw_import_wisdom_from_string</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftw_init_threads.html'
+                               title='fftw3-sys::fftw_init_threads'>fftw_init_threads</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftw_malloc.html'
+                               title='fftw3-sys::fftw_malloc'>fftw_malloc</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftw_plan_dft.html'
+                               title='fftw3-sys::fftw_plan_dft'>fftw_plan_dft</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftw_plan_dft_1d.html'
+                               title='fftw3-sys::fftw_plan_dft_1d'>fftw_plan_dft_1d</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftw_plan_dft_2d.html'
+                               title='fftw3-sys::fftw_plan_dft_2d'>fftw_plan_dft_2d</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftw_plan_dft_3d.html'
+                               title='fftw3-sys::fftw_plan_dft_3d'>fftw_plan_dft_3d</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftw_plan_dft_c2r.html'
+                               title='fftw3-sys::fftw_plan_dft_c2r'>fftw_plan_dft_c2r</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftw_plan_dft_c2r_1d.html'
+                               title='fftw3-sys::fftw_plan_dft_c2r_1d'>fftw_plan_dft_c2r_1d</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftw_plan_dft_c2r_2d.html'
+                               title='fftw3-sys::fftw_plan_dft_c2r_2d'>fftw_plan_dft_c2r_2d</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftw_plan_dft_c2r_3d.html'
+                               title='fftw3-sys::fftw_plan_dft_c2r_3d'>fftw_plan_dft_c2r_3d</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftw_plan_dft_r2c.html'
+                               title='fftw3-sys::fftw_plan_dft_r2c'>fftw_plan_dft_r2c</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftw_plan_dft_r2c_1d.html'
+                               title='fftw3-sys::fftw_plan_dft_r2c_1d'>fftw_plan_dft_r2c_1d</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftw_plan_dft_r2c_2d.html'
+                               title='fftw3-sys::fftw_plan_dft_r2c_2d'>fftw_plan_dft_r2c_2d</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftw_plan_dft_r2c_3d.html'
+                               title='fftw3-sys::fftw_plan_dft_r2c_3d'>fftw_plan_dft_r2c_3d</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftw_plan_guru64_dft.html'
+                               title='fftw3-sys::fftw_plan_guru64_dft'>fftw_plan_guru64_dft</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftw_plan_guru64_dft_c2r.html'
+                               title='fftw3-sys::fftw_plan_guru64_dft_c2r'>fftw_plan_guru64_dft_c2r</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftw_plan_guru64_dft_r2c.html'
+                               title='fftw3-sys::fftw_plan_guru64_dft_r2c'>fftw_plan_guru64_dft_r2c</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftw_plan_guru64_r2r.html'
+                               title='fftw3-sys::fftw_plan_guru64_r2r'>fftw_plan_guru64_r2r</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftw_plan_guru64_split_dft.html'
+                               title='fftw3-sys::fftw_plan_guru64_split_dft'>fftw_plan_guru64_split_dft</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftw_plan_guru64_split_dft_c2r.html'
+                               title='fftw3-sys::fftw_plan_guru64_split_dft_c2r'>fftw_plan_guru64_split_dft_c2r</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftw_plan_guru64_split_dft_r2c.html'
+                               title='fftw3-sys::fftw_plan_guru64_split_dft_r2c'>fftw_plan_guru64_split_dft_r2c</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftw_plan_guru_dft.html'
+                               title='fftw3-sys::fftw_plan_guru_dft'>fftw_plan_guru_dft</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftw_plan_guru_dft_c2r.html'
+                               title='fftw3-sys::fftw_plan_guru_dft_c2r'>fftw_plan_guru_dft_c2r</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftw_plan_guru_dft_r2c.html'
+                               title='fftw3-sys::fftw_plan_guru_dft_r2c'>fftw_plan_guru_dft_r2c</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftw_plan_guru_r2r.html'
+                               title='fftw3-sys::fftw_plan_guru_r2r'>fftw_plan_guru_r2r</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftw_plan_guru_split_dft.html'
+                               title='fftw3-sys::fftw_plan_guru_split_dft'>fftw_plan_guru_split_dft</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftw_plan_guru_split_dft_c2r.html'
+                               title='fftw3-sys::fftw_plan_guru_split_dft_c2r'>fftw_plan_guru_split_dft_c2r</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftw_plan_guru_split_dft_r2c.html'
+                               title='fftw3-sys::fftw_plan_guru_split_dft_r2c'>fftw_plan_guru_split_dft_r2c</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftw_plan_many_dft.html'
+                               title='fftw3-sys::fftw_plan_many_dft'>fftw_plan_many_dft</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftw_plan_many_dft_c2r.html'
+                               title='fftw3-sys::fftw_plan_many_dft_c2r'>fftw_plan_many_dft_c2r</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftw_plan_many_dft_r2c.html'
+                               title='fftw3-sys::fftw_plan_many_dft_r2c'>fftw_plan_many_dft_r2c</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftw_plan_many_r2r.html'
+                               title='fftw3-sys::fftw_plan_many_r2r'>fftw_plan_many_r2r</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftw_plan_r2r.html'
+                               title='fftw3-sys::fftw_plan_r2r'>fftw_plan_r2r</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftw_plan_r2r_1d.html'
+                               title='fftw3-sys::fftw_plan_r2r_1d'>fftw_plan_r2r_1d</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftw_plan_r2r_2d.html'
+                               title='fftw3-sys::fftw_plan_r2r_2d'>fftw_plan_r2r_2d</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftw_plan_r2r_3d.html'
+                               title='fftw3-sys::fftw_plan_r2r_3d'>fftw_plan_r2r_3d</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftw_plan_with_nthreads.html'
+                               title='fftw3-sys::fftw_plan_with_nthreads'>fftw_plan_with_nthreads</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftw_print_plan.html'
+                               title='fftw3-sys::fftw_print_plan'>fftw_print_plan</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftw_set_timelimit.html'
+                               title='fftw3-sys::fftw_set_timelimit'>fftw_set_timelimit</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwf_alloc_complex.html'
+                               title='fftw3-sys::fftwf_alloc_complex'>fftwf_alloc_complex</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwf_alloc_real.html'
+                               title='fftw3-sys::fftwf_alloc_real'>fftwf_alloc_real</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwf_cleanup.html'
+                               title='fftw3-sys::fftwf_cleanup'>fftwf_cleanup</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwf_cleanup_threads.html'
+                               title='fftw3-sys::fftwf_cleanup_threads'>fftwf_cleanup_threads</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwf_cost.html'
+                               title='fftw3-sys::fftwf_cost'>fftwf_cost</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwf_destroy_plan.html'
+                               title='fftw3-sys::fftwf_destroy_plan'>fftwf_destroy_plan</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwf_estimate_cost.html'
+                               title='fftw3-sys::fftwf_estimate_cost'>fftwf_estimate_cost</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwf_execute.html'
+                               title='fftw3-sys::fftwf_execute'>fftwf_execute</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwf_execute_dft.html'
+                               title='fftw3-sys::fftwf_execute_dft'>fftwf_execute_dft</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwf_execute_dft_c2r.html'
+                               title='fftw3-sys::fftwf_execute_dft_c2r'>fftwf_execute_dft_c2r</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwf_execute_dft_r2c.html'
+                               title='fftw3-sys::fftwf_execute_dft_r2c'>fftwf_execute_dft_r2c</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwf_execute_r2r.html'
+                               title='fftw3-sys::fftwf_execute_r2r'>fftwf_execute_r2r</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwf_execute_split_dft.html'
+                               title='fftw3-sys::fftwf_execute_split_dft'>fftwf_execute_split_dft</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwf_execute_split_dft_c2r.html'
+                               title='fftw3-sys::fftwf_execute_split_dft_c2r'>fftwf_execute_split_dft_c2r</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwf_execute_split_dft_r2c.html'
+                               title='fftw3-sys::fftwf_execute_split_dft_r2c'>fftwf_execute_split_dft_r2c</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwf_export_wisdom.html'
+                               title='fftw3-sys::fftwf_export_wisdom'>fftwf_export_wisdom</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwf_export_wisdom_to_file.html'
+                               title='fftw3-sys::fftwf_export_wisdom_to_file'>fftwf_export_wisdom_to_file</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwf_export_wisdom_to_filename.html'
+                               title='fftw3-sys::fftwf_export_wisdom_to_filename'>fftwf_export_wisdom_to_filename</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwf_export_wisdom_to_string.html'
+                               title='fftw3-sys::fftwf_export_wisdom_to_string'>fftwf_export_wisdom_to_string</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwf_flops.html'
+                               title='fftw3-sys::fftwf_flops'>fftwf_flops</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwf_forget_wisdom.html'
+                               title='fftw3-sys::fftwf_forget_wisdom'>fftwf_forget_wisdom</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwf_fprint_plan.html'
+                               title='fftw3-sys::fftwf_fprint_plan'>fftwf_fprint_plan</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwf_free.html'
+                               title='fftw3-sys::fftwf_free'>fftwf_free</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwf_import_system_wisdom.html'
+                               title='fftw3-sys::fftwf_import_system_wisdom'>fftwf_import_system_wisdom</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwf_import_wisdom.html'
+                               title='fftw3-sys::fftwf_import_wisdom'>fftwf_import_wisdom</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwf_import_wisdom_from_file.html'
+                               title='fftw3-sys::fftwf_import_wisdom_from_file'>fftwf_import_wisdom_from_file</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwf_import_wisdom_from_filename.html'
+                               title='fftw3-sys::fftwf_import_wisdom_from_filename'>fftwf_import_wisdom_from_filename</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwf_import_wisdom_from_string.html'
+                               title='fftw3-sys::fftwf_import_wisdom_from_string'>fftwf_import_wisdom_from_string</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwf_init_threads.html'
+                               title='fftw3-sys::fftwf_init_threads'>fftwf_init_threads</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwf_malloc.html'
+                               title='fftw3-sys::fftwf_malloc'>fftwf_malloc</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwf_plan_dft.html'
+                               title='fftw3-sys::fftwf_plan_dft'>fftwf_plan_dft</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwf_plan_dft_1d.html'
+                               title='fftw3-sys::fftwf_plan_dft_1d'>fftwf_plan_dft_1d</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwf_plan_dft_2d.html'
+                               title='fftw3-sys::fftwf_plan_dft_2d'>fftwf_plan_dft_2d</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwf_plan_dft_3d.html'
+                               title='fftw3-sys::fftwf_plan_dft_3d'>fftwf_plan_dft_3d</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwf_plan_dft_c2r.html'
+                               title='fftw3-sys::fftwf_plan_dft_c2r'>fftwf_plan_dft_c2r</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwf_plan_dft_c2r_1d.html'
+                               title='fftw3-sys::fftwf_plan_dft_c2r_1d'>fftwf_plan_dft_c2r_1d</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwf_plan_dft_c2r_2d.html'
+                               title='fftw3-sys::fftwf_plan_dft_c2r_2d'>fftwf_plan_dft_c2r_2d</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwf_plan_dft_c2r_3d.html'
+                               title='fftw3-sys::fftwf_plan_dft_c2r_3d'>fftwf_plan_dft_c2r_3d</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwf_plan_dft_r2c.html'
+                               title='fftw3-sys::fftwf_plan_dft_r2c'>fftwf_plan_dft_r2c</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwf_plan_dft_r2c_1d.html'
+                               title='fftw3-sys::fftwf_plan_dft_r2c_1d'>fftwf_plan_dft_r2c_1d</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwf_plan_dft_r2c_2d.html'
+                               title='fftw3-sys::fftwf_plan_dft_r2c_2d'>fftwf_plan_dft_r2c_2d</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwf_plan_dft_r2c_3d.html'
+                               title='fftw3-sys::fftwf_plan_dft_r2c_3d'>fftwf_plan_dft_r2c_3d</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwf_plan_guru64_dft.html'
+                               title='fftw3-sys::fftwf_plan_guru64_dft'>fftwf_plan_guru64_dft</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwf_plan_guru64_dft_c2r.html'
+                               title='fftw3-sys::fftwf_plan_guru64_dft_c2r'>fftwf_plan_guru64_dft_c2r</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwf_plan_guru64_dft_r2c.html'
+                               title='fftw3-sys::fftwf_plan_guru64_dft_r2c'>fftwf_plan_guru64_dft_r2c</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwf_plan_guru64_r2r.html'
+                               title='fftw3-sys::fftwf_plan_guru64_r2r'>fftwf_plan_guru64_r2r</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwf_plan_guru64_split_dft.html'
+                               title='fftw3-sys::fftwf_plan_guru64_split_dft'>fftwf_plan_guru64_split_dft</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwf_plan_guru64_split_dft_c2r.html'
+                               title='fftw3-sys::fftwf_plan_guru64_split_dft_c2r'>fftwf_plan_guru64_split_dft_c2r</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwf_plan_guru64_split_dft_r2c.html'
+                               title='fftw3-sys::fftwf_plan_guru64_split_dft_r2c'>fftwf_plan_guru64_split_dft_r2c</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwf_plan_guru_dft.html'
+                               title='fftw3-sys::fftwf_plan_guru_dft'>fftwf_plan_guru_dft</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwf_plan_guru_dft_c2r.html'
+                               title='fftw3-sys::fftwf_plan_guru_dft_c2r'>fftwf_plan_guru_dft_c2r</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwf_plan_guru_dft_r2c.html'
+                               title='fftw3-sys::fftwf_plan_guru_dft_r2c'>fftwf_plan_guru_dft_r2c</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwf_plan_guru_r2r.html'
+                               title='fftw3-sys::fftwf_plan_guru_r2r'>fftwf_plan_guru_r2r</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwf_plan_guru_split_dft.html'
+                               title='fftw3-sys::fftwf_plan_guru_split_dft'>fftwf_plan_guru_split_dft</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwf_plan_guru_split_dft_c2r.html'
+                               title='fftw3-sys::fftwf_plan_guru_split_dft_c2r'>fftwf_plan_guru_split_dft_c2r</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwf_plan_guru_split_dft_r2c.html'
+                               title='fftw3-sys::fftwf_plan_guru_split_dft_r2c'>fftwf_plan_guru_split_dft_r2c</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwf_plan_many_dft.html'
+                               title='fftw3-sys::fftwf_plan_many_dft'>fftwf_plan_many_dft</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwf_plan_many_dft_c2r.html'
+                               title='fftw3-sys::fftwf_plan_many_dft_c2r'>fftwf_plan_many_dft_c2r</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwf_plan_many_dft_r2c.html'
+                               title='fftw3-sys::fftwf_plan_many_dft_r2c'>fftwf_plan_many_dft_r2c</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwf_plan_many_r2r.html'
+                               title='fftw3-sys::fftwf_plan_many_r2r'>fftwf_plan_many_r2r</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwf_plan_r2r.html'
+                               title='fftw3-sys::fftwf_plan_r2r'>fftwf_plan_r2r</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwf_plan_r2r_1d.html'
+                               title='fftw3-sys::fftwf_plan_r2r_1d'>fftwf_plan_r2r_1d</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwf_plan_r2r_2d.html'
+                               title='fftw3-sys::fftwf_plan_r2r_2d'>fftwf_plan_r2r_2d</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwf_plan_r2r_3d.html'
+                               title='fftw3-sys::fftwf_plan_r2r_3d'>fftwf_plan_r2r_3d</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwf_plan_with_nthreads.html'
+                               title='fftw3-sys::fftwf_plan_with_nthreads'>fftwf_plan_with_nthreads</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwf_print_plan.html'
+                               title='fftw3-sys::fftwf_print_plan'>fftwf_print_plan</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwf_set_timelimit.html'
+                               title='fftw3-sys::fftwf_set_timelimit'>fftwf_set_timelimit</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwl_alloc_complex.html'
+                               title='fftw3-sys::fftwl_alloc_complex'>fftwl_alloc_complex</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwl_alloc_real.html'
+                               title='fftw3-sys::fftwl_alloc_real'>fftwl_alloc_real</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwl_cleanup.html'
+                               title='fftw3-sys::fftwl_cleanup'>fftwl_cleanup</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwl_cleanup_threads.html'
+                               title='fftw3-sys::fftwl_cleanup_threads'>fftwl_cleanup_threads</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwl_cost.html'
+                               title='fftw3-sys::fftwl_cost'>fftwl_cost</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwl_destroy_plan.html'
+                               title='fftw3-sys::fftwl_destroy_plan'>fftwl_destroy_plan</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwl_estimate_cost.html'
+                               title='fftw3-sys::fftwl_estimate_cost'>fftwl_estimate_cost</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwl_execute.html'
+                               title='fftw3-sys::fftwl_execute'>fftwl_execute</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwl_execute_dft.html'
+                               title='fftw3-sys::fftwl_execute_dft'>fftwl_execute_dft</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwl_execute_dft_c2r.html'
+                               title='fftw3-sys::fftwl_execute_dft_c2r'>fftwl_execute_dft_c2r</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwl_execute_dft_r2c.html'
+                               title='fftw3-sys::fftwl_execute_dft_r2c'>fftwl_execute_dft_r2c</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwl_execute_r2r.html'
+                               title='fftw3-sys::fftwl_execute_r2r'>fftwl_execute_r2r</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwl_execute_split_dft.html'
+                               title='fftw3-sys::fftwl_execute_split_dft'>fftwl_execute_split_dft</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwl_execute_split_dft_c2r.html'
+                               title='fftw3-sys::fftwl_execute_split_dft_c2r'>fftwl_execute_split_dft_c2r</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwl_execute_split_dft_r2c.html'
+                               title='fftw3-sys::fftwl_execute_split_dft_r2c'>fftwl_execute_split_dft_r2c</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwl_export_wisdom.html'
+                               title='fftw3-sys::fftwl_export_wisdom'>fftwl_export_wisdom</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwl_export_wisdom_to_file.html'
+                               title='fftw3-sys::fftwl_export_wisdom_to_file'>fftwl_export_wisdom_to_file</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwl_export_wisdom_to_filename.html'
+                               title='fftw3-sys::fftwl_export_wisdom_to_filename'>fftwl_export_wisdom_to_filename</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwl_export_wisdom_to_string.html'
+                               title='fftw3-sys::fftwl_export_wisdom_to_string'>fftwl_export_wisdom_to_string</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwl_flops.html'
+                               title='fftw3-sys::fftwl_flops'>fftwl_flops</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwl_forget_wisdom.html'
+                               title='fftw3-sys::fftwl_forget_wisdom'>fftwl_forget_wisdom</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwl_fprint_plan.html'
+                               title='fftw3-sys::fftwl_fprint_plan'>fftwl_fprint_plan</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwl_free.html'
+                               title='fftw3-sys::fftwl_free'>fftwl_free</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwl_import_system_wisdom.html'
+                               title='fftw3-sys::fftwl_import_system_wisdom'>fftwl_import_system_wisdom</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwl_import_wisdom.html'
+                               title='fftw3-sys::fftwl_import_wisdom'>fftwl_import_wisdom</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwl_import_wisdom_from_file.html'
+                               title='fftw3-sys::fftwl_import_wisdom_from_file'>fftwl_import_wisdom_from_file</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwl_import_wisdom_from_filename.html'
+                               title='fftw3-sys::fftwl_import_wisdom_from_filename'>fftwl_import_wisdom_from_filename</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwl_import_wisdom_from_string.html'
+                               title='fftw3-sys::fftwl_import_wisdom_from_string'>fftwl_import_wisdom_from_string</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwl_init_threads.html'
+                               title='fftw3-sys::fftwl_init_threads'>fftwl_init_threads</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwl_malloc.html'
+                               title='fftw3-sys::fftwl_malloc'>fftwl_malloc</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwl_plan_dft.html'
+                               title='fftw3-sys::fftwl_plan_dft'>fftwl_plan_dft</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwl_plan_dft_1d.html'
+                               title='fftw3-sys::fftwl_plan_dft_1d'>fftwl_plan_dft_1d</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwl_plan_dft_2d.html'
+                               title='fftw3-sys::fftwl_plan_dft_2d'>fftwl_plan_dft_2d</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwl_plan_dft_3d.html'
+                               title='fftw3-sys::fftwl_plan_dft_3d'>fftwl_plan_dft_3d</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwl_plan_dft_c2r.html'
+                               title='fftw3-sys::fftwl_plan_dft_c2r'>fftwl_plan_dft_c2r</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwl_plan_dft_c2r_1d.html'
+                               title='fftw3-sys::fftwl_plan_dft_c2r_1d'>fftwl_plan_dft_c2r_1d</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwl_plan_dft_c2r_2d.html'
+                               title='fftw3-sys::fftwl_plan_dft_c2r_2d'>fftwl_plan_dft_c2r_2d</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwl_plan_dft_c2r_3d.html'
+                               title='fftw3-sys::fftwl_plan_dft_c2r_3d'>fftwl_plan_dft_c2r_3d</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwl_plan_dft_r2c.html'
+                               title='fftw3-sys::fftwl_plan_dft_r2c'>fftwl_plan_dft_r2c</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwl_plan_dft_r2c_1d.html'
+                               title='fftw3-sys::fftwl_plan_dft_r2c_1d'>fftwl_plan_dft_r2c_1d</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwl_plan_dft_r2c_2d.html'
+                               title='fftw3-sys::fftwl_plan_dft_r2c_2d'>fftwl_plan_dft_r2c_2d</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwl_plan_dft_r2c_3d.html'
+                               title='fftw3-sys::fftwl_plan_dft_r2c_3d'>fftwl_plan_dft_r2c_3d</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwl_plan_guru64_dft.html'
+                               title='fftw3-sys::fftwl_plan_guru64_dft'>fftwl_plan_guru64_dft</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwl_plan_guru64_dft_c2r.html'
+                               title='fftw3-sys::fftwl_plan_guru64_dft_c2r'>fftwl_plan_guru64_dft_c2r</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwl_plan_guru64_dft_r2c.html'
+                               title='fftw3-sys::fftwl_plan_guru64_dft_r2c'>fftwl_plan_guru64_dft_r2c</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwl_plan_guru64_r2r.html'
+                               title='fftw3-sys::fftwl_plan_guru64_r2r'>fftwl_plan_guru64_r2r</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwl_plan_guru64_split_dft.html'
+                               title='fftw3-sys::fftwl_plan_guru64_split_dft'>fftwl_plan_guru64_split_dft</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwl_plan_guru64_split_dft_c2r.html'
+                               title='fftw3-sys::fftwl_plan_guru64_split_dft_c2r'>fftwl_plan_guru64_split_dft_c2r</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwl_plan_guru64_split_dft_r2c.html'
+                               title='fftw3-sys::fftwl_plan_guru64_split_dft_r2c'>fftwl_plan_guru64_split_dft_r2c</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwl_plan_guru_dft.html'
+                               title='fftw3-sys::fftwl_plan_guru_dft'>fftwl_plan_guru_dft</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwl_plan_guru_dft_c2r.html'
+                               title='fftw3-sys::fftwl_plan_guru_dft_c2r'>fftwl_plan_guru_dft_c2r</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwl_plan_guru_dft_r2c.html'
+                               title='fftw3-sys::fftwl_plan_guru_dft_r2c'>fftwl_plan_guru_dft_r2c</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwl_plan_guru_r2r.html'
+                               title='fftw3-sys::fftwl_plan_guru_r2r'>fftwl_plan_guru_r2r</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwl_plan_guru_split_dft.html'
+                               title='fftw3-sys::fftwl_plan_guru_split_dft'>fftwl_plan_guru_split_dft</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwl_plan_guru_split_dft_c2r.html'
+                               title='fftw3-sys::fftwl_plan_guru_split_dft_c2r'>fftwl_plan_guru_split_dft_c2r</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwl_plan_guru_split_dft_r2c.html'
+                               title='fftw3-sys::fftwl_plan_guru_split_dft_r2c'>fftwl_plan_guru_split_dft_r2c</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwl_plan_many_dft.html'
+                               title='fftw3-sys::fftwl_plan_many_dft'>fftwl_plan_many_dft</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwl_plan_many_dft_c2r.html'
+                               title='fftw3-sys::fftwl_plan_many_dft_c2r'>fftwl_plan_many_dft_c2r</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwl_plan_many_dft_r2c.html'
+                               title='fftw3-sys::fftwl_plan_many_dft_r2c'>fftwl_plan_many_dft_r2c</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwl_plan_many_r2r.html'
+                               title='fftw3-sys::fftwl_plan_many_r2r'>fftwl_plan_many_r2r</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwl_plan_r2r.html'
+                               title='fftw3-sys::fftwl_plan_r2r'>fftwl_plan_r2r</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwl_plan_r2r_1d.html'
+                               title='fftw3-sys::fftwl_plan_r2r_1d'>fftwl_plan_r2r_1d</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwl_plan_r2r_2d.html'
+                               title='fftw3-sys::fftwl_plan_r2r_2d'>fftwl_plan_r2r_2d</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwl_plan_r2r_3d.html'
+                               title='fftw3-sys::fftwl_plan_r2r_3d'>fftwl_plan_r2r_3d</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwl_plan_with_nthreads.html'
+                               title='fftw3-sys::fftwl_plan_with_nthreads'>fftwl_plan_with_nthreads</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwl_print_plan.html'
+                               title='fftw3-sys::fftwl_print_plan'>fftwl_print_plan</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffi' href='ffi.fftwl_set_timelimit.html'
+                               title='fftw3-sys::fftwl_set_timelimit'>fftwl_set_timelimit</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                </table><h2 id='ffi-statics' class='section-header'><a href="#ffi-statics">Foreign Statics</a></h2>
+<table>
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffs' href='ffs.fftw_cc.html'
+                               title='fftw3-sys::fftw_cc'>fftw_cc</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffs' href='ffs.fftw_codelet_optim.html'
+                               title='fftw3-sys::fftw_codelet_optim'>fftw_codelet_optim</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffs' href='ffs.fftw_version.html'
+                               title='fftw3-sys::fftw_version'>fftw_version</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffs' href='ffs.fftwf_cc.html'
+                               title='fftw3-sys::fftwf_cc'>fftwf_cc</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffs' href='ffs.fftwf_codelet_optim.html'
+                               title='fftw3-sys::fftwf_codelet_optim'>fftwf_codelet_optim</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffs' href='ffs.fftwf_version.html'
+                               title='fftw3-sys::fftwf_version'>fftwf_version</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffs' href='ffs.fftwl_cc.html'
+                               title='fftw3-sys::fftwl_cc'>fftwl_cc</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffs' href='ffs.fftwl_codelet_optim.html'
+                               title='fftw3-sys::fftwl_codelet_optim'>fftwl_codelet_optim</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='ffs' href='ffs.fftwl_version.html'
+                               title='fftw3-sys::fftwl_version'>fftwl_version</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                </table><h2 id='types' class='section-header'><a href="#types">Type Definitions</a></h2>
+<table>
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='type' href='type.Enum_fftw_r2r_kind_do_not_use_me.html'
+                               title='fftw3-sys::Enum_fftw_r2r_kind_do_not_use_me'>Enum_fftw_r2r_kind_do_not_use_me</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='type' href='type.Struct_fftw_plan_s.html'
+                               title='fftw3-sys::Struct_fftw_plan_s'>Struct_fftw_plan_s</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='type' href='type.Struct_fftwf_plan_s.html'
+                               title='fftw3-sys::Struct_fftwf_plan_s'>Struct_fftwf_plan_s</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='type' href='type.Struct_fftwl_plan_s.html'
+                               title='fftw3-sys::Struct_fftwl_plan_s'>Struct_fftwl_plan_s</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='type' href='type.fftw_complex.html'
+                               title='fftw3-sys::fftw_complex'>fftw_complex</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='type' href='type.fftw_iodim.html'
+                               title='fftw3-sys::fftw_iodim'>fftw_iodim</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='type' href='type.fftw_iodim64.html'
+                               title='fftw3-sys::fftw_iodim64'>fftw_iodim64</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='type' href='type.fftw_plan.html'
+                               title='fftw3-sys::fftw_plan'>fftw_plan</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='type' href='type.fftw_r2r_kind.html'
+                               title='fftw3-sys::fftw_r2r_kind'>fftw_r2r_kind</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='type' href='type.fftw_read_char_func.html'
+                               title='fftw3-sys::fftw_read_char_func'>fftw_read_char_func</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='type' href='type.fftw_read_char_func_do_not_use_me.html'
+                               title='fftw3-sys::fftw_read_char_func_do_not_use_me'>fftw_read_char_func_do_not_use_me</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='type' href='type.fftw_write_char_func.html'
+                               title='fftw3-sys::fftw_write_char_func'>fftw_write_char_func</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='type' href='type.fftw_write_char_func_do_not_use_me.html'
+                               title='fftw3-sys::fftw_write_char_func_do_not_use_me'>fftw_write_char_func_do_not_use_me</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='type' href='type.fftwf_complex.html'
+                               title='fftw3-sys::fftwf_complex'>fftwf_complex</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='type' href='type.fftwf_iodim.html'
+                               title='fftw3-sys::fftwf_iodim'>fftwf_iodim</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='type' href='type.fftwf_iodim64.html'
+                               title='fftw3-sys::fftwf_iodim64'>fftwf_iodim64</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='type' href='type.fftwf_plan.html'
+                               title='fftw3-sys::fftwf_plan'>fftwf_plan</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='type' href='type.fftwf_r2r_kind.html'
+                               title='fftw3-sys::fftwf_r2r_kind'>fftwf_r2r_kind</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='type' href='type.fftwf_read_char_func.html'
+                               title='fftw3-sys::fftwf_read_char_func'>fftwf_read_char_func</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='type' href='type.fftwf_write_char_func.html'
+                               title='fftw3-sys::fftwf_write_char_func'>fftwf_write_char_func</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='type' href='type.fftwl_complex.html'
+                               title='fftw3-sys::fftwl_complex'>fftwl_complex</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='type' href='type.fftwl_iodim.html'
+                               title='fftw3-sys::fftwl_iodim'>fftwl_iodim</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='type' href='type.fftwl_iodim64.html'
+                               title='fftw3-sys::fftwl_iodim64'>fftwl_iodim64</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='type' href='type.fftwl_plan.html'
+                               title='fftw3-sys::fftwl_plan'>fftwl_plan</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='type' href='type.fftwl_r2r_kind.html'
+                               title='fftw3-sys::fftwl_r2r_kind'>fftwl_r2r_kind</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='type' href='type.fftwl_read_char_func.html'
+                               title='fftw3-sys::fftwl_read_char_func'>fftwl_read_char_func</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='type' href='type.fftwl_write_char_func.html'
+                               title='fftw3-sys::fftwl_write_char_func'>fftwl_write_char_func</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                </table></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <div id="help" class="hidden">
+        <div class="shortcuts">
+            <h1>Keyboard shortcuts</h1>
+            <dl>
+                <dt>?</dt>
+                <dd>Show this help dialog</dd>
+                <dt>S</dt>
+                <dd>Focus the search field</dd>
+                <dt>&larrb;</dt>
+                <dd>Move up in search results</dd>
+                <dt>&rarrb;</dt>
+                <dd>Move down in search results</dd>
+                <dt>&#9166;</dt>
+                <dd>Go to active search result</dd>
+            </dl>
+        </div>
+        <div class="infos">
+            <h1>Search tricks</h1>
+            <p>
+                Prefix searches with a type followed by a colon (e.g.
+                <code>fn:</code>) to restrict the search to a given type.
+            </p>
+            <p>
+                Accepted types are: <code>fn</code>, <code>mod</code>,
+                <code>struct</code>, <code>enum</code>,
+                <code>trait</code>, <code>typedef</code> (or
+                <code>tdef</code>).
+            </p>
+        </div>
+    </div>
+
+    
+
+    <script>
+        window.rootPath = "../";
+        window.currentCrate = "fftw3-sys";
+        window.playgroundUrl = "";
+    </script>
+    <script src="../jquery.js"></script>
+    <script src="../main.js"></script>
+    
+    <script async src="../search-index.js"></script>
+</body>
+</html>

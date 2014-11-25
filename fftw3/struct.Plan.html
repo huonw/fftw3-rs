@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `Plan` struct in crate `fftw3`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, Plan">
+
+    <title>fftw3::Plan - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../main.css">
+
+    
+    
+</head>
+<body class="rustdoc">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <section class="sidebar">
+        
+        <p class='location'><a href='index.html'>fftw3</a></p><div class='block mod'><h2>Modules</h2><a class='mod ' href='builder/index.html'>builder</a><a class='mod ' href='builder2/index.html'>builder2</a><a class='mod ' href='lock/index.html'>lock</a><a class='mod ' href='traits/index.html'>traits</a><a class='mod ' href='wisdom/index.html'>wisdom</a></div><div class='block struct'><h2>Structs</h2><a class='struct ' href='struct.FftwVec.html'>FftwVec</a><a class='struct current' href='struct.Plan.html'>Plan</a><a class='struct ' href='struct.RawPlan.html'>RawPlan</a></div><div class='block macro'><h2>Macros</h2><a class='macro ' href='macro.wisdom!.html'>wisdom!</a></div>
+    </section>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press 'S' to search, '?' for more options..."
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content struct">
+<h1 class='fqn'><span class='in-band'>Struct <a href='index.html'>fftw3</a>::<wbr><a class='struct' href=''>Plan</a><wbr></span><span class='out-of-band'><span id='render-detail'>
+            <a id="collapse-all" href="#">[-]
+            </a>&nbsp;<a id="expand-all" href="#">[+]</a>
+        </span><a id='src-113' href='../src/fftw3/home/huon/projects/fftw-rs/src/plan.rs.html#49-53'>[src]</a></span></h1>
+<pre class='rust struct'>pub struct Plan&lt;In, Out&gt; {
+    // some fields omitted
+}</pre><div class='docblock'><p>The structure representing the computation of an FFT.</p>
+</div><h2 id='methods'>Methods</h2><h3 class='impl'><a class='stability Unmarked' title='No stability level'></a><code>impl&lt;In, Out&gt; <a class='struct' href='../fftw3/struct.Plan.html' title='fftw3::Plan'>Plan</a>&lt;In, Out&gt;</code></h3><div class='impl-methods'><h4 id='method.take_out' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.take_out' class='fnname'>take_out</a>(self) -&gt; Out</code></h4>
+<h4 id='method.take_in' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.take_in' class='fnname'>take_in</a>(self) -&gt; In</code></h4>
+</div><h3 class='impl'><a class='stability Unmarked' title='No stability level'></a><code>impl&lt;I, In: <a class='trait' href='http://doc.rust-lang.org/nightly/core/ops/trait.DerefMut.html' title='core::ops::DerefMut'>DerefMut</a>&lt;<a href='http://doc.rust-lang.org/nightly/std/primitive.slice.html'>[I]</a>&gt;, Out&gt; <a class='struct' href='../fftw3/struct.Plan.html' title='fftw3::Plan'>Plan</a>&lt;In, Out&gt;</code></h3><div class='impl-methods'><h4 id='method.input' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.input' class='fnname'>input</a>&lt;'a&gt;(&amp;'a mut self) -&gt; <a href='http://doc.rust-lang.org/nightly/std/primitive.slice.html'>&amp;'a mut [I]</a></code></h4>
+</div><h3 class='impl'><a class='stability Unmarked' title='No stability level'></a><code>impl&lt;In, O, Out: <a class='trait' href='http://doc.rust-lang.org/nightly/core/ops/trait.DerefMut.html' title='core::ops::DerefMut'>DerefMut</a>&lt;<a href='http://doc.rust-lang.org/nightly/std/primitive.slice.html'>[O]</a>&gt;&gt; <a class='struct' href='../fftw3/struct.Plan.html' title='fftw3::Plan'>Plan</a>&lt;In, Out&gt;</code></h3><div class='impl-methods'><h4 id='method.execute' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.execute' class='fnname'>execute</a>&lt;'a&gt;(&amp;'a mut self) -&gt; <a href='http://doc.rust-lang.org/nightly/std/primitive.slice.html'>&amp;'a mut [O]</a></code></h4>
+</div><h3 class='impl'><a class='stability Unmarked' title='No stability level'></a><code>impl&lt;In: <a class='trait' href='http://doc.rust-lang.org/nightly/core/ops/trait.DerefMut.html' title='core::ops::DerefMut'>DerefMut</a>&lt;<a href='http://doc.rust-lang.org/nightly/std/primitive.slice.html'>[<a href='http://doc.rust-lang.org/nightly/std/primitive.f64.html'>f64</a>]</a>&gt;, Out: <a class='trait' href='http://doc.rust-lang.org/nightly/core/ops/trait.DerefMut.html' title='core::ops::DerefMut'>DerefMut</a>&lt;<a href='http://doc.rust-lang.org/nightly/std/primitive.slice.html'>[<a class='type' href='../num/complex/type.Complex64.html' title='num::complex::Complex64'>Complex64</a>]</a>&gt;&gt; <a class='struct' href='../fftw3/struct.Plan.html' title='fftw3::Plan'>Plan</a>&lt;In, Out&gt;</code></h3><div class='impl-methods'><h4 id='method.r2c_1d_prealloc' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.r2c_1d_prealloc' class='fnname'>r2c_1d_prealloc</a>(in_: In, out: Out) -&gt; <a class='struct' href='../fftw3/struct.Plan.html' title='fftw3::Plan'>Plan</a>&lt;In, Out&gt;</code></h4>
+</div><h3 class='impl'><a class='stability Unmarked' title='No stability level'></a><code>impl <a class='struct' href='../fftw3/struct.Plan.html' title='fftw3::Plan'>Plan</a>&lt;<a class='struct' href='../fftw3/struct.FftwVec.html' title='fftw3::FftwVec'>FftwVec</a>&lt;<a href='http://doc.rust-lang.org/nightly/std/primitive.f64.html'>f64</a>&gt;, <a class='struct' href='../fftw3/struct.FftwVec.html' title='fftw3::FftwVec'>FftwVec</a>&lt;<a class='type' href='../num/complex/type.Complex64.html' title='num::complex::Complex64'>Complex64</a>&gt;&gt;</code></h3><div class='impl-methods'><h4 id='method.r2c_1d' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.r2c_1d' class='fnname'>r2c_1d</a>(n: <a href='http://doc.rust-lang.org/nightly/std/primitive.uint.html'>uint</a>) -&gt; <a class='struct' href='../fftw3/struct.Plan.html' title='fftw3::Plan'>Plan</a>&lt;<a class='struct' href='../fftw3/struct.FftwVec.html' title='fftw3::FftwVec'>FftwVec</a>&lt;<a href='http://doc.rust-lang.org/nightly/std/primitive.f64.html'>f64</a>&gt;, <a class='struct' href='../fftw3/struct.FftwVec.html' title='fftw3::FftwVec'>FftwVec</a>&lt;<a class='type' href='../num/complex/type.Complex64.html' title='num::complex::Complex64'>Complex64</a>&gt;&gt;</code></h4>
+</div><h3 class='impl'><a class='stability Unmarked' title='No stability level'></a><code>impl&lt;In: <a class='trait' href='http://doc.rust-lang.org/nightly/core/ops/trait.DerefMut.html' title='core::ops::DerefMut'>DerefMut</a>&lt;<a href='http://doc.rust-lang.org/nightly/std/primitive.slice.html'>[<a class='type' href='../num/complex/type.Complex64.html' title='num::complex::Complex64'>Complex64</a>]</a>&gt;, Out: <a class='trait' href='http://doc.rust-lang.org/nightly/core/ops/trait.DerefMut.html' title='core::ops::DerefMut'>DerefMut</a>&lt;<a href='http://doc.rust-lang.org/nightly/std/primitive.slice.html'>[<a href='http://doc.rust-lang.org/nightly/std/primitive.f64.html'>f64</a>]</a>&gt;&gt; <a class='struct' href='../fftw3/struct.Plan.html' title='fftw3::Plan'>Plan</a>&lt;In, Out&gt;</code></h3><div class='impl-methods'><h4 id='method.c2r_1d_prealloc' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.c2r_1d_prealloc' class='fnname'>c2r_1d_prealloc</a>(in_: In, out: Out) -&gt; <a class='struct' href='../fftw3/struct.Plan.html' title='fftw3::Plan'>Plan</a>&lt;In, Out&gt;</code></h4>
+</div><h3 class='impl'><a class='stability Unmarked' title='No stability level'></a><code>impl <a class='struct' href='../fftw3/struct.Plan.html' title='fftw3::Plan'>Plan</a>&lt;<a class='struct' href='../fftw3/struct.FftwVec.html' title='fftw3::FftwVec'>FftwVec</a>&lt;<a class='type' href='../num/complex/type.Complex64.html' title='num::complex::Complex64'>Complex64</a>&gt;, <a class='struct' href='../fftw3/struct.FftwVec.html' title='fftw3::FftwVec'>FftwVec</a>&lt;<a href='http://doc.rust-lang.org/nightly/std/primitive.f64.html'>f64</a>&gt;&gt;</code></h3><div class='impl-methods'><h4 id='method.c2r_1d' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.c2r_1d' class='fnname'>c2r_1d</a>(n: <a href='http://doc.rust-lang.org/nightly/std/primitive.uint.html'>uint</a>) -&gt; <a class='struct' href='../fftw3/struct.Plan.html' title='fftw3::Plan'>Plan</a>&lt;<a class='struct' href='../fftw3/struct.FftwVec.html' title='fftw3::FftwVec'>FftwVec</a>&lt;<a class='type' href='../num/complex/type.Complex64.html' title='num::complex::Complex64'>Complex64</a>&gt;, <a class='struct' href='../fftw3/struct.FftwVec.html' title='fftw3::FftwVec'>FftwVec</a>&lt;<a href='http://doc.rust-lang.org/nightly/std/primitive.f64.html'>f64</a>&gt;&gt;</code></h4>
+</div><h3 class='impl'><a class='stability Unmarked' title='No stability level'></a><code>impl&lt;In: <a class='trait' href='http://doc.rust-lang.org/nightly/core/ops/trait.DerefMut.html' title='core::ops::DerefMut'>DerefMut</a>&lt;<a href='http://doc.rust-lang.org/nightly/std/primitive.slice.html'>[<a class='type' href='../num/complex/type.Complex64.html' title='num::complex::Complex64'>Complex64</a>]</a>&gt;, Out: <a class='trait' href='http://doc.rust-lang.org/nightly/core/ops/trait.DerefMut.html' title='core::ops::DerefMut'>DerefMut</a>&lt;<a href='http://doc.rust-lang.org/nightly/std/primitive.slice.html'>[<a class='type' href='../num/complex/type.Complex64.html' title='num::complex::Complex64'>Complex64</a>]</a>&gt;&gt; <a class='struct' href='../fftw3/struct.Plan.html' title='fftw3::Plan'>Plan</a>&lt;In, Out&gt;</code></h3><div class='impl-methods'><h4 id='method.c2c_1d_prealloc' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.c2c_1d_prealloc' class='fnname'>c2c_1d_prealloc</a>(in_: In, out: Out) -&gt; <a class='struct' href='../fftw3/struct.Plan.html' title='fftw3::Plan'>Plan</a>&lt;In, Out&gt;</code></h4>
+</div><h3 class='impl'><a class='stability Unmarked' title='No stability level'></a><code>impl <a class='struct' href='../fftw3/struct.Plan.html' title='fftw3::Plan'>Plan</a>&lt;<a class='struct' href='../fftw3/struct.FftwVec.html' title='fftw3::FftwVec'>FftwVec</a>&lt;<a class='type' href='../num/complex/type.Complex64.html' title='num::complex::Complex64'>Complex64</a>&gt;, <a class='struct' href='../fftw3/struct.FftwVec.html' title='fftw3::FftwVec'>FftwVec</a>&lt;<a class='type' href='../num/complex/type.Complex64.html' title='num::complex::Complex64'>Complex64</a>&gt;&gt;</code></h3><div class='impl-methods'><h4 id='method.c2c_1d' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.c2c_1d' class='fnname'>c2c_1d</a>(n: <a href='http://doc.rust-lang.org/nightly/std/primitive.uint.html'>uint</a>) -&gt; <a class='struct' href='../fftw3/struct.Plan.html' title='fftw3::Plan'>Plan</a>&lt;<a class='struct' href='../fftw3/struct.FftwVec.html' title='fftw3::FftwVec'>FftwVec</a>&lt;<a class='type' href='../num/complex/type.Complex64.html' title='num::complex::Complex64'>Complex64</a>&gt;, <a class='struct' href='../fftw3/struct.FftwVec.html' title='fftw3::FftwVec'>FftwVec</a>&lt;<a class='type' href='../num/complex/type.Complex64.html' title='num::complex::Complex64'>Complex64</a>&gt;&gt;</code></h4>
+</div></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <div id="help" class="hidden">
+        <div class="shortcuts">
+            <h1>Keyboard shortcuts</h1>
+            <dl>
+                <dt>?</dt>
+                <dd>Show this help dialog</dd>
+                <dt>S</dt>
+                <dd>Focus the search field</dd>
+                <dt>&larrb;</dt>
+                <dd>Move up in search results</dd>
+                <dt>&rarrb;</dt>
+                <dd>Move down in search results</dd>
+                <dt>&#9166;</dt>
+                <dd>Go to active search result</dd>
+            </dl>
+        </div>
+        <div class="infos">
+            <h1>Search tricks</h1>
+            <p>
+                Prefix searches with a type followed by a colon (e.g.
+                <code>fn:</code>) to restrict the search to a given type.
+            </p>
+            <p>
+                Accepted types are: <code>fn</code>, <code>mod</code>,
+                <code>struct</code>, <code>enum</code>,
+                <code>trait</code>, <code>typedef</code> (or
+                <code>tdef</code>).
+            </p>
+        </div>
+    </div>
+
+    
+
+    <script>
+        window.rootPath = "../";
+        window.currentCrate = "fftw3";
+        window.playgroundUrl = "";
+    </script>
+    <script src="../jquery.js"></script>
+    <script src="../main.js"></script>
+    
+    <script async src="../search-index.js"></script>
+</body>
+</html>

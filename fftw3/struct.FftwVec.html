@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `FftwVec` struct in crate `fftw3`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, FftwVec">
+
+    <title>fftw3::FftwVec - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../main.css">
+
+    
+    
+</head>
+<body class="rustdoc">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <section class="sidebar">
+        
+        <p class='location'><a href='index.html'>fftw3</a></p><div class='block mod'><h2>Modules</h2><a class='mod ' href='builder/index.html'>builder</a><a class='mod ' href='builder2/index.html'>builder2</a><a class='mod ' href='lock/index.html'>lock</a><a class='mod ' href='traits/index.html'>traits</a><a class='mod ' href='wisdom/index.html'>wisdom</a></div><div class='block struct'><h2>Structs</h2><a class='struct current' href='struct.FftwVec.html'>FftwVec</a><a class='struct ' href='struct.Plan.html'>Plan</a><a class='struct ' href='struct.RawPlan.html'>RawPlan</a></div><div class='block macro'><h2>Macros</h2><a class='macro ' href='macro.wisdom!.html'>wisdom!</a></div>
+    </section>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press 'S' to search, '?' for more options..."
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content struct">
+<h1 class='fqn'><span class='in-band'>Struct <a href='index.html'>fftw3</a>::<wbr><a class='struct' href=''>FftwVec</a><wbr></span><span class='out-of-band'><span id='render-detail'>
+            <a id="collapse-all" href="#">[-]
+            </a>&nbsp;<a id="expand-all" href="#">[+]</a>
+        </span><a id='src-1065' href='../src/fftw3/home/huon/projects/fftw-rs/src/mem.rs.html#48-50'>[src]</a></span></h1>
+<pre class='rust struct'>pub struct FftwVec&lt;T&gt; {
+    // some fields omitted
+}</pre><div class='docblock'><p>A non-resizable vector allocated using FFTWs allocator.</p>
+
+<p>This implements <code>Deref&lt;[T]&gt;</code> and <code>DerefMut&lt;[T]&gt;</code> and so can be
+used nearly-interchangeably with slices.</p>
+</div><h2 id='methods'>Methods</h2><h3 class='impl'><a class='stability Unmarked' title='No stability level'></a><code>impl&lt;T&gt; <a class='struct' href='../fftw3/struct.FftwVec.html' title='fftw3::FftwVec'>FftwVec</a>&lt;T&gt;</code></h3><div class='impl-methods'><h4 id='method.uninit' class='method'><a class='stability Unmarked' title='No stability level'></a><code>unsafe fn <a href='#method.uninit' class='fnname'>uninit</a>(n: <a href='http://doc.rust-lang.org/nightly/std/primitive.uint.html'>uint</a>) -&gt; <a class='struct' href='../fftw3/struct.FftwVec.html' title='fftw3::FftwVec'>FftwVec</a>&lt;T&gt;</code></h4>
+<div class='docblock'><p>Allocate a <code>FftwVec</code> without initialising the elements at all.</p>
+</div></div><h3 class='impl'><a class='stability Unmarked' title='No stability level'></a><code>impl&lt;T: <a class='trait' href='../fftw3/traits/trait.Zero.html' title='fftw3::traits::Zero'>Zero</a>&gt; <a class='struct' href='../fftw3/struct.FftwVec.html' title='fftw3::FftwVec'>FftwVec</a>&lt;T&gt;</code></h3><div class='impl-methods'><h4 id='method.zeros' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.zeros' class='fnname'>zeros</a>(n: <a href='http://doc.rust-lang.org/nightly/std/primitive.uint.html'>uint</a>) -&gt; <a class='struct' href='../fftw3/struct.FftwVec.html' title='fftw3::FftwVec'>FftwVec</a>&lt;T&gt;</code></h4>
+<div class='docblock'><p>Allocate a <code>FftwVec</code> of length <code>n</code> containing zeros.</p>
+</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><a class='stability Unmarked' title='No stability level'></a><code>impl&lt;T&gt; <a class='trait' href='http://doc.rust-lang.org/nightly/core/ops/trait.Deref.html' title='core::ops::Deref'>Deref</a>&lt;<a href='http://doc.rust-lang.org/nightly/std/primitive.slice.html'>[T]</a>&gt; for <a class='struct' href='../fftw3/struct.FftwVec.html' title='fftw3::FftwVec'>FftwVec</a>&lt;T&gt;</code></h3><div class='impl-methods'><h4 id='method.deref' class='method'><a class='stability Experimental' title='Experimental'></a><code>fn <a href='#method.deref' class='fnname'>deref</a>(&amp;self) -&gt; <a href='http://doc.rust-lang.org/nightly/std/primitive.slice.html'>&amp;[T]</a></code></h4>
+</div><h3 class='impl'><a class='stability Unmarked' title='No stability level'></a><code>impl&lt;T&gt; <a class='trait' href='http://doc.rust-lang.org/nightly/core/ops/trait.DerefMut.html' title='core::ops::DerefMut'>DerefMut</a>&lt;<a href='http://doc.rust-lang.org/nightly/std/primitive.slice.html'>[T]</a>&gt; for <a class='struct' href='../fftw3/struct.FftwVec.html' title='fftw3::FftwVec'>FftwVec</a>&lt;T&gt;</code></h3><div class='impl-methods'><h4 id='method.deref_mut' class='method'><a class='stability Experimental' title='Experimental'></a><code>fn <a href='#method.deref_mut' class='fnname'>deref_mut</a>(&amp;mut self) -&gt; <a href='http://doc.rust-lang.org/nightly/std/primitive.slice.html'>&amp;mut [T]</a></code></h4>
+</div><h3 class='impl'><a class='stability Unmarked' title='No stability level'></a><code>impl&lt;T&gt; <a class='trait' href='http://doc.rust-lang.org/nightly/core/ops/trait.Slice.html' title='core::ops::Slice'>Slice</a>&lt;<a href='http://doc.rust-lang.org/nightly/std/primitive.uint.html'>uint</a>, <a href='http://doc.rust-lang.org/nightly/std/primitive.slice.html'>[T]</a>&gt; for <a class='struct' href='../fftw3/struct.FftwVec.html' title='fftw3::FftwVec'>FftwVec</a>&lt;T&gt;</code></h3><div class='impl-methods'><h4 id='method.as_slice_' class='method'><a class='stability Experimental' title='Experimental'></a><code>fn <a href='#method.as_slice_' class='fnname'>as_slice_</a>&lt;'a&gt;(&amp;'a self) -&gt; <a href='http://doc.rust-lang.org/nightly/std/primitive.slice.html'>&amp;'a [T]</a></code></h4>
+<h4 id='method.slice_from_or_fail' class='method'><a class='stability Experimental' title='Experimental'></a><code>fn <a href='#method.slice_from_or_fail' class='fnname'>slice_from_or_fail</a>&lt;'a&gt;(&amp;'a self, start: &amp;<a href='http://doc.rust-lang.org/nightly/std/primitive.uint.html'>uint</a>) -&gt; <a href='http://doc.rust-lang.org/nightly/std/primitive.slice.html'>&amp;'a [T]</a></code></h4>
+<h4 id='method.slice_to_or_fail' class='method'><a class='stability Experimental' title='Experimental'></a><code>fn <a href='#method.slice_to_or_fail' class='fnname'>slice_to_or_fail</a>&lt;'a&gt;(&amp;'a self, end: &amp;<a href='http://doc.rust-lang.org/nightly/std/primitive.uint.html'>uint</a>) -&gt; <a href='http://doc.rust-lang.org/nightly/std/primitive.slice.html'>&amp;'a [T]</a></code></h4>
+<h4 id='method.slice_or_fail' class='method'><a class='stability Experimental' title='Experimental'></a><code>fn <a href='#method.slice_or_fail' class='fnname'>slice_or_fail</a>&lt;'a&gt;(&amp;'a self, start: &amp;<a href='http://doc.rust-lang.org/nightly/std/primitive.uint.html'>uint</a>, end: &amp;<a href='http://doc.rust-lang.org/nightly/std/primitive.uint.html'>uint</a>) -&gt; <a href='http://doc.rust-lang.org/nightly/std/primitive.slice.html'>&amp;'a [T]</a></code></h4>
+</div><h3 class='impl'><a class='stability Unmarked' title='No stability level'></a><code>impl&lt;T&gt; <a class='trait' href='http://doc.rust-lang.org/nightly/core/ops/trait.SliceMut.html' title='core::ops::SliceMut'>SliceMut</a>&lt;<a href='http://doc.rust-lang.org/nightly/std/primitive.uint.html'>uint</a>, <a href='http://doc.rust-lang.org/nightly/std/primitive.slice.html'>[T]</a>&gt; for <a class='struct' href='../fftw3/struct.FftwVec.html' title='fftw3::FftwVec'>FftwVec</a>&lt;T&gt;</code></h3><div class='impl-methods'><h4 id='method.as_mut_slice_' class='method'><a class='stability Experimental' title='Experimental'></a><code>fn <a href='#method.as_mut_slice_' class='fnname'>as_mut_slice_</a>&lt;'a&gt;(&amp;'a mut self) -&gt; <a href='http://doc.rust-lang.org/nightly/std/primitive.slice.html'>&amp;'a mut [T]</a></code></h4>
+<h4 id='method.slice_from_or_fail_mut' class='method'><a class='stability Experimental' title='Experimental'></a><code>fn <a href='#method.slice_from_or_fail_mut' class='fnname'>slice_from_or_fail_mut</a>&lt;'a&gt;(&amp;'a mut self, start: &amp;<a href='http://doc.rust-lang.org/nightly/std/primitive.uint.html'>uint</a>) -&gt; <a href='http://doc.rust-lang.org/nightly/std/primitive.slice.html'>&amp;'a mut [T]</a></code></h4>
+<h4 id='method.slice_to_or_fail_mut' class='method'><a class='stability Experimental' title='Experimental'></a><code>fn <a href='#method.slice_to_or_fail_mut' class='fnname'>slice_to_or_fail_mut</a>&lt;'a&gt;(&amp;'a mut self, end: &amp;<a href='http://doc.rust-lang.org/nightly/std/primitive.uint.html'>uint</a>) -&gt; <a href='http://doc.rust-lang.org/nightly/std/primitive.slice.html'>&amp;'a mut [T]</a></code></h4>
+<h4 id='method.slice_or_fail_mut' class='method'><a class='stability Experimental' title='Experimental'></a><code>fn <a href='#method.slice_or_fail_mut' class='fnname'>slice_or_fail_mut</a>&lt;'a&gt;(&amp;'a mut self, start: &amp;<a href='http://doc.rust-lang.org/nightly/std/primitive.uint.html'>uint</a>, end: &amp;<a href='http://doc.rust-lang.org/nightly/std/primitive.uint.html'>uint</a>) -&gt; <a href='http://doc.rust-lang.org/nightly/std/primitive.slice.html'>&amp;'a mut [T]</a></code></h4>
+</div><h3 class='impl'><a class='stability Unmarked' title='No stability level'></a><code>impl&lt;T&gt; <a class='trait' href='http://doc.rust-lang.org/nightly/core/ops/trait.Drop.html' title='core::ops::Drop'>Drop</a> for <a class='struct' href='../fftw3/struct.FftwVec.html' title='fftw3::FftwVec'>FftwVec</a>&lt;T&gt;</code></h3><div class='impl-methods'><h4 id='method.drop' class='method'><a class='stability Experimental' title='Experimental'></a><code>fn <a href='#method.drop' class='fnname'>drop</a>(&amp;mut self)</code></h4>
+</div></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <div id="help" class="hidden">
+        <div class="shortcuts">
+            <h1>Keyboard shortcuts</h1>
+            <dl>
+                <dt>?</dt>
+                <dd>Show this help dialog</dd>
+                <dt>S</dt>
+                <dd>Focus the search field</dd>
+                <dt>&larrb;</dt>
+                <dd>Move up in search results</dd>
+                <dt>&rarrb;</dt>
+                <dd>Move down in search results</dd>
+                <dt>&#9166;</dt>
+                <dd>Go to active search result</dd>
+            </dl>
+        </div>
+        <div class="infos">
+            <h1>Search tricks</h1>
+            <p>
+                Prefix searches with a type followed by a colon (e.g.
+                <code>fn:</code>) to restrict the search to a given type.
+            </p>
+            <p>
+                Accepted types are: <code>fn</code>, <code>mod</code>,
+                <code>struct</code>, <code>enum</code>,
+                <code>trait</code>, <code>typedef</code> (or
+                <code>tdef</code>).
+            </p>
+        </div>
+    </div>
+
+    
+
+    <script>
+        window.rootPath = "../";
+        window.currentCrate = "fftw3";
+        window.playgroundUrl = "";
+    </script>
+    <script src="../jquery.js"></script>
+    <script src="../main.js"></script>
+    
+    <script async src="../search-index.js"></script>
+</body>
+</html>

@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="Source to the Rust file `/home/huon/.cargo/registry/src/github.com-1ecc6299db9ec823/strided-0.2.1/src/lib.rs`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang">
+
+    <title>lib.rs.html -- source</title>
+
+    <link rel="stylesheet" type="text/css" href="../../../../../../../../../../main.css">
+
+    
+    
+</head>
+<body class="rustdoc">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <section class="sidebar">
+        
+        
+    </section>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press 'S' to search, '?' for more options..."
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content source"><pre class='line-numbers'><span id='1'>  1</span>
+<span id='2'>  2</span>
+<span id='3'>  3</span>
+<span id='4'>  4</span>
+<span id='5'>  5</span>
+<span id='6'>  6</span>
+<span id='7'>  7</span>
+<span id='8'>  8</span>
+<span id='9'>  9</span>
+<span id='10'> 10</span>
+<span id='11'> 11</span>
+<span id='12'> 12</span>
+<span id='13'> 13</span>
+<span id='14'> 14</span>
+<span id='15'> 15</span>
+<span id='16'> 16</span>
+<span id='17'> 17</span>
+<span id='18'> 18</span>
+<span id='19'> 19</span>
+<span id='20'> 20</span>
+<span id='21'> 21</span>
+<span id='22'> 22</span>
+<span id='23'> 23</span>
+<span id='24'> 24</span>
+<span id='25'> 25</span>
+<span id='26'> 26</span>
+<span id='27'> 27</span>
+<span id='28'> 28</span>
+<span id='29'> 29</span>
+<span id='30'> 30</span>
+<span id='31'> 31</span>
+<span id='32'> 32</span>
+<span id='33'> 33</span>
+<span id='34'> 34</span>
+<span id='35'> 35</span>
+<span id='36'> 36</span>
+<span id='37'> 37</span>
+<span id='38'> 38</span>
+<span id='39'> 39</span>
+<span id='40'> 40</span>
+<span id='41'> 41</span>
+<span id='42'> 42</span>
+<span id='43'> 43</span>
+<span id='44'> 44</span>
+<span id='45'> 45</span>
+<span id='46'> 46</span>
+<span id='47'> 47</span>
+<span id='48'> 48</span>
+<span id='49'> 49</span>
+<span id='50'> 50</span>
+<span id='51'> 51</span>
+<span id='52'> 52</span>
+<span id='53'> 53</span>
+<span id='54'> 54</span>
+<span id='55'> 55</span>
+<span id='56'> 56</span>
+<span id='57'> 57</span>
+<span id='58'> 58</span>
+<span id='59'> 59</span>
+<span id='60'> 60</span>
+<span id='61'> 61</span>
+<span id='62'> 62</span>
+<span id='63'> 63</span>
+<span id='64'> 64</span>
+<span id='65'> 65</span>
+<span id='66'> 66</span>
+<span id='67'> 67</span>
+<span id='68'> 68</span>
+<span id='69'> 69</span>
+<span id='70'> 70</span>
+<span id='71'> 71</span>
+<span id='72'> 72</span>
+<span id='73'> 73</span>
+<span id='74'> 74</span>
+<span id='75'> 75</span>
+<span id='76'> 76</span>
+<span id='77'> 77</span>
+<span id='78'> 78</span>
+<span id='79'> 79</span>
+<span id='80'> 80</span>
+<span id='81'> 81</span>
+<span id='82'> 82</span>
+<span id='83'> 83</span>
+<span id='84'> 84</span>
+<span id='85'> 85</span>
+<span id='86'> 86</span>
+<span id='87'> 87</span>
+<span id='88'> 88</span>
+<span id='89'> 89</span>
+<span id='90'> 90</span>
+<span id='91'> 91</span>
+<span id='92'> 92</span>
+<span id='93'> 93</span>
+<span id='94'> 94</span>
+<span id='95'> 95</span>
+<span id='96'> 96</span>
+<span id='97'> 97</span>
+<span id='98'> 98</span>
+<span id='99'> 99</span>
+<span id='100'>100</span>
+<span id='101'>101</span>
+<span id='102'>102</span>
+<span id='103'>103</span>
+<span id='104'>104</span>
+<span id='105'>105</span>
+<span id='106'>106</span>
+<span id='107'>107</span>
+<span id='108'>108</span>
+<span id='109'>109</span>
+<span id='110'>110</span>
+<span id='111'>111</span>
+<span id='112'>112</span>
+<span id='113'>113</span>
+<span id='114'>114</span>
+<span id='115'>115</span>
+<span id='116'>116</span>
+<span id='117'>117</span>
+<span id='118'>118</span>
+<span id='119'>119</span>
+<span id='120'>120</span>
+<span id='121'>121</span>
+<span id='122'>122</span>
+<span id='123'>123</span>
+<span id='124'>124</span>
+<span id='125'>125</span>
+<span id='126'>126</span>
+<span id='127'>127</span>
+<span id='128'>128</span>
+<span id='129'>129</span>
+<span id='130'>130</span>
+<span id='131'>131</span>
+<span id='132'>132</span>
+<span id='133'>133</span>
+<span id='134'>134</span>
+<span id='135'>135</span>
+<span id='136'>136</span>
+<span id='137'>137</span>
+<span id='138'>138</span>
+<span id='139'>139</span>
+<span id='140'>140</span>
+<span id='141'>141</span>
+<span id='142'>142</span>
+<span id='143'>143</span>
+<span id='144'>144</span>
+<span id='145'>145</span>
+<span id='146'>146</span>
+<span id='147'>147</span>
+<span id='148'>148</span>
+<span id='149'>149</span>
+<span id='150'>150</span>
+<span id='151'>151</span>
+<span id='152'>152</span>
+<span id='153'>153</span>
+<span id='154'>154</span>
+<span id='155'>155</span>
+<span id='156'>156</span>
+<span id='157'>157</span>
+<span id='158'>158</span>
+<span id='159'>159</span>
+<span id='160'>160</span>
+<span id='161'>161</span>
+<span id='162'>162</span>
+<span id='163'>163</span>
+<span id='164'>164</span>
+<span id='165'>165</span>
+<span id='166'>166</span>
+<span id='167'>167</span>
+<span id='168'>168</span>
+<span id='169'>169</span>
+<span id='170'>170</span>
+<span id='171'>171</span>
+<span id='172'>172</span>
+<span id='173'>173</span>
+<span id='174'>174</span>
+<span id='175'>175</span>
+<span id='176'>176</span>
+<span id='177'>177</span>
+<span id='178'>178</span>
+<span id='179'>179</span>
+<span id='180'>180</span>
+<span id='181'>181</span>
+<span id='182'>182</span>
+<span id='183'>183</span>
+<span id='184'>184</span>
+<span id='185'>185</span>
+<span id='186'>186</span>
+<span id='187'>187</span>
+<span id='188'>188</span>
+<span id='189'>189</span>
+<span id='190'>190</span>
+<span id='191'>191</span>
+<span id='192'>192</span>
+<span id='193'>193</span>
+<span id='194'>194</span>
+<span id='195'>195</span>
+<span id='196'>196</span>
+<span id='197'>197</span>
+<span id='198'>198</span>
+<span id='199'>199</span>
+<span id='200'>200</span>
+<span id='201'>201</span>
+<span id='202'>202</span>
+<span id='203'>203</span>
+<span id='204'>204</span>
+<span id='205'>205</span>
+<span id='206'>206</span>
+<span id='207'>207</span>
+<span id='208'>208</span>
+<span id='209'>209</span>
+<span id='210'>210</span>
+<span id='211'>211</span>
+<span id='212'>212</span>
+<span id='213'>213</span>
+<span id='214'>214</span>
+<span id='215'>215</span>
+<span id='216'>216</span>
+<span id='217'>217</span>
+<span id='218'>218</span>
+<span id='219'>219</span>
+<span id='220'>220</span>
+<span id='221'>221</span>
+<span id='222'>222</span>
+<span id='223'>223</span>
+<span id='224'>224</span>
+<span id='225'>225</span>
+<span id='226'>226</span>
+<span id='227'>227</span>
+<span id='228'>228</span>
+<span id='229'>229</span>
+<span id='230'>230</span>
+<span id='231'>231</span>
+<span id='232'>232</span>
+<span id='233'>233</span>
+<span id='234'>234</span>
+<span id='235'>235</span>
+<span id='236'>236</span>
+<span id='237'>237</span>
+<span id='238'>238</span>
+<span id='239'>239</span>
+<span id='240'>240</span>
+<span id='241'>241</span>
+<span id='242'>242</span>
+<span id='243'>243</span>
+<span id='244'>244</span>
+<span id='245'>245</span>
+<span id='246'>246</span>
+<span id='247'>247</span>
+<span id='248'>248</span>
+<span id='249'>249</span>
+<span id='250'>250</span>
+<span id='251'>251</span>
+<span id='252'>252</span>
+<span id='253'>253</span>
+<span id='254'>254</span>
+<span id='255'>255</span>
+<span id='256'>256</span>
+<span id='257'>257</span>
+<span id='258'>258</span>
+<span id='259'>259</span>
+<span id='260'>260</span>
+<span id='261'>261</span>
+<span id='262'>262</span>
+<span id='263'>263</span>
+<span id='264'>264</span>
+<span id='265'>265</span>
+<span id='266'>266</span>
+<span id='267'>267</span>
+<span id='268'>268</span>
+<span id='269'>269</span>
+<span id='270'>270</span>
+<span id='271'>271</span>
+<span id='272'>272</span>
+<span id='273'>273</span>
+<span id='274'>274</span>
+<span id='275'>275</span>
+<span id='276'>276</span>
+<span id='277'>277</span>
+<span id='278'>278</span>
+<span id='279'>279</span>
+<span id='280'>280</span>
+<span id='281'>281</span>
+<span id='282'>282</span>
+<span id='283'>283</span>
+<span id='284'>284</span>
+<span id='285'>285</span>
+<span id='286'>286</span>
+<span id='287'>287</span>
+</pre><pre class='rust '>
+<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>feature</span>(<span class='ident'>macro_rules</span>)]</span>
+
+<span class='doccomment'>//! Strided slices.</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//! This library provides two types `Stride` and `MutStride` as</span>
+<span class='doccomment'>//! generalised forms of `&amp;[T]` and `&amp;mut [T]` respectively, where the</span>
+<span class='doccomment'>//! elements are regularly spaced in memory, but not necessarily</span>
+<span class='doccomment'>//! immediately adjacently.</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//! For example, given an underlying array `[1, 2, 3, 4, 5]`, the</span>
+<span class='doccomment'>//! elements `[1, 3, 5]` are a strided slice with stride 2, and</span>
+<span class='doccomment'>//! `[1, 4]` has stride 3. Any slice can be regarded as a strided slice</span>
+<span class='doccomment'>//! with stride 1.</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//! This provides functionality through which one can safely and</span>
+<span class='doccomment'>//! efficiently manipulate every `n`th element of a slice (even a</span>
+<span class='doccomment'>//! mutable one) as close as possible to it being a conventional</span>
+<span class='doccomment'>//! slice. This releases one from worries about stride bookkeeping,</span>
+<span class='doccomment'>//! aliasing of `&amp;mut` or any `unsafe` code.</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//! # Quick start</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//! The work-horse functions are `.substrides(n)` and</span>
+<span class='doccomment'>//! `.substrides_mut(n)`, which return an iterator across a series of</span>
+<span class='doccomment'>//! `n` new strided slices (shared and mutable, respectively), each of</span>
+<span class='doccomment'>//! which points to every `n`th element, and each of which starts at</span>
+<span class='doccomment'>//! the next successive offset. For example, the following has</span>
+<span class='doccomment'>//! `n = 3`.</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//! ```rust</span>
+<span class='doccomment'>//! use strided::MutStride;</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//! let mut v = [1u8, 2, 3, 4, 5];</span>
+<span class='doccomment'>//! let mut all = MutStride::new(&amp;mut v);</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//! let mut substrides = all.substrides_mut(3);</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//! let a = substrides.next().unwrap();</span>
+<span class='doccomment'>//! let b = substrides.next().unwrap();</span>
+<span class='doccomment'>//! let c = substrides.next().unwrap();</span>
+<span class='doccomment'>//! assert!(substrides.next().is_none()); // there was exactly 3.</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//! assert_eq!(a, MutStride::new(&amp;mut [1, 4]));</span>
+<span class='doccomment'>//! assert_eq!(b, MutStride::new(&amp;mut [2, 5]));</span>
+<span class='doccomment'>//! assert_eq!(c, MutStride::new(&amp;mut [3]));</span>
+<span class='doccomment'>//! ```</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//! The common case of `n = 2` has an abbreviation `substrides2`</span>
+<span class='doccomment'>//! (resp. `substrides2_mut`), which takes the liberty of returns a</span>
+<span class='doccomment'>//! tuple rather than an iterator to make direct destructuring</span>
+<span class='doccomment'>//! work. Continuing with the values above, `left` and `right` point</span>
+<span class='doccomment'>//! to alternate elements, starting at index `0` and `1` of their</span>
+<span class='doccomment'>//! parent slice respectively.</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//! ```rust</span>
+<span class='doccomment'>//! # use strided::MutStride;</span>
+<span class='doccomment'>//! # let mut v = [1u8, 2, 3, 4, 5];</span>
+<span class='doccomment'>//! # let mut all = MutStride::new(&amp;mut v);</span>
+<span class='doccomment'>//! let (left, right) = all.substrides2_mut();</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//! assert_eq!(left, MutStride::new(&amp;mut [1, 3, 5]));</span>
+<span class='doccomment'>//! assert_eq!(right, MutStride::new(&amp;mut [2, 4]));</span>
+<span class='doccomment'>//! ```</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//! A lot of the conventional slice functionality is available, such</span>
+<span class='doccomment'>//! as indexing, iterators and slicing.</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//! ```rust</span>
+<span class='doccomment'>//! # use strided::MutStride;</span>
+<span class='doccomment'>//! # let mut v = [1u8, 2, 3, 4, 5];</span>
+<span class='doccomment'>//! # let mut all = MutStride::new(&amp;mut v);</span>
+<span class='doccomment'>//! let (mut left, right) = all.substrides2_mut();</span>
+<span class='doccomment'>//! assert_eq!(left[2], 5);</span>
+<span class='doccomment'>//! assert!(right.get(10).is_none()); // out of bounds</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//! left[2] += 10;</span>
+<span class='doccomment'>//! match left.get_mut(0) {</span>
+<span class='doccomment'>//!     Some(val) =&gt; *val -= 3,</span>
+<span class='doccomment'>//!     None =&gt; {}</span>
+<span class='doccomment'>//! }</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//! assert_eq!(right.iter().fold(0, |sum, a| sum + *a), 2 + 4);</span>
+<span class='doccomment'>//! for val in left.iter_mut() {</span>
+<span class='doccomment'>//!     *val /= 2</span>
+<span class='doccomment'>//! }</span>
+<span class='doccomment'>//! ```</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//! ## Ownership and `reborrow`</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//! `MutStride` has a method `reborrow` which has signature</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//! ```rust,ignore</span>
+<span class='doccomment'>//! impl&lt;&#39;a, T&gt; MutStride&lt;&#39;a, T&gt; {</span>
+<span class='doccomment'>//!     pub fn reborrow&lt;&#39;b&gt;(&amp;&#39;b mut self) -&gt; MutStride&lt;&#39;b, T&gt; { ... }</span>
+<span class='doccomment'>//! }</span>
+<span class='doccomment'>//! ```</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//! That is, it allows temporarily viewing a strided slices as one</span>
+<span class='doccomment'>//! with a shorter lifetime. This method is key because many of the</span>
+<span class='doccomment'>//! methods on `MutStride` take `self` by-value and so consume</span>
+<span class='doccomment'>//! ownership which is unfortunate if one needs to use a strided slice</span>
+<span class='doccomment'>//! multiple times.</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//! The temporary returned by `reborrow` can be used with the</span>
+<span class='doccomment'>//! consuming methods, which allows the parent slice to continuing</span>
+<span class='doccomment'>//! being used after that temporary has disappeared. For example, all</span>
+<span class='doccomment'>//! of the splitting and slicing methods on `MutStride` consume</span>
+<span class='doccomment'>//! ownership, and so `reborrow` is necessary there to continue using,</span>
+<span class='doccomment'>//! in this case, `left`.</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//! ```rust</span>
+<span class='doccomment'>//! # use strided::MutStride;</span>
+<span class='doccomment'>//! # let mut v = [1u8, 2, 3, 4, 5];</span>
+<span class='doccomment'>//! # let mut all = MutStride::new(&amp;mut v);</span>
+<span class='doccomment'>//! let (mut left, right) = all.substrides2_mut();</span>
+<span class='doccomment'>//! assert_eq!(left.reborrow().slice_mut(1, 3), MutStride::new(&amp;mut [3, 5]));</span>
+<span class='doccomment'>//! assert_eq!(left.reborrow().slice_from_mut(2), MutStride::new(&amp;mut [5]));</span>
+<span class='doccomment'>//! assert_eq!(left.reborrow().slice_to_mut(2), MutStride::new(&amp;mut [1, 3]));</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//! // no reborrow:</span>
+<span class='doccomment'>//! assert_eq!(right.split_at_mut(1),</span>
+<span class='doccomment'>//!            (MutStride::new(&amp;mut [2]), MutStride::new(&amp;mut [4])));</span>
+<span class='doccomment'>//! // println!(&quot;{}&quot;, right); // error: use of moved value `right`.</span>
+<span class='doccomment'>//! ```</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//! These contortions are necessary to ensure that `&amp;mut`s cannot</span>
+<span class='doccomment'>//! alias, while still maintaining flexibility: leaving elements with</span>
+<span class='doccomment'>//! the maximum possible lifetime (i.e. that of the non-strided slices</span>
+<span class='doccomment'>//! which they lie in). Theoretically they are necessary with</span>
+<span class='doccomment'>//! `&amp;mut []` too, but the compiler inserts implicit reborrows and so</span>
+<span class='doccomment'>//! one rarely needs to do them manually.</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//! In practice, one should only need to insert `reborrow`s if the</span>
+<span class='doccomment'>//! compiler complains about the use of a moved value.</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//! The shared `Stride` is equivalent to `&amp;[]` and only handles `&amp;`</span>
+<span class='doccomment'>//! references, making ownership transfer and `reborrow` unnecessary,</span>
+<span class='doccomment'>//! so all its methods act identically to those on `&amp;[]`.</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//! # Example</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//! The [fast Fourier transform</span>
+<span class='doccomment'>//! (FFT)](https://en.wikipedia.org/wiki/Fast_Fourier_transform) is a</span>
+<span class='doccomment'>//! signal processing algorithm that performs a discrete Fourier</span>
+<span class='doccomment'>//! transform (DFT) of length `n` in `O(n log n)` time. A DFT breaks a</span>
+<span class='doccomment'>//! waveform into the sum of sines and cosines, and is an important</span>
+<span class='doccomment'>//! part of many other algorithms due to certain nice properties of</span>
+<span class='doccomment'>//! the Fourier transform.</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//! The first FFT algorithm was the [Cooley-Tukey</span>
+<span class='doccomment'>//! algorithm](https://en.wikipedia.org/wiki/Cooley-Tukey_FFT_algorithm). The</span>
+<span class='doccomment'>//! decimation-in-time variant works by computing the FFT of</span>
+<span class='doccomment'>//! equal-length subarrays of equally spaced elements and then</span>
+<span class='doccomment'>//! combining these together into the desired result. This sort of</span>
+<span class='doccomment'>//! spacing is exactly the striding provided by this library, and</span>
+<span class='doccomment'>//! hence this library can be used to create an FFT algorithm in a</span>
+<span class='doccomment'>//! very natural way.</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//! Below is an implementation of the radix-2 case, that is, when the</span>
+<span class='doccomment'>//! length `n` is a power of two, in this case, only two strided</span>
+<span class='doccomment'>//! subarrays are necessary: exactly the alternating ones provided by</span>
+<span class='doccomment'>//! `substrides2`. Note the use of `reborrow` to allow `start` and</span>
+<span class='doccomment'>//! `end` to be used for the recursive `fft` calls and then again</span>
+<span class='doccomment'>//! later in the loop.</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//! ```rust</span>
+<span class='doccomment'>//! extern crate strided;</span>
+<span class='doccomment'>//! extern crate num; // https://github.com/rust-lang/num</span>
+<span class='doccomment'>//! use std::num::Int;</span>
+<span class='doccomment'>//! use std::f64;</span>
+<span class='doccomment'>//! use num::complex::{Complex, Complex64};</span>
+<span class='doccomment'>//! use strided::{MutStride, Stride};</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//! /// Writes the forward DFT of `input` to `output`.</span>
+<span class='doccomment'>//! fn fft(input: Stride&lt;Complex64&gt;, mut output: MutStride&lt;Complex64&gt;) {</span>
+<span class='doccomment'>//!     // check it&#39;s a power of two.</span>
+<span class='doccomment'>//!     assert!(input.len() == output.len() &amp;&amp; input.len().count_ones() == 1);</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//!     // base case: the DFT of a single element is itself.</span>
+<span class='doccomment'>//!     if input.len() == 1 {</span>
+<span class='doccomment'>//!         output[0] = input[0];</span>
+<span class='doccomment'>//!         return</span>
+<span class='doccomment'>//!     }</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//!     // split the input into two arrays of alternating elements (&quot;decimate in time&quot;)</span>
+<span class='doccomment'>//!     let (evens, odds) = input.substrides2();</span>
+<span class='doccomment'>//!     // break the output into two halves (front and back, not alternating)</span>
+<span class='doccomment'>//!     let (mut start, mut end) = output.split_at_mut(input.len() / 2);</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//!     // recursively perform two FFTs on alternating elements of the input, writing the</span>
+<span class='doccomment'>//!     // results into the first and second half of the output array respectively.</span>
+<span class='doccomment'>//!     fft(evens, start.reborrow());</span>
+<span class='doccomment'>//!     fft(odds, end.reborrow());</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//!     // exp(-2πi/N)</span>
+<span class='doccomment'>//!     let twiddle = Complex::from_polar(&amp;1.0, &amp;(-2.0 * f64::consts::PI / input.len() as f64));</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//!     let mut factor = Complex::new(1., 0.);</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//!     // combine the subFFTs with the relations:</span>
+<span class='doccomment'>//!     //   X_k       = E_k + exp(-2πki/N) * O_k</span>
+<span class='doccomment'>//!     //   X_{k+N/2} = E_k - exp(-2πki/N) * O_k</span>
+<span class='doccomment'>//!     for (even, odd) in start.iter_mut().zip(end.iter_mut()) {</span>
+<span class='doccomment'>//!         let twiddled = factor * *odd;</span>
+<span class='doccomment'>//!         let e = *even;</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//!         *even = e + twiddled;</span>
+<span class='doccomment'>//!         *odd = e - twiddled;</span>
+<span class='doccomment'>//!         factor = factor * twiddle;</span>
+<span class='doccomment'>//!     }</span>
+<span class='doccomment'>//! }</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//! fn main() {</span>
+<span class='doccomment'>//!     let a = [Complex::new(2., 0.), Complex::new(1., 0.),</span>
+<span class='doccomment'>//!              Complex::new(2., 0.), Complex::new(1., 0.)];</span>
+<span class='doccomment'>//!     let mut b = [Complex::new(0., 0.), .. 4];</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//!     fft(Stride::new(&amp;a), MutStride::new(&amp;mut b));</span>
+<span class='doccomment'>//!     println!(&quot;forward: {} -&gt; {}&quot;, a.as_slice(), b.as_slice());</span>
+<span class='doccomment'>//! }</span>
+<span class='doccomment'>//! ```</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//! The above definitely has complexity `O(n log n)`, but it has a</span>
+<span class='doccomment'>//! much larger constant factor than an optimised library like</span>
+<span class='doccomment'>//! [FFTW](http://www.fftw.org/). (Strictly speaking `output` does not</span>
+<span class='doccomment'>//! need to be a strided slice, since it is never split into</span>
+<span class='doccomment'>//! alternating elements.)</span>
+
+<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>test</span>)]</span> <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>test</span>;
+
+<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>base</span>::{<span class='ident'>Items</span>, <span class='ident'>MutItems</span>};
+
+<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>mut_</span>::<span class='ident'>Stride</span> <span class='kw'>as</span> <span class='ident'>MutStride</span>;
+<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>mut_</span>::<span class='ident'>Substrides</span> <span class='kw'>as</span> <span class='ident'>MutSubstrides</span>;
+
+<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>imm</span>::<span class='ident'>Stride</span> <span class='kw'>as</span> <span class='ident'>Stride</span>;
+<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>imm</span>::<span class='ident'>Substrides</span> <span class='kw'>as</span> <span class='ident'>Substrides</span>;
+
+
+<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>traits</span>::{<span class='ident'>Strided</span>, <span class='ident'>MutStrided</span>};
+
+<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>test</span>)]</span>
+<span class='kw'>mod</span> <span class='ident'>common_tests</span>;
+
+<span class='kw'>mod</span> <span class='ident'>base</span>;
+<span class='kw'>mod</span> <span class='ident'>mut_</span>;
+<span class='kw'>mod</span> <span class='ident'>imm</span>;
+<span class='kw'>mod</span> <span class='ident'>traits</span>;
+
+<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>test</span>)]</span>
+<span class='kw'>mod</span> <span class='ident'>bench</span> {
+    <span class='kw'>use</span> <span class='ident'>super</span>::<span class='ident'>Stride</span>;
+    <span class='kw'>use</span> <span class='ident'>test</span>::<span class='ident'>Bencher</span> <span class='kw'>as</span> <span class='ident'>B</span>;
+    <span class='kw'>use</span> <span class='ident'>test</span>;
+
+    <span class='kw'>const</span> <span class='ident'>N</span>: <span class='ident'>uint</span> <span class='op'>=</span> <span class='number'>100</span>;
+
+    <span class='attribute'>#[<span class='ident'>bench</span>]</span>
+    <span class='kw'>fn</span> <span class='ident'>iter_slice</span>(<span class='ident'>b</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>B</span>) {
+        <span class='kw'>let</span> <span class='ident'>v</span> <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='ident'>from_fn</span>(<span class='ident'>N</span>, <span class='op'>|</span><span class='ident'>i</span><span class='op'>|</span> <span class='ident'>i</span>);
+        <span class='ident'>b</span>.<span class='ident'>iter</span>(<span class='op'>||</span> {
+            <span class='ident'>test</span>::<span class='ident'>black_box</span>(<span class='kw-2'>&amp;</span><span class='ident'>v</span>);
+            <span class='kw'>for</span> <span class='ident'>e</span> <span class='kw'>in</span> <span class='ident'>v</span>.<span class='ident'>iter</span>() { <span class='ident'>test</span>::<span class='ident'>black_box</span>(<span class='ident'>e</span>) }
+        })
+    }
+
+    <span class='attribute'>#[<span class='ident'>bench</span>]</span>
+    <span class='kw'>fn</span> <span class='ident'>iter_step_1</span>(<span class='ident'>b</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>B</span>) {
+        <span class='kw'>let</span> <span class='ident'>v</span> <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='ident'>from_fn</span>(<span class='ident'>N</span>, <span class='op'>|</span><span class='ident'>i</span><span class='op'>|</span> <span class='ident'>i</span>);
+        <span class='kw'>let</span> <span class='ident'>s</span> <span class='op'>=</span> <span class='ident'>Stride</span>::<span class='ident'>new</span>(<span class='kw-2'>&amp;</span><span class='op'>*</span><span class='ident'>v</span>);
+        <span class='ident'>b</span>.<span class='ident'>iter</span>(<span class='op'>||</span> {
+            <span class='ident'>test</span>::<span class='ident'>black_box</span>(<span class='kw-2'>&amp;</span><span class='ident'>s</span>);
+            <span class='kw'>for</span> <span class='ident'>e</span> <span class='kw'>in</span> <span class='ident'>s</span>.<span class='ident'>iter</span>() { <span class='ident'>test</span>::<span class='ident'>black_box</span>(<span class='ident'>e</span>) }
+        })
+    }
+
+    <span class='attribute'>#[<span class='ident'>bench</span>]</span>
+    <span class='kw'>fn</span> <span class='ident'>iter_step_13</span>(<span class='ident'>b</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>B</span>) {
+        <span class='kw'>let</span> <span class='ident'>v</span> <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='ident'>from_fn</span>(<span class='ident'>N</span> <span class='op'>*</span> <span class='number'>13</span>, <span class='op'>|</span><span class='ident'>i</span><span class='op'>|</span> <span class='ident'>i</span>);
+        <span class='kw'>let</span> <span class='ident'>s</span> <span class='op'>=</span> <span class='ident'>Stride</span>::<span class='ident'>new</span>(<span class='kw-2'>&amp;</span><span class='op'>*</span><span class='ident'>v</span>);
+        <span class='kw'>let</span> <span class='ident'>s</span> <span class='op'>=</span> <span class='ident'>s</span>.<span class='ident'>substrides</span>(<span class='number'>13</span>).<span class='ident'>next</span>().<span class='ident'>unwrap</span>();
+        <span class='ident'>b</span>.<span class='ident'>iter</span>(<span class='op'>||</span> {
+            <span class='ident'>test</span>::<span class='ident'>black_box</span>(<span class='kw-2'>&amp;</span><span class='ident'>s</span>);
+            <span class='kw'>for</span> <span class='ident'>e</span> <span class='kw'>in</span> <span class='ident'>s</span>.<span class='ident'>iter</span>() { <span class='ident'>test</span>::<span class='ident'>black_box</span>(<span class='ident'>e</span>) }
+        })
+    }
+}
+</pre>
+</section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <div id="help" class="hidden">
+        <div class="shortcuts">
+            <h1>Keyboard shortcuts</h1>
+            <dl>
+                <dt>?</dt>
+                <dd>Show this help dialog</dd>
+                <dt>S</dt>
+                <dd>Focus the search field</dd>
+                <dt>&larrb;</dt>
+                <dd>Move up in search results</dd>
+                <dt>&rarrb;</dt>
+                <dd>Move down in search results</dd>
+                <dt>&#9166;</dt>
+                <dd>Go to active search result</dd>
+            </dl>
+        </div>
+        <div class="infos">
+            <h1>Search tricks</h1>
+            <p>
+                Prefix searches with a type followed by a colon (e.g.
+                <code>fn:</code>) to restrict the search to a given type.
+            </p>
+            <p>
+                Accepted types are: <code>fn</code>, <code>mod</code>,
+                <code>struct</code>, <code>enum</code>,
+                <code>trait</code>, <code>typedef</code> (or
+                <code>tdef</code>).
+            </p>
+        </div>
+    </div>
+
+    
+
+    <script>
+        window.rootPath = "../../../../../../../../../../";
+        window.currentCrate = "strided";
+        window.playgroundUrl = "";
+    </script>
+    <script src="../../../../../../../../../../jquery.js"></script>
+    <script src="../../../../../../../../../../main.js"></script>
+    
+    <script async src="../../../../../../../../../../search-index.js"></script>
+</body>
+</html>
