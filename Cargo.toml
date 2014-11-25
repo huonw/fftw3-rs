@@ -4,14 +4,21 @@ name = "fftw3"
 version = "0.0.1"
 authors = [ "Huon Wilson <dbau.pp@gmail.com>" ]
 
-#[dependencies]
-#num = ">= 0.0.0"
+license = "MIT/Apache-2.0"
+keywords = ["fft", "dsp", "numerics", "mathematics"]
 
-[dependencies.fftw3-sys]
-path = "fftw3-sys"
+description = """
+Bindings to FFTW3: the Fastest Fourier Transform in the West. This
+library aims to expose the full power of FFTW3 in high-performance,
+safe and idiomatic manner. NB. FFTW3 is licensed GPLv2 (or later) by
+default, and so applications using it must be distributed under those
+terms (the license of these bindings is independent).
+"""
 
-[dependencies.num]
-git = "https://github.com/rust-lang/num"
+repository = "https://github.com/huonw/fftw3-rs/tree/basic"
+documentation = "https://huonw.github.io/fftw3-rs/fftw3"
 
-[dependencies.strided]
-git = "https://github.com/huonw/strided-rs"
+[dependencies]
+num = "~0.0.4"
+fftw3-sys = "~0.0.1"
+strided = "0.2.1"

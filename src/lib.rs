@@ -12,6 +12,17 @@
 //! particular the `lock` module assists with keeping the use of FFTW3
 //! threadsafe, and the `plan` module gives a nicer interface to
 //! creating and using plans.
+//!
+//! # Licensing
+//!
+//! The FFTW3 library is licensed under GPLv2 (or later) with
+//! non-free/commercial licenses available from MIT via the FFTW
+//! website. On the other hand, these bindings are dual-licensed
+//! MIT/Apache-2.0, however, any application using FFTW3 via these
+//! bindings *must* still be distributed under the terms of the GPL
+//! (unless a non-free license has been arranged). The explicit
+//! difference in licenses is to enable code-reuse between these
+//! bindings and bindings to other FFT libraries.
 
 extern crate libc;
 extern crate sync;
