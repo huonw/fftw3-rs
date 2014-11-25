@@ -1,10 +1,12 @@
+//! Helpers for managing plans.
+
 use {ffi, lock};
-use mem::FftwVec;
+//use mem::FftwVec;
 
-use num::complex::Complex64;
+//use num::complex::Complex64;
 
-/// A thin wrapper around the internal FFTW plan type. Prefer `Plan`
-/// if possible.
+/// A thin wrapper around the internal FFTW plan type, that assists
+/// with creation and manages destruction.
 pub struct RawPlan {
     plan: ffi::fftw_plan
 }
@@ -34,8 +36,14 @@ impl RawPlan {
         unsafe {ffi::fftw_print_plan(self.plan);}
     }
 
+    /// Execute the plan on the data vectors provided while planning.
     pub unsafe fn execute(&mut self) {
         ffi::fftw_execute(self.plan)
+    }
+
+    /// Obtain a copy of the internal FFTW plan.
+    pub fn raw_plan(&self) -> ffi::fftw_plan {
+        self.plan
     }
 }
 
