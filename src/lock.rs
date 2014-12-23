@@ -2,7 +2,7 @@
 //! that only one thread is executing these at a time. This module
 //! provides a lock for this purpose.
 
-use sync::mutex::{StaticMutex, MUTEX_INIT};
+use std::sync::{StaticMutex, MUTEX_INIT};
 
 /// Hold this lock when doing anything thread-unsafe with FFTW.
 pub static LOCK: StaticMutex = MUTEX_INIT;

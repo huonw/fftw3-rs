@@ -1,11 +1,10 @@
 #![crate_type="lib"]
 #![feature(default_type_params, associated_types)]
-#![feature(globs, macro_rules, unsafe_destructor, tuple_indexing, phase)]
+#![feature(globs, macro_rules, unsafe_destructor, phase)]
 
 #[phase(plugin, link)]
 extern crate log;
 extern crate libc;
-extern crate sync;
 extern crate num;
 extern crate strided;
 
