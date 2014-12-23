@@ -239,7 +239,7 @@ impl<X, Y> Planner<X, Y> {
 
 impl<U, T: FftData<U>, I: MutStrided<T>, Y> Planner<Input<I>, Y> {
     pub fn output<O: MutStrided<U>>(mut self, out: O)
-                                    -> Planner<Io<I, O>, <T as FftData<U>>::State> {
+                                    -> Planner<Io<I, O>, T::State> {
         self.meta.out_stride = out.stride();
 
         Planner {
@@ -250,7 +250,7 @@ impl<U, T: FftData<U>, I: MutStrided<T>, Y> Planner<Input<I>, Y> {
 }
 
 impl<T: FftData<T>, I: MutStrided<T>> Planner<Input<I>> {
-    pub fn inplace(mut self) -> Planner<Inplace<I>, <T as FftData<T>>::State>  {
+    pub fn inplace(mut self) -> Planner<Inplace<I>, T::State>  {
         self.meta.out_stride = self.meta.in_stride;
 
         Planner {
