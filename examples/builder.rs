@@ -9,8 +9,8 @@ fn main() {
     let output = FftwVec::zeros(9);
 
     let mut plan = Planner::new()
-        .rigor(Estimate)
-        .direction(Forward)
+        .rigor(Rigor::Estimate)
+        .direction(Direction::Forward)
         .r2c(input, output)
         .plan()
         .ok().expect("failed to create plan");

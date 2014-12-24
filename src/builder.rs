@@ -8,6 +8,7 @@ use plan::RawPlan;
 /// to use.
 ///
 /// The `FFTW_WISDOM_ONLY` rigor level is replaced by the
+#[deriving(Copy)]
 pub enum Rigor {
     Estimate,
     Measure,
@@ -17,15 +18,16 @@ pub enum Rigor {
 impl Rigor {
     fn flags(self) -> c_uint {
         match self {
-            Estimate => ffi::FFTW_ESTIMATE,
-            Measure => ffi::FFTW_MEASURE,
-            Patient => ffi::FFTW_PATIENT,
-            Exhaustive => ffi::FFTW_EXHAUSTIVE,
+            Rigor::Estimate => ffi::FFTW_ESTIMATE,
+            Rigor::Measure => ffi::FFTW_MEASURE,
+            Rigor::Patient => ffi::FFTW_PATIENT,
+            Rigor::Exhaustive => ffi::FFTW_EXHAUSTIVE,
         }
     }
 }
 
 /// The direction of the transform to perform..
+#[deriving(Copy)]
 pub enum Direction {
     Forward, Backward
 }
@@ -89,7 +91,7 @@ impl Planner {
     }
     #[cfg(higher_dim_is_hard)]
     pub fn multiples(mut self, number: uint) -> PlanMem<I, O> {
-        unimplemented!()
+        unimplemented!();
         self.how_many = Contiguous(vec![number]);
         self
     }
@@ -103,8 +105,8 @@ impl Planner {
     }
     fn dir(&self) -> c_int {
         match self.direction {
-            Forward => ffi::FFTW_FORWARD,
-            Backward => ffi::FFTW_BACKWARD,
+            Direction::Forward => ffi::FFTW_FORWARD,
+            Direction::Backward => ffi::FFTW_BACKWARD,
         }
     }
 
@@ -245,6 +247,7 @@ unsafe fn r2r(n: c_int, in_: *mut c_void, out: *mut c_void,
 
 
 #[repr(C)]
+#[deriving(Copy)]
 pub struct Dim {
     pub n: uint,
     pub in_stride: uint,

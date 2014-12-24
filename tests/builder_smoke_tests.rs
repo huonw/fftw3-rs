@@ -5,7 +5,8 @@ extern crate num;
 use std::rand::random;
 use std::num::Float;
 use num::Complex;
-use fftw3::builder::{Planner, Backward, Estimate, Measure, Patient, Exhaustive};
+use fftw3::builder::{Planner, Direction};
+use fftw3::builder::Rigor::{Estimate, Measure, Patient, Exhaustive};
 
 fn almost_eq(x: &[f64], y: &[f64]) -> bool {
     x.len() == y.len() &&
@@ -33,7 +34,7 @@ macro_rules! smoke_test {
             let in_ = fftw3::FftwVec::zeros($n);
             let out = fftw3::FftwVec::zeros(N * 10);
             let mut inv = Planner::new()
-                .direction(Backward)
+                .direction(Direction::Backward)
                 .rigor(rigor)
                 .$inverse(in_, out)
                 .plan().ok().unwrap();
@@ -81,7 +82,7 @@ fn c2c_inplace_smoke_test() {
 
         let mut inv = Planner::new()
             .rigor(rigor)
-            .direction(Backward)
+            .direction(Direction::Backward)
             .inplace()
             .c2c(b)
             .plan().ok().unwrap();

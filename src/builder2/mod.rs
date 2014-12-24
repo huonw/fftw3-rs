@@ -26,6 +26,7 @@ pub trait FftData<Target> {
 /// to use.
 ///
 /// The `FFTW_WISDOM_ONLY` rigor level is replaced by the
+#[deriving(Copy)]
 pub enum Rigor {
     Estimate,
     Measure,
@@ -35,23 +36,24 @@ pub enum Rigor {
 impl Rigor {
     fn flags(self) -> c_uint {
         match self {
-            Estimate => ffi::FFTW_ESTIMATE,
-            Measure => ffi::FFTW_MEASURE,
-            Patient => ffi::FFTW_PATIENT,
-            Exhaustive => ffi::FFTW_EXHAUSTIVE,
+            Rigor::Estimate => ffi::FFTW_ESTIMATE,
+            Rigor::Measure => ffi::FFTW_MEASURE,
+            Rigor::Patient => ffi::FFTW_PATIENT,
+            Rigor::Exhaustive => ffi::FFTW_EXHAUSTIVE,
         }
     }
 }
 
 /// The direction of the transform to perform..
+#[deriving(Copy)]
 pub enum Direction {
     Forward, Backward
 }
 impl Direction {
     fn sign(self) -> c_int {
         match self {
-            Forward => ffi::FFTW_FORWARD,
-            Backward => ffi::FFTW_BACKWARD,
+            Direction::Forward => ffi::FFTW_FORWARD,
+            Direction::Backward => ffi::FFTW_BACKWARD,
         }
     }
 }
@@ -82,7 +84,7 @@ pub struct Dim {
 impl Dim {
     // TODO: should be num_elems?
     fn size(ds: &[Dim]) -> (uint, uint) {
-        assert!(ds.len() > 0)
+        assert!(ds.len() > 0);
         let head = ds.slice_to(ds.len() - 1).iter().fold(1, |m, d| m * d.n);
         let last = ds.last().expect("no dims in Dim::num_elems");
         (head * last.n, head * (last.n / 2 + 1))
@@ -109,6 +111,7 @@ impl Dim {
     }
 }
 
+#[deriving(Copy)]
 pub enum R2rKind {
     R2ch,
     Hc2r,
@@ -125,17 +128,17 @@ pub enum R2rKind {
 impl R2rKind {
     fn as_fftw(self) -> c_uint {
         match self {
-            R2ch => ffi::FFTW_R2HC,
-            Hc2r => ffi::FFTW_HC2R,
-            Dht => ffi::FFTW_DHT,
-            Dct00 => ffi::FFTW_REDFT00,
-            Dct01 => ffi::FFTW_REDFT01,
-            Dct10 => ffi::FFTW_REDFT10,
-            Dct11 => ffi::FFTW_REDFT11,
-            Dst00 => ffi::FFTW_RODFT00,
-            Dst01 => ffi::FFTW_RODFT01,
-            Dst10 => ffi::FFTW_RODFT10,
-            Dst11 => ffi::FFTW_RODFT11,
+            R2rKind::R2ch => ffi::FFTW_R2HC,
+            R2rKind::Hc2r => ffi::FFTW_HC2R,
+            R2rKind::Dht => ffi::FFTW_DHT,
+            R2rKind::Dct00 => ffi::FFTW_REDFT00,
+            R2rKind::Dct01 => ffi::FFTW_REDFT01,
+            R2rKind::Dct10 => ffi::FFTW_REDFT10,
+            R2rKind::Dct11 => ffi::FFTW_REDFT11,
+            R2rKind::Dst00 => ffi::FFTW_RODFT00,
+            R2rKind::Dst01 => ffi::FFTW_RODFT01,
+            R2rKind::Dst10 => ffi::FFTW_RODFT10,
+            R2rKind::Dst11 => ffi::FFTW_RODFT11,
         }
     }
 }
@@ -249,7 +252,7 @@ impl<U, T: FftData<U>, I: MutStrided<T>, Y> Planner<Input<I>, Y> {
     }
 }
 
-impl<T: FftData<T>, I: MutStrided<T>> Planner<Input<I>> {
+impl<T: FftData<T>, I: MutStrided<T>, Y> Planner<Input<I>, Y> {
     pub fn inplace(mut self) -> Planner<Inplace<I>, T::State>  {
         self.meta.out_stride = self.meta.in_stride;
 
@@ -260,8 +263,8 @@ impl<T: FftData<T>, I: MutStrided<T>> Planner<Input<I>> {
     }
 }
 
-impl<T, U, I, J, X, Y> Planner<X, Y>
-    where T: FftData<U>, I: MutStrided<T>, J: MutStrided<U>, X: HasInput<I> + HasOutput<J> {
+impl<T: FftData<U>, U, I, J, X, Y> Planner<X, Y>
+    where I: MutStrided<T>, J: MutStrided<U>, X: HasInput<I> + HasOutput<J> {
 
     pub fn _1d(mut self, n: uint) -> Planner<X, Y> {
         self.nd(&[n])
@@ -352,7 +355,10 @@ impl<X: FftSpec<f64, f64>> Planner<X, R2R> {
         self.meta.r2r_kinds.clear();
         self.meta.r2r_kinds.extend(kinds.iter().map(|k| k.as_fftw()));
 
-        self
+        Planner {
+            meta: self.meta,
+            data: self.data,
+        }
     }
 }
 
@@ -372,7 +378,7 @@ impl<T, U, X: FftSpec<T, U>> Planner<X, Ready> {
 }
 
 pub struct Plan<X> {
-    planner: Planner<X>,
+    planner: Planner<X, Ready>,
     plan: RawPlan,
 }
 
