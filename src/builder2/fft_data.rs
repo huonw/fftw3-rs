@@ -9,7 +9,9 @@ use plan::RawPlan;
 use super::{FftData,  Meta, Secret, Inplace, Io, FftSpec, PlanResult, do_plan,
             Dim, PlanningError, Ready, R2R};
 
-impl<T: FftData<T>, I: MutStrided<T>> FftSpec<T, T> for Inplace<I> {
+impl<T: FftData<T>, I: MutStrided<T>> FftSpec for Inplace<T, I> {
+    type Input = T;
+    type Output = T;
     #[doc(hidden)]
     unsafe fn plan(&mut self, meta: &Meta) -> PlanResult<RawPlan> {
         FftData::plan(self.in_out.as_stride_mut(), None::<MutStride<T>>, meta)
@@ -18,7 +20,9 @@ impl<T: FftData<T>, I: MutStrided<T>> FftSpec<T, T> for Inplace<I> {
     #[doc(hidden)]
     fn secret() -> Secret { Secret(()) }
 }
-impl<T, U: FftData<T>, I: MutStrided<U>, O: MutStrided<T>> FftSpec<U, T> for Io<I, O> {
+impl<U, T: FftData<U>, I: MutStrided<T>, O: MutStrided<U>> FftSpec for Io<T, I, U, O> {
+    type Input = T;
+    type Output = U;
     #[doc(hidden)]
     unsafe fn plan(&mut self, meta: &Meta) -> PlanResult<RawPlan> {
         let in_ = self.in_.as_stride_mut();

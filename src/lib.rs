@@ -12,6 +12,7 @@ extern crate "fftw3-sys" as ffi;
 
 pub use mem::FftwVec;
 pub use plan::{Plan, RawPlan};
+pub use builder2::Planner;
 
 mod plan;
 mod mem;

@@ -7,12 +7,9 @@ use strided::{MutStrided, MutStride};
 
 use plan::RawPlan;
 
-mod fft_data;
-
 /// Values for which `[Self] -> [Target]` works as a transform.
 pub trait FftData<Target> {
     type State;
-
     #[doc(hidden)]
     unsafe fn plan(in_: MutStride<Self>, out: Option<MutStride<Target>>,
                    meta: &Meta) -> PlanResult<RawPlan>;
@@ -20,6 +17,8 @@ pub trait FftData<Target> {
     #[doc(hidden)]
     fn secret() -> Secret;
 }
+
+mod fft_data;
 
 
 /// How much effort FFTW should put into computing the best strategy
@@ -58,20 +57,20 @@ impl Direction {
     }
 }
 
-pub struct Begin;
-pub struct Input<I> {
+pub struct Begin(());
+pub struct Input<T, I> {
     in_: I
 }
-pub struct Io<I, O> {
+pub struct Io<T, I, U, O> {
     in_: I,
     out: O
 }
-pub struct Inplace<I> {
+pub struct Inplace<T, I> {
     in_out: I
 }
 
-struct R2R;
-struct Ready;
+pub struct R2R(());
+pub struct Ready(());
 
 #[repr(C)]
 #[deriving(Show, Clone, PartialEq, Eq, PartialOrd, Ord)]
@@ -204,13 +203,13 @@ impl Planner<Begin, Begin> {
                 out_stride: 1,
             },
 
-            data: Begin,
+            data: Begin(()),
         }
     }
 }
 
 impl<Y> Planner<Begin, Y> {
-    pub fn input<T, I: MutStrided<T>>(mut self, in_: I) -> Planner<Input<I>, Y> {
+    pub fn input<T, I: MutStrided<T>>(mut self, in_: I) -> Planner<Input<T, I>, Begin> {
         self.meta.in_stride = in_.stride();
 
         Planner {
@@ -240,9 +239,10 @@ impl<X, Y> Planner<X, Y> {
     }
 }
 
-impl<U, T: FftData<U>, I: MutStrided<T>, Y> Planner<Input<I>, Y> {
+impl<U, T: FftData<U>, I: MutStrided<T>, Y> Planner<Input<T, I>, Y> {
     pub fn output<O: MutStrided<U>>(mut self, out: O)
-                                    -> Planner<Io<I, O>, T::State> {
+                                       -> Planner<Io<T, I, U, O>, T::State>  {
+
         self.meta.out_stride = out.stride();
 
         Planner {
@@ -252,8 +252,8 @@ impl<U, T: FftData<U>, I: MutStrided<T>, Y> Planner<Input<I>, Y> {
     }
 }
 
-impl<T: FftData<T>, I: MutStrided<T>, Y> Planner<Input<I>, Y> {
-    pub fn inplace(mut self) -> Planner<Inplace<I>, T::State>  {
+impl<T: FftData<T>, I: MutStrided<T>, Y> Planner<Input<T, I>, Y> {
+    pub fn inplace(mut self) -> Planner<Inplace<T, I>, T::State>  {
         self.meta.out_stride = self.meta.in_stride;
 
         Planner {
@@ -316,28 +316,30 @@ impl<T: FftData<U>, U, I, J, X, Y> Planner<X, Y>
 pub trait HasInput<I> {
     fn input(&mut self) -> &mut I;
 }
-impl<I> HasInput<I> for Input<I> {
+impl<T, I> HasInput<I> for Input<T, I> {
     fn input(&mut self) -> &mut I { &mut self.in_ }
 }
-impl<I> HasInput<I> for Inplace<I> {
+impl<T, I> HasInput<I> for Inplace<T, I> {
     fn input(&mut self) -> &mut I { &mut self.in_out }
 }
-impl<I, O> HasInput<I> for Io<I, O> {
+impl<T, I, U, O> HasInput<I> for Io<T, I, U, O> {
     fn input(&mut self) -> &mut I { &mut self.in_ }
 }
 
 pub trait HasOutput<O> {
     fn output(&mut self) -> &mut O;
 }
-impl<I> HasOutput<I> for Inplace<I> {
+impl<T, I> HasOutput<I> for Inplace<T, I> {
     fn output(&mut self) -> &mut I { &mut self.in_out }
 }
-impl<I, O> HasOutput<O> for Io<I, O> {
+impl<T, I, U, O> HasOutput<O> for Io<T, I, U, O> {
     fn output(&mut self) -> &mut O { &mut self.out }
 }
 
 // add associated item here for the target result, to make r2r kind always required.
-pub trait FftSpec<From, To> {
+pub trait FftSpec {
+    type Input;
+    type Output;
     #[doc(hidden)]
     unsafe fn plan(&mut self, meta: &Meta) -> PlanResult<RawPlan>;
 
@@ -345,7 +347,8 @@ pub trait FftSpec<From, To> {
     fn secret() -> Secret;
 }
 
-impl<X: FftSpec<f64, f64>> Planner<X, R2R> {
+impl<X: FftSpec<Input=f64, Output=f64>> Planner<X, R2R> {
+    #[cfg(ices)]
     pub fn r2r_kind(mut self, kind: R2rKind) -> Planner<X, Ready> {
         self.r2r_kinds(&[kind])
     }
@@ -362,7 +365,7 @@ impl<X: FftSpec<f64, f64>> Planner<X, R2R> {
     }
 }
 
-impl<T, U, X: FftSpec<T, U>> Planner<X, Ready> {
+impl<X: FftSpec> Planner<X, Ready> {
     pub fn plan(mut self) -> Result<Plan<X>, PlanningError> {
         // space things out appropriately for the backing array.
         for d in self.meta.dims.iter_mut() {
@@ -382,12 +385,12 @@ pub struct Plan<X> {
     plan: RawPlan,
 }
 
-impl<T: FftData<T>, I: MutStrided<T>> Plan<Inplace<I>> {
+impl<T: FftData<T>, I: MutStrided<T>> Plan<Inplace<T, I>> {
     pub fn in_out(&mut self) -> &mut I {
         &mut self.planner.data.in_out
     }
 }
-impl<I, O> Plan<Io<I, O>> {
+impl<T, I, U, O> Plan<Io<T, I, U, O>> {
     pub fn input(&mut self) -> &mut I {
         &mut self.planner.data.in_
     }
