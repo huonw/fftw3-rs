@@ -25,7 +25,7 @@ mod fft_data;
 /// to use.
 ///
 /// The `FFTW_WISDOM_ONLY` rigor level is replaced by the
-#[deriving(Copy)]
+#[derive(Copy)]
 pub enum Rigor {
     Estimate,
     Measure,
@@ -44,7 +44,7 @@ impl Rigor {
 }
 
 /// The direction of the transform to perform..
-#[deriving(Copy)]
+#[derive(Copy)]
 pub enum Direction {
     Forward, Backward
 }
@@ -58,14 +58,14 @@ impl Direction {
 }
 
 pub struct Begin(());
-pub struct Input<T, I> {
+pub struct Input<I> {
     in_: I
 }
-pub struct Io<T, I, U, O> {
+pub struct Io<I, O> {
     in_: I,
     out: O
 }
-pub struct Inplace<T, I> {
+pub struct Inplace<I> {
     in_out: I
 }
 
@@ -73,16 +73,16 @@ pub struct R2R(());
 pub struct Ready(());
 
 #[repr(C)]
-#[deriving(Show, Clone, PartialEq, Eq, PartialOrd, Ord)]
+#[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
 pub struct Dim {
-    pub n: uint,
-    pub in_stride: uint,
-    pub out_stride: uint,
+    pub n: usize,
+    pub in_stride: usize,
+    pub out_stride: usize,
 }
 
 impl Dim {
     // TODO: should be num_elems?
-    fn size(ds: &[Dim]) -> (uint, uint) {
+    fn size(ds: &[Dim]) -> (usize, usize) {
         assert!(ds.len() > 0);
         let head = ds.slice_to(ds.len() - 1).iter().fold(1, |m, d| m * d.n);
         let last = ds.last().expect("no dims in Dim::num_elems");
@@ -90,7 +90,7 @@ impl Dim {
     }
 
     // TODO: the checks in fft_size.rs need to use this
-    fn array_size(ds: &[Dim], c2r: bool, r2c: bool) -> (uint, uint) {
+    fn array_size(ds: &[Dim], c2r: bool, r2c: bool) -> (usize, usize) {
         debug_assert!(!(c2r && r2c));
         assert!(ds.len() > 0);
 
@@ -110,7 +110,7 @@ impl Dim {
     }
 }
 
-#[deriving(Copy)]
+#[derive(Copy)]
 pub enum R2rKind {
     R2ch,
     Hc2r,
@@ -148,8 +148,8 @@ pub struct Meta {
     wisdom_restriction: bool,
     direction: Direction,
 
-    in_stride: uint,
-    out_stride: uint,
+    in_stride: usize,
+    out_stride: usize,
 
     r2r_kinds: Vec<c_uint>,
     overall_dims: Vec<Dim>,
@@ -157,16 +157,16 @@ pub struct Meta {
     howmany: Vec<Dim>,
 }
 
-#[deriving(Show)]
+#[derive(Debug)]
 pub enum PlanningError {
     FftwError,
     NoLengthNoDefault,
-    BufferTooSmall(uint, uint, Vec<Dim>),
+    BufferTooSmall(usize, usize, Vec<Dim>),
 }
 
 pub type PlanResult<T> = Result<T, PlanningError>;
 
-fn do_plan(f: || -> ffi::fftw_plan) -> PlanResult<RawPlan> {
+fn do_plan<F: FnOnce() -> ffi::fftw_plan>(f: F) -> PlanResult<RawPlan> {
     match RawPlan::new(f) {
         Some(p) => Ok(p),
         None => Err(PlanningError::FftwError),
@@ -209,7 +209,7 @@ impl Planner<Begin, Begin> {
 }
 
 impl<Y> Planner<Begin, Y> {
-    pub fn input<T, I: MutStrided<T>>(mut self, in_: I) -> Planner<Input<T, I>, Begin> {
+    pub fn input<I: MutStrided>(mut self, in_: I) -> Planner<Input<I>, Begin> {
         self.meta.in_stride = in_.stride();
 
         Planner {
@@ -239,9 +239,13 @@ impl<X, Y> Planner<X, Y> {
     }
 }
 
-impl<U, T: FftData<U>, I: MutStrided<T>, Y> Planner<Input<T, I>, Y> {
-    pub fn output<O: MutStrided<U>>(mut self, out: O)
-                                       -> Planner<Io<T, I, U, O>, T::State>  {
+impl<I: MutStrided, Y> Planner<Input<I>, Y> {
+    pub fn output<O: MutStrided>(mut self, out: O)
+                                       -> Planner<Io<I, O>,
+                                                  <I::Elem as FftData<O::Elem>>::State>
+        where O: MutStrided,
+              I::Elem: FftData<O::Elem>
+    {
 
         self.meta.out_stride = out.stride();
 
@@ -252,8 +256,10 @@ impl<U, T: FftData<U>, I: MutStrided<T>, Y> Planner<Input<T, I>, Y> {
     }
 }
 
-impl<T: FftData<T>, I: MutStrided<T>, Y> Planner<Input<T, I>, Y> {
-    pub fn inplace(mut self) -> Planner<Inplace<T, I>, T::State>  {
+impl<I: MutStrided, Y> Planner<Input<I>, Y>
+    where I::Elem: FftData<I::Elem>
+{
+    pub fn inplace(mut self) -> Planner<Inplace<I>, <I::Elem as FftData<I::Elem>>::State>  {
         self.meta.out_stride = self.meta.in_stride;
 
         Planner {
@@ -262,23 +268,25 @@ impl<T: FftData<T>, I: MutStrided<T>, Y> Planner<Input<T, I>, Y> {
         }
     }
 }
+impl<X, Y> Planner<X, Y>
+    where X: HasInput + HasOutput,
+        <X as HasInput>::I: MutStrided, <X as HasOutput>::O: MutStrided,
+        <<X as HasInput>::I as MutStrided>::Elem: FftData<<<X as HasOutput>::O as MutStrided>::Elem>
+{
 
-impl<T: FftData<U>, U, I, J, X, Y> Planner<X, Y>
-    where I: MutStrided<T>, J: MutStrided<U>, X: HasInput<I> + HasOutput<J> {
-
-    pub fn _1d(mut self, n: uint) -> Planner<X, Y> {
+    pub fn _1d(mut self, n: usize) -> Planner<X, Y> {
         self.nd(&[n])
     }
 
-    pub fn _2d(mut self, n0: uint, n1: uint) -> Planner<X, Y> {
+    pub fn _2d(mut self, n0: usize, n1: usize) -> Planner<X, Y> {
         self.nd(&[n0, n1])
     }
 
-    pub fn _3d(mut self, n0: uint, n1: uint, n2: uint) -> Planner<X, Y> {
+    pub fn _3d(mut self, n0: usize, n1: usize, n2: usize) -> Planner<X, Y> {
         self.nd(&[n0, n1, n2])
     }
 
-    pub fn nd(mut self, dims: &[uint]) -> Planner<X, Y> {
+    pub fn nd(mut self, dims: &[usize]) -> Planner<X, Y> {
         assert!(dims.len() > 0, "Planner.nd: empty dimensions");
         self.meta.dims.clear();
         self.meta.dims.extend(dims.iter().map(|n| Dim { n: *n, in_stride: 0, out_stride: 0 }));
@@ -292,7 +300,7 @@ impl<T: FftData<U>, U, I, J, X, Y> Planner<X, Y>
         self
     }
 
-    pub fn nd_subarray(mut self, dims: &[(uint, uint, uint)]) -> Planner<X, Y> {
+    pub fn nd_subarray(mut self, dims: &[(usize, usize, usize)]) -> Planner<X, Y> {
         assert!(dims.len() > 0,
                 "Planner.nd_subarray: empty dimensions");
 
@@ -308,31 +316,38 @@ impl<T: FftData<U>, U, I, J, X, Y> Planner<X, Y>
             in_stride *= in_;
             out_stride *= out;
         }
-        debug!("dimensions & strides: {}", self.meta.dims);
+        debug!("dimensions & strides: {:?}", self.meta.dims);
         self
     }
 }
 
-pub trait HasInput<I> {
-    fn input(&mut self) -> &mut I;
+pub trait HasInput {
+    type I;
+    fn input(&mut self) -> &mut Self::I;
 }
-impl<T, I> HasInput<I> for Input<T, I> {
+impl<I> HasInput for Input<I> {
+    type I = I;
     fn input(&mut self) -> &mut I { &mut self.in_ }
 }
-impl<T, I> HasInput<I> for Inplace<T, I> {
+impl<I> HasInput for Inplace<I> {
+    type I = I;
     fn input(&mut self) -> &mut I { &mut self.in_out }
 }
-impl<T, I, U, O> HasInput<I> for Io<T, I, U, O> {
+impl<I, O> HasInput for Io<I, O> {
+    type I = I;
     fn input(&mut self) -> &mut I { &mut self.in_ }
 }
 
-pub trait HasOutput<O> {
-    fn output(&mut self) -> &mut O;
+pub trait HasOutput {
+    type O;
+    fn output(&mut self) -> &mut Self::O;
 }
-impl<T, I> HasOutput<I> for Inplace<T, I> {
+impl<I> HasOutput for Inplace<I> {
+    type O = I;
     fn output(&mut self) -> &mut I { &mut self.in_out }
 }
-impl<T, I, U, O> HasOutput<O> for Io<T, I, U, O> {
+impl<I, O> HasOutput for Io<I,O> {
+    type O = O;
     fn output(&mut self) -> &mut O { &mut self.out }
 }
 
@@ -385,12 +400,14 @@ pub struct Plan<X> {
     plan: RawPlan,
 }
 
-impl<T: FftData<T>, I: MutStrided<T>> Plan<Inplace<T, I>> {
+impl<I: MutStrided> Plan<Inplace<I>>
+    where I::Elem: FftData<I::Elem>
+{
     pub fn in_out(&mut self) -> &mut I {
         &mut self.planner.data.in_out
     }
 }
-impl<T, I, U, O> Plan<Io<T, I, U, O>> {
+impl<I, O> Plan<Io<I, O>> {
     pub fn input(&mut self) -> &mut I {
         &mut self.planner.data.in_
     }

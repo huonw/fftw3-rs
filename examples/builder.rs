@@ -16,11 +16,11 @@ fn main() {
         .ok().expect("failed to create plan");
 
     for v in plan.input().iter_mut() { *v = 1.0 }
-    println!("{}", plan.input());
+    println!("{:?}", plan.input());
 
     plan.execute();
 
-    println!("{}", plan.output());
+    println!("{:?}", plan.output());
 
     let mut inverse = Planner::new()
         .c2r(FftwVec::zeros(9), FftwVec::zeros(16))
@@ -30,5 +30,5 @@ fn main() {
         *a = *b
     }
     inverse.execute();
-    println!("{}", inverse.output());
+    println!("{:?}", inverse.output());
 }

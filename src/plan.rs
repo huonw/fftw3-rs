@@ -1,4 +1,5 @@
 use {ffi, lock};
+use std::ops::DerefMut;
 use mem::FftwVec;
 
 use num::complex::Complex64;
@@ -13,7 +14,7 @@ impl RawPlan {
     ///
     /// This executes `f` inside a lock since FFTW plan creation is
     /// not threadsafe.
-    pub fn new(f: || -> ffi::fftw_plan) -> Option<RawPlan> {
+    pub fn new<F: FnOnce() -> ffi::fftw_plan>(f: F) -> Option<RawPlan> {
         let plan = lock::run(f);
 
         if plan.is_null() {
@@ -62,14 +63,14 @@ impl<In, Out> Plan<In, Out> {
     }
 }
 
-impl<I, In: DerefMut<[I]>, Out> Plan<In, Out> {
-    pub fn input<'a>(&'a mut self) -> &'a mut [I] {
+impl<In: DerefMut, Out> Plan<In, Out> {
+    pub fn input<'a>(&'a mut self) -> &'a mut In::Target {
         &mut *self.in_
     }
 }
 
-impl<In, O, Out: DerefMut<[O]>> Plan<In, Out> {
-    pub fn execute<'a>(&'a mut self) -> &'a mut [O] {
+impl<In, Out: DerefMut> Plan<In, Out> {
+    pub fn execute<'a>(&'a mut self) -> &'a mut Out::Target {
         unsafe {
             self.raw.execute()
         }
@@ -78,7 +79,7 @@ impl<In, O, Out: DerefMut<[O]>> Plan<In, Out> {
     }
 }
 
-impl<In: DerefMut<[f64]>, Out: DerefMut<[Complex64]>> Plan<In, Out> {
+impl<In: DerefMut<Target = [f64]>, Out: DerefMut<Target = [Complex64]>> Plan<In, Out> {
     pub fn r2c_1d_prealloc(mut in_: In, mut out: Out) -> Plan<In, Out> {
         let plan = {
             let n = in_.len();
@@ -99,7 +100,7 @@ impl<In: DerefMut<[f64]>, Out: DerefMut<[Complex64]>> Plan<In, Out> {
     }
 }
 impl Plan<FftwVec<f64>, FftwVec<Complex64>> {
-    pub fn r2c_1d(n: uint) -> Plan<FftwVec<f64>, FftwVec<Complex64>> {
+    pub fn r2c_1d(n: usize) -> Plan<FftwVec<f64>, FftwVec<Complex64>> {
         unsafe {
             let (in_, out) = (FftwVec::uninit(n), FftwVec::uninit(n / 2 + 1));
 
@@ -107,7 +108,7 @@ impl Plan<FftwVec<f64>, FftwVec<Complex64>> {
         }
     }
 }
-impl<In: DerefMut<[Complex64]>, Out: DerefMut<[f64]>> Plan<In, Out> {
+impl<In: DerefMut<Target = [Complex64]>, Out: DerefMut<Target = [f64]>> Plan<In, Out> {
     pub fn c2r_1d_prealloc(mut in_: In, mut out: Out) -> Plan<In, Out> {
         let plan = {
             let n = out.len();
@@ -126,7 +127,7 @@ impl<In: DerefMut<[Complex64]>, Out: DerefMut<[f64]>> Plan<In, Out> {
     }
 }
 impl Plan<FftwVec<Complex64>, FftwVec<f64>> {
-    pub fn c2r_1d(n: uint) -> Plan<FftwVec<Complex64>, FftwVec<f64>> {
+    pub fn c2r_1d(n: usize) -> Plan<FftwVec<Complex64>, FftwVec<f64>> {
         unsafe {
             let (in_, out) = (FftwVec::uninit(n / 2 + 1), FftwVec::uninit(n));
 
@@ -135,7 +136,7 @@ impl Plan<FftwVec<Complex64>, FftwVec<f64>> {
     }
 }
 
-impl<In: DerefMut<[Complex64]>, Out: DerefMut<[Complex64]>> Plan<In, Out> {
+impl<In: DerefMut<Target = [Complex64]>, Out: DerefMut<Target = [Complex64]>> Plan<In, Out> {
     pub fn c2c_1d_prealloc(mut in_: In, mut out: Out) -> Plan<In, Out> {
         let plan = {
             let n = in_.len();
@@ -157,7 +158,7 @@ impl<In: DerefMut<[Complex64]>, Out: DerefMut<[Complex64]>> Plan<In, Out> {
     }
 }
 impl Plan<FftwVec<Complex64>, FftwVec<Complex64>> {
-    pub fn c2c_1d(n: uint) -> Plan<FftwVec<Complex64>, FftwVec<Complex64>> {
+    pub fn c2c_1d(n: usize) -> Plan<FftwVec<Complex64>, FftwVec<Complex64>> {
         unsafe {
             let (in_, out) = (FftwVec::uninit(n), FftwVec::uninit(n));
 

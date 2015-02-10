@@ -1,9 +1,10 @@
+#![feature(os, env, path)]
 extern crate fftw3;
 
 use fftw3::wisdom;
 
 fn main() {
-    let n: uint = from_str(std::os::args()[1].as_slice()).expect("./basic integer");
+    let n: usize = std::env::args().nth(1).unwrap().into_string().unwrap().parse().ok().expect("./basic integer");
     let p = Path::new(format!("wisdom-{}.fftw", n));
     let loaded = wisdom::import_from_file(p.clone());
 

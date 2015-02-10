@@ -10,8 +10,8 @@ authors = [ "Huon Wilson <dbau.pp@gmail.com>" ]
 [dependencies.fftw3-sys]
 path = "fftw3-sys"
 
-[dependencies.num]
-git = "https://github.com/rust-lang/num"
-
-[dependencies.strided]
-git = "https://github.com/huonw/strided-rs"
+[dependencies]
+num = "*"
+strided = "*"
+libc = "*"
+log = "*"

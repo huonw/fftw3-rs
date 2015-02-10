@@ -15,8 +15,11 @@ Low-level bindings to the FFTW3 library.
 build = "build.rs"
 links = "fftw3"
 
+[dependencies]
+libc = "*"
+
 [build-dependencies]
-pkg-config = "~0.0.1"
+pkg-config = "*"
 
 [lib]
 name = "fftw3-sys"

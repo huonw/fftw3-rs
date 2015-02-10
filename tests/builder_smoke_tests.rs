@@ -17,7 +17,7 @@ fn almost_eq_c(x: &[Complex<f64>], y: &[Complex<f64>]) -> bool {
         x.iter().zip(y.iter()).all(|(a,b)| (*a - *b).norm() <= 1e-5)
 }
 
-const N: uint = 32;
+const N: usize = 32;
 
 macro_rules! smoke_test {
     ($forward: ident, $inverse: ident, $ctor: expr,
@@ -69,7 +69,7 @@ fn r2c_c2r_smoke_test() {
 #[test]
 fn c2c_inplace_smoke_test() {
     for &rigor in [Estimate, Measure, Patient, Exhaustive].iter() {
-        let data = Vec::from_fn(N, |_| Complex::new(random(), random()));
+        let data = (0..N).map(|_| Complex::new(random(), random())).collect::<Vec<_>>();
         let a = fftw3::FftwVec::zeros(N);
         let b = fftw3::FftwVec::zeros(N);
         let mut plan = Planner::new()

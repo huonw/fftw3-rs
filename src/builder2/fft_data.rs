@@ -9,7 +9,7 @@ use plan::RawPlan;
 use super::{FftData,  Meta, Secret, Inplace, Io, FftSpec, PlanResult, do_plan,
             Dim, PlanningError, Ready, R2R};
 
-impl<T: FftData<T>, I: MutStrided<T>> FftSpec for Inplace<T, I> {
+impl<T: FftData<T>, I: MutStrided<Elem = T>> FftSpec for Inplace<I> {
     type Input = T;
     type Output = T;
     #[doc(hidden)]
@@ -20,7 +20,7 @@ impl<T: FftData<T>, I: MutStrided<T>> FftSpec for Inplace<T, I> {
     #[doc(hidden)]
     fn secret() -> Secret { Secret(()) }
 }
-impl<U, T: FftData<U>, I: MutStrided<T>, O: MutStrided<U>> FftSpec for Io<T, I, U, O> {
+impl<U, T: FftData<U>, I: MutStrided<Elem = T>, O: MutStrided<Elem = U>> FftSpec for Io<I, O> {
     type Input = T;
     type Output = U;
     #[doc(hidden)]
@@ -189,7 +189,7 @@ impl FftData<f64> for f64 {
             (meta.dims.len() as c_int, meta.dims.as_ptr() as *const _)
         };
 
-        assert!(meta.r2r_kinds.len() == rank as uint || meta.r2r_kinds.len() == 1);
+        assert!(meta.r2r_kinds.len() == rank as usize || meta.r2r_kinds.len() == 1);
         let kinds = meta.r2r_kinds.as_ptr();
         do_plan(|| {
             ffi::fftw_plan_guru64_r2r(

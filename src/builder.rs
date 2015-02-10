@@ -1,6 +1,7 @@
 use ffi;
 use libc::{c_uint, c_int, c_void};
 use num::complex::Complex64;
+use std::ops::DerefMut;
 
 use plan::RawPlan;
 
@@ -8,7 +9,7 @@ use plan::RawPlan;
 /// to use.
 ///
 /// The `FFTW_WISDOM_ONLY` rigor level is replaced by the
-#[deriving(Copy)]
+#[derive(Copy)]
 pub enum Rigor {
     Estimate,
     Measure,
@@ -27,7 +28,7 @@ impl Rigor {
 }
 
 /// The direction of the transform to perform..
-#[deriving(Copy)]
+#[derive(Copy)]
 pub enum Direction {
     Forward, Backward
 }
@@ -115,7 +116,7 @@ impl Planner {
     }
 
     pub fn c2c<I, O>(self, in_: I, out: O) -> PlanMem<I, O>
-        where I: DerefMut<[Complex64]>, O: DerefMut<[Complex64]>
+        where I: DerefMut<Target = [Complex64]>, O: DerefMut<Target = [Complex64]>
     {
         assert!(in_.len() <= 0x7F_FF_FF_FF);
         assert!(in_.len() <= out.len());
@@ -131,7 +132,7 @@ impl Planner {
         }
     }
     pub fn c2r<I, O>(self, in_: I, out: O) -> PlanMem<I, O>
-        where I: DerefMut<[Complex64]>, O: DerefMut<[f64]>
+        where I: DerefMut<Target = [Complex64]>, O: DerefMut<Target = [f64]>
     {
         assert!(in_.len() <= 0x7F_FF_FF_FF);
         assert!(in_.len() <= out.len() / 2 + 1);
@@ -147,7 +148,7 @@ impl Planner {
         }
     }
     pub fn r2c<I, O>(self, in_: I, out: O) -> PlanMem<I, O>
-        where I: DerefMut<[f64]>, O: DerefMut<[Complex64]>
+        where I: DerefMut<Target = [f64]>, O: DerefMut<Target = [Complex64]>
     {
         assert!(in_.len() <= 0x7F_FF_FF_FF);
         assert!(in_.len() / 2 + 1 <= out.len());
@@ -187,7 +188,7 @@ pub struct InPlacePlanner {
 
 impl InPlacePlanner {
     pub fn c2c<I>(self, in_: I) -> PlanMem<I, I>
-        where I: DerefMut<[Complex64]>
+        where I: DerefMut<Target = [Complex64]>
     {
         assert!(in_.len() <= 0x7F_FF_FF_FF);
         let dims = vec![Dim { n: in_.len(), in_stride: 1, out_stride: 1 }];
@@ -247,11 +248,11 @@ unsafe fn r2r(n: c_int, in_: *mut c_void, out: *mut c_void,
 
 
 #[repr(C)]
-#[deriving(Copy)]
+#[derive(Copy)]
 pub struct Dim {
-    pub n: uint,
-    pub in_stride: uint,
-    pub out_stride: uint,
+    pub n: usize,
+    pub in_stride: usize,
+    pub out_stride: usize,
 }
 
 pub struct PlanMem<I, O> {
@@ -264,7 +265,7 @@ pub struct PlanMem<I, O> {
     planner: GuruPlanner
 }
 
-impl<X, Y, I: DerefMut<[X]>, O: DerefMut<[Y]>> PlanMem<I, O> {
+impl<X, Y, I: DerefMut<Target = [X]>, O: DerefMut<Target = [Y]>> PlanMem<I, O> {
     pub fn plan(mut self) -> Result<Planned<I, O>, PlanMem<I, O>> {
         let plan;
         {
@@ -298,11 +299,11 @@ pub struct Planned<I, O> {
     plan: RawPlan,
 }
 
-impl<X, Y, I: DerefMut<[X]>, O: DerefMut<[Y]>> Planned<I, O> {
-    pub fn input(&mut self) -> &mut [X] {
+impl<I: DerefMut, O: DerefMut> Planned<I, O> {
+    pub fn input(&mut self) -> &mut I::Target {
         &mut *self.mem.in_
     }
-    pub fn output(&mut self) -> Option<&mut [Y]> {
+    pub fn output(&mut self) -> Option<&mut O::Target> {
         self.mem.out.as_mut().map(|o| &mut **o)
     }
 
@@ -323,15 +324,15 @@ mod tests {
     #[test]
     fn iodims_are_compatible() {
         // handle 32-bit and 64-bit platforms properly
-        let n = 0x0102_0304_0506_0708u64 as uint;
-        let is = 0x090A_0B0C_0D0E_0F00u64 as uint;
-        let os = 0x1122_3344_5566_7788u64 as uint;
+        let n = 0x0102_0304_0506_0708u64 as usize;
+        let is = 0x090A_0B0C_0D0E_0F00u64 as usize;
+        let os = 0x1122_3344_5566_7788u64 as usize;
 
         let d = Dim { n: n, in_stride: is, out_stride: os };
         let f = Struct_fftw_iodim64_do_not_use_me {
             n: n as ptrdiff_t, is: is as ptrdiff_t, os: os as ptrdiff_t
         };
-        type T = (uint, uint, uint);
+        type T = (usize, usize, usize);
         unsafe {
             assert_eq!(mem::transmute::<_, T>(d), mem::transmute::<_, T>(f));
         }

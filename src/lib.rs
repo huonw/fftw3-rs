@@ -1,8 +1,8 @@
 #![crate_type="lib"]
-#![feature(default_type_params, associated_types)]
-#![feature(globs, macro_rules, unsafe_destructor, phase)]
+#![feature(unsafe_destructor)]
+#![feature(core, collections, path, std_misc)]
 
-#[phase(plugin, link)]
+#[macro_use]
 extern crate log;
 extern crate libc;
 extern crate num;
@@ -31,5 +31,5 @@ fn test() {
     p.input()[0] = 1.0;
     p.input()[1] = 1.0;
 
-    println!("{}", p.execute());
+    println!("{:?}", p.execute());
 }

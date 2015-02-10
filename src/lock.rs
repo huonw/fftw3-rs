@@ -9,7 +9,7 @@ pub static LOCK: StaticMutex = MUTEX_INIT;
 
 /// Run the given closure inside the critical section of the FFTW
 /// lock.
-pub fn run<A>(f: || -> A) -> A {
+pub fn run<A, F: FnOnce() -> A>(f: F) -> A {
     let _g = LOCK.lock();
     f()
 }
