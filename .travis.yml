@@ -1,6 +1,8 @@
 language: rust
 rust: nightly
-sudo: false
+sudo: true
+before_script:
+  - sudo apt-get install --assume-yes libfftw3-dev
 script:
   - rustc --version
   - cargo test
