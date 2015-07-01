@@ -1,3 +1,4 @@
+use std::path::{Path, PathBuf};
 use {ffi, lock};
 
 /// Import and export FFTW wisdom implicitly.
@@ -17,21 +18,21 @@ use {ffi, lock};
 /// } // any new wisdom is automatically saved.
 /// ```
 pub struct WisdomGuard {
-    p: Path
+    p: PathBuf
 }
 impl WisdomGuard {
     /// Load wisdom from `p`, and save it automatically on clean-up.
     ///
     /// Failure to load is ignored, so one can supply a wisdom file
     /// that does not exist (yet) and it will be created on the next run.
-    pub fn import(p: Path) -> WisdomGuard {
-        import_from_file(p.clone());
-        WisdomGuard { p: p }
+    pub fn import(p: &Path) -> WisdomGuard {
+        import_from_file(p);
+        WisdomGuard { p: p.to_path_buf() }
     }
 }
 impl Drop for WisdomGuard {
     fn drop(&mut self) {
-        export_to_file(self.p.clone());
+        export_to_file(self.p.as_path());
     }
 }
 
@@ -49,18 +50,16 @@ pub fn import_from_system() -> bool {
 }
 
 /// Attempt to save wisdom to `p`.
-pub fn export_to_file(p: Path) -> bool {
-    let mut v = p.into_vec();
-    v.push(0);
+pub fn export_to_file(p: &Path) -> bool {
+    let v = p.as_os_str().to_cstring().unwrap();
     unsafe {
         lock::run(|| ffi::fftw_export_wisdom_to_filename(v.as_ptr() as *const i8) != 0)
     }
 }
 
 /// Attempt to load wisdom from `p`.
-pub fn import_from_file(p: Path) -> bool {
-    let mut v = p.into_vec();
-    v.push(0);
+pub fn import_from_file(p: &Path) -> bool {
+    let v = p.as_os_str().to_cstring().unwrap();
     unsafe {
         lock::run(|| ffi::fftw_import_wisdom_from_filename(v.as_ptr() as *const i8) != 0)
     }

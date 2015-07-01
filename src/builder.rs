@@ -9,7 +9,7 @@ use plan::RawPlan;
 /// to use.
 ///
 /// The `FFTW_WISDOM_ONLY` rigor level is replaced by the
-#[derive(Copy)]
+#[derive(Clone, Copy)]
 pub enum Rigor {
     Estimate,
     Measure,
@@ -28,7 +28,7 @@ impl Rigor {
 }
 
 /// The direction of the transform to perform..
-#[derive(Copy)]
+#[derive(Clone, Copy)]
 pub enum Direction {
     Forward, Backward
 }
@@ -248,7 +248,7 @@ unsafe fn r2r(n: c_int, in_: *mut c_void, out: *mut c_void,
 
 
 #[repr(C)]
-#[derive(Copy)]
+#[derive(Clone, Copy)]
 pub struct Dim {
     pub n: usize,
     pub in_stride: usize,

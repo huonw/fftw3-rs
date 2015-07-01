@@ -1,4 +1,3 @@
-#![feature(core)]
 extern crate fftw3;
 
 extern crate num;
@@ -10,8 +9,8 @@ fn main() {
     let mut out = [num::Complex::new(0f64, 0f64); 10];
     let p
         = fftw3::Planner::new()
-        .input(in_.as_mut_slice())
-        .output(out.as_mut_slice())
+        .input(&mut in_[..])
+        .output(&mut out[..])
         ._1d(10);
 
     let mut p = p.plan()

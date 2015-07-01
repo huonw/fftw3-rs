@@ -1,9 +1,10 @@
-#![feature(macro_rules)]
+#![feature(clone_from_slice)]
 extern crate fftw3;
-
 extern crate num;
-use std::rand::random;
-use std::num::Float;
+extern crate rand;
+
+use rand::random;
+use num::Float;
 use num::Complex;
 use fftw3::builder::{Planner, Direction};
 use fftw3::builder::Rigor::{Estimate, Measure, Patient, Exhaustive};
@@ -51,7 +52,7 @@ macro_rules! smoke_test {
             for x in inv.output().unwrap().iter_mut() {
                 *x = $scale(x, scale)
             }
-            assert!($cmp(plan.input(), inv.output().unwrap().slice_to(N)))
+            assert!($cmp(plan.input(), &inv.output().unwrap()[..N]))
         }
     }}
 }

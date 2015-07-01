@@ -2,8 +2,8 @@
 use ffi;
 use libc::{c_uint, c_int, c_void};
 use num::complex::{Complex, Complex64};
-
-use strided::{MutStrided, MutStride};
+use std::marker::PhantomData;
+use strided::{MutStrided, Strided, MutStride};
 
 use plan::RawPlan;
 
@@ -25,7 +25,7 @@ mod fft_data;
 /// to use.
 ///
 /// The `FFTW_WISDOM_ONLY` rigor level is replaced by the
-#[derive(Copy)]
+#[derive(Clone, Copy)]
 pub enum Rigor {
     Estimate,
     Measure,
@@ -44,7 +44,7 @@ impl Rigor {
 }
 
 /// The direction of the transform to perform..
-#[derive(Copy)]
+#[derive(Clone, Copy)]
 pub enum Direction {
     Forward, Backward
 }
@@ -84,7 +84,7 @@ impl Dim {
     // TODO: should be num_elems?
     fn size(ds: &[Dim]) -> (usize, usize) {
         assert!(ds.len() > 0);
-        let head = ds.slice_to(ds.len() - 1).iter().fold(1, |m, d| m * d.n);
+        let head = ds[.. ds.len() - 1].iter().fold(1, |m, d| m * d.n);
         let last = ds.last().expect("no dims in Dim::num_elems");
         (head * last.n, head * (last.n / 2 + 1))
     }
@@ -94,7 +94,7 @@ impl Dim {
         debug_assert!(!(c2r && r2c));
         assert!(ds.len() > 0);
 
-        let (in_, out) = ds.slice_to(ds.len() - 1).iter().fold((0, 0), |(a,b), d| {
+        let (in_, out) = ds[.. ds.len() - 1].iter().fold((0, 0), |(a,b), d| {
             (a + d.n * d.in_stride, b + d.n * d.out_stride)
         });
         let last = ds.last().unwrap();
@@ -110,7 +110,7 @@ impl Dim {
     }
 }
 
-#[derive(Copy)]
+#[derive(Clone, Copy)]
 pub enum R2rKind {
     R2ch,
     Hc2r,
@@ -181,7 +181,8 @@ pub struct Secret(());
 
 pub struct Planner<Stage, State> {
     meta: Meta,
-    data: Stage
+    data: Stage,
+    _marker: PhantomData<State>
 }
 
 
@@ -204,6 +205,8 @@ impl Planner<Begin, Begin> {
             },
 
             data: Begin(()),
+
+            _marker: PhantomData
         }
     }
 }
@@ -215,6 +218,7 @@ impl<Y> Planner<Begin, Y> {
         Planner {
             meta: self.meta,
             data: Input { in_: in_ },
+            _marker: PhantomData
         }
     }
 }
@@ -252,12 +256,13 @@ impl<I: MutStrided, Y> Planner<Input<I>, Y> {
         Planner {
             meta: self.meta,
             data: Io { in_: self.data.in_, out: out },
+            _marker: PhantomData
         }
     }
 }
 
 impl<I: MutStrided, Y> Planner<Input<I>, Y>
-    where I::Elem: FftData<I::Elem>
+    where <I as Strided>::Elem: FftData<I::Elem>
 {
     pub fn inplace(mut self) -> Planner<Inplace<I>, <I::Elem as FftData<I::Elem>>::State>  {
         self.meta.out_stride = self.meta.in_stride;
@@ -265,13 +270,14 @@ impl<I: MutStrided, Y> Planner<Input<I>, Y>
         Planner {
             meta: self.meta,
             data: Inplace { in_out: self.data.in_ },
+            _marker: PhantomData
         }
     }
 }
 impl<X, Y> Planner<X, Y>
     where X: HasInput + HasOutput,
         <X as HasInput>::I: MutStrided, <X as HasOutput>::O: MutStrided,
-        <<X as HasInput>::I as MutStrided>::Elem: FftData<<<X as HasOutput>::O as MutStrided>::Elem>
+        <<X as HasInput>::I as Strided>::Elem: FftData<<<X as HasOutput>::O as Strided>::Elem>
 {
 
     pub fn _1d(mut self, n: usize) -> Planner<X, Y> {
@@ -376,6 +382,7 @@ impl<X: FftSpec<Input=f64, Output=f64>> Planner<X, R2R> {
         Planner {
             meta: self.meta,
             data: self.data,
+            _marker: PhantomData
         }
     }
 }
@@ -401,7 +408,7 @@ pub struct Plan<X> {
 }
 
 impl<I: MutStrided> Plan<Inplace<I>>
-    where I::Elem: FftData<I::Elem>
+    where <I as Strided>::Elem: FftData<I::Elem>
 {
     pub fn in_out(&mut self) -> &mut I {
         &mut self.planner.data.in_out

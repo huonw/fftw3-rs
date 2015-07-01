@@ -32,14 +32,14 @@ pub static FFTW_RODFT01: c_uint = 8;
 pub static FFTW_RODFT10: c_uint = 9;
 pub static FFTW_RODFT11: c_uint = 10;
 #[repr(C)]
-#[derive(Copy)]
+#[derive(Clone, Copy)]
 pub struct Struct_fftw_iodim_do_not_use_me {
     pub n: c_int,
     pub is: c_int,
     pub os: c_int,
 }
 #[repr(C)]
-#[derive(Copy)]
+#[derive(Clone, Copy)]
 pub struct Struct_fftw_iodim64_do_not_use_me {
     pub n: ptrdiff_t,
     pub is: ptrdiff_t,
