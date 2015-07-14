@@ -108,8 +108,8 @@ impl<T: Zero> FftwVec<T> {
 
 impl<T> Drop for PartialVec<T> {
     fn drop(&mut self) {
-        for i in 0..self.idx {
-            unsafe {ptr::read(self.dat.dat.offset(i as isize));} // FIXME: overflow
+        for p in self.dat[..self.idx].iter() {
+            unsafe {ptr::read(p);} // FIXME: overflow
         }
     }
 }
