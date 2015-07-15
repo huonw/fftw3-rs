@@ -1,6 +1,5 @@
 #![crate_type="lib"]
-#![feature(unsafe_destructor)]
-#![feature(core, collections, path, std_misc)]
+#![feature(raw, convert, static_mutex)]
 
 #[macro_use]
 extern crate log;
@@ -8,7 +7,7 @@ extern crate libc;
 extern crate num;
 extern crate strided;
 
-extern crate "fftw3-sys" as ffi;
+extern crate fftw3_sys as ffi;
 
 pub use mem::FftwVec;
 pub use plan::{Plan, RawPlan};

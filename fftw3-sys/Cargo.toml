@@ -22,5 +22,5 @@ libc = "*"
 pkg-config = "*"
 
 [lib]
-name = "fftw3-sys"
+name = "fftw3_sys"
 path = "lib.rs"

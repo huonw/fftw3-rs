@@ -1,0 +1,10 @@
+language: rust
+rust: nightly
+sudo: false
+addons:
+  apt:
+    packages:
+      - libfftw3-dev
+script:
+  - rustc --version
+  - cargo test

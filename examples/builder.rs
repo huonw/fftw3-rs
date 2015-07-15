@@ -1,4 +1,3 @@
-#![feature(globs)]
 extern crate fftw3;
 
 use fftw3::FftwVec;

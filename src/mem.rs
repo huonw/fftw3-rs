@@ -5,7 +5,6 @@ use traits::Zero;
 use libc;
 use std::{mem, ptr, raw};
 use std::ops::{Deref, DerefMut};
-use std::num::Int;
 
 struct RawVec<T> {
     dat: *mut T,
@@ -36,7 +35,6 @@ impl<T> DerefMut for RawVec<T> {
     }
 }
 
-#[unsafe_destructor]
 impl<T> Drop for RawVec<T> {
     fn drop(&mut self) {
         unsafe {ffi::fftw_free(self.dat as *mut libc::c_void)}
@@ -69,7 +67,6 @@ impl<T> DerefMut for FftwVec<T> {
     }
 }
 
-#[unsafe_destructor]
 impl<T> Drop for FftwVec<T> {
     fn drop(&mut self) {
         // free everything
@@ -109,10 +106,9 @@ impl<T: Zero> FftwVec<T> {
     }
 }
 
-#[unsafe_destructor]
 impl<T> Drop for PartialVec<T> {
     fn drop(&mut self) {
-        for p in self.dat.as_slice()[..self.idx].iter() {
+        for p in self.dat[..self.idx].iter() {
             unsafe {ptr::read(p);}
         }
     }
@@ -125,11 +121,11 @@ mod tests {
     #[test]
     fn fftw_vec() {
         let mut v = FftwVec::<usize>::zeros(100);
-        for (i, x) in v.as_mut_slice().iter_mut().enumerate() {
+        for (i, x) in v.iter_mut().enumerate() {
             *x = i;
         }
         let mut i = 0;
-        for x in v.as_slice().iter() {
+        for x in v.iter() {
             assert_eq!(*x, i);
             i += 1;
         }
