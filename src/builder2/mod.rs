@@ -8,7 +8,7 @@ use strided::{MutStrided, Strided, MutStride};
 use plan::RawPlan;
 
 /// Values for which `[Self] -> [Target]` works as a transform.
-pub trait FftData<Target> {
+pub trait FftData<Target> : Sized {
     type State;
     #[doc(hidden)]
     unsafe fn plan(in_: MutStride<Self>, out: Option<MutStride<Target>>,
