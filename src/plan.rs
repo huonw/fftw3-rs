@@ -35,6 +35,7 @@ impl RawPlan {
         unsafe {ffi::fftw_print_plan(self.plan);}
     }
 
+    /// Execute the plan
     pub unsafe fn execute(&mut self) {
         ffi::fftw_execute(self.plan)
     }
@@ -47,6 +48,9 @@ impl Drop for RawPlan {
 }
 
 /// The structure representing the computation of an FFT.
+///
+/// Manages a native FFTW3 plan, and access to the associated input and output
+/// arrays.
 pub struct Plan<In, Out> {
     raw: RawPlan,
     in_: In,
@@ -54,22 +58,32 @@ pub struct Plan<In, Out> {
 }
 
 impl<In, Out> Plan<In, Out> {
+    /// Get immutable access to the output of the plan.
     pub fn take_out(self) -> Out {
         self.out
     }
 
+    /// Get immutable access to the input of the plan.
     pub fn take_in(self) -> In {
         self.in_
     }
 }
 
 impl<In: DerefMut, Out> Plan<In, Out> {
+    /// Get a mutable reference to the plan's input.
+    ///
+    /// This function is usually used to fill the input buffer with a new set
+    /// of data before [executing](struct.Plan.html#method.execute).
     pub fn input<'a>(&'a mut self) -> &'a mut In::Target {
         &mut *self.in_
     }
 }
 
 impl<In, Out: DerefMut> Plan<In, Out> {
+    /// Execute the plan.
+    ///
+    /// Compute the FFT of the plan's input buffer.
+    /// Returns a mutable reference to the output buffer.
     pub fn execute<'a>(&'a mut self) -> &'a mut Out::Target {
         unsafe {
             self.raw.execute()
@@ -80,6 +94,12 @@ impl<In, Out: DerefMut> Plan<In, Out> {
 }
 
 impl<In: DerefMut<Target = [f64]>, Out: DerefMut<Target = [Complex64]>> Plan<In, Out> {
+    /// Create a real to complex plan with preallocated buffers.
+    ///
+    /// # Panics
+    /// If the length of `in` is more than twice the length of `out`, we will panic.
+    /// This is because we need to have at least `in.len()` elements worth of output,
+    /// and every `Complex64` is 2 elements.
     pub fn r2c_1d_prealloc(mut in_: In, mut out: Out) -> Plan<In, Out> {
         let plan = {
             let n = in_.len();
@@ -100,6 +120,9 @@ impl<In: DerefMut<Target = [f64]>, Out: DerefMut<Target = [Complex64]>> Plan<In,
     }
 }
 impl Plan<FftwVec<f64>, FftwVec<Complex64>> {
+    /// A transformation from real numbers to complex numbers.
+    ///
+    /// See [`r2c_1d_prealloc`](struct.Plan.html#method.r2c_1d_prealloc) for more information
     pub fn r2c_1d(n: usize) -> Plan<FftwVec<f64>, FftwVec<Complex64>> {
         unsafe {
             let (in_, out) = (FftwVec::uninit(n), FftwVec::uninit(n / 2 + 1));
@@ -109,6 +132,12 @@ impl Plan<FftwVec<f64>, FftwVec<Complex64>> {
     }
 }
 impl<In: DerefMut<Target = [Complex64]>, Out: DerefMut<Target = [f64]>> Plan<In, Out> {
+    /// Creates a complex to real plan with preallocated buffers.
+    ///
+    /// # Panics
+    /// If the length of `in` is more than twice the length of `out`, we will panic.
+    /// This is because we need to have at least `in.len()` elements worth of output,
+    /// and every `Complex64` is 2 elements.
     pub fn c2r_1d_prealloc(mut in_: In, mut out: Out) -> Plan<In, Out> {
         let plan = {
             let n = out.len();
@@ -127,6 +156,9 @@ impl<In: DerefMut<Target = [Complex64]>, Out: DerefMut<Target = [f64]>> Plan<In,
     }
 }
 impl Plan<FftwVec<Complex64>, FftwVec<f64>> {
+    /// Creates a complex to real transformation
+    ///
+    /// See [c2r_1d_prealloc](struct.Plan.html#method.c2r_1d_prealloc) for more information
     pub fn c2r_1d(n: usize) -> Plan<FftwVec<Complex64>, FftwVec<f64>> {
         unsafe {
             let (in_, out) = (FftwVec::uninit(n / 2 + 1), FftwVec::uninit(n));
@@ -137,6 +169,11 @@ impl Plan<FftwVec<Complex64>, FftwVec<f64>> {
 }
 
 impl<In: DerefMut<Target = [Complex64]>, Out: DerefMut<Target = [Complex64]>> Plan<In, Out> {
+    /// Create a complex to complex plan with preallocated buffers.
+    ///
+    /// # Panics
+    /// If the length of `in` is more than the length of `out`, we will panic.
+    /// This is because we need to have at least `in.len()` elements worth of output.
     pub fn c2c_1d_prealloc(mut in_: In, mut out: Out) -> Plan<In, Out> {
         let plan = {
             let n = in_.len();
@@ -158,6 +195,9 @@ impl<In: DerefMut<Target = [Complex64]>, Out: DerefMut<Target = [Complex64]>> Pl
     }
 }
 impl Plan<FftwVec<Complex64>, FftwVec<Complex64>> {
+    /// Creates a complex to complex transformation
+    ///
+    /// See [c2c_1d_prealloc](struct.Plan.html#method.c2c_1d_prealloc) for more information
     pub fn c2c_1d(n: usize) -> Plan<FftwVec<Complex64>, FftwVec<Complex64>> {
         unsafe {
             let (in_, out) = (FftwVec::uninit(n), FftwVec::uninit(n));
