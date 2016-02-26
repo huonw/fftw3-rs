@@ -1,6 +1,9 @@
 #![crate_type="lib"]
 #![feature(raw, convert, static_mutex)]
 
+//! This crate provides a high level interface to the FFTW3 library
+#![warn(missing_docs)]
+
 #[macro_use]
 extern crate log;
 extern crate libc;
