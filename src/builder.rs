@@ -1,3 +1,6 @@
+//! This module is an interface to the `fftw` plan building machinery.
+//!
+
 use ffi;
 use libc::{c_uint, c_int, c_void};
 use num::complex::Complex64;
@@ -10,6 +13,7 @@ use plan::RawPlan;
 ///
 /// The `FFTW_WISDOM_ONLY` rigor level is replaced by the
 #[derive(Clone, Copy)]
+#[allow(missing_docs)]
 pub enum Rigor {
     Estimate,
     Measure,
@@ -27,8 +31,9 @@ impl Rigor {
     }
 }
 
-/// The direction of the transform to perform..
+/// The direction of the transform to perform.
 #[derive(Clone, Copy)]
+#[allow(missing_docs)]
 pub enum Direction {
     Forward, Backward
 }
@@ -111,10 +116,13 @@ impl Planner {
         }
     }
 
+    /// Create a plan that performs its transformation in place using the settings
+    /// from this planner
     pub fn inplace(self) -> InPlacePlanner {
         InPlacePlanner { plan: self }
     }
 
+    /// Create plan memory for a complex to complex transformation
     pub fn c2c<I, O>(self, in_: I, out: O) -> PlanMem<I, O>
         where I: DerefMut<Target = [Complex64]>, O: DerefMut<Target = [Complex64]>
     {
@@ -131,6 +139,8 @@ impl Planner {
             how_many: vec![],
         }
     }
+
+    /// Create plan memory for a complex to real transformation
     pub fn c2r<I, O>(self, in_: I, out: O) -> PlanMem<I, O>
         where I: DerefMut<Target = [Complex64]>, O: DerefMut<Target = [f64]>
     {
@@ -147,6 +157,8 @@ impl Planner {
             how_many: vec![],
         }
     }
+
+    /// Create plan memory for a real to complex transformation
     pub fn r2c<I, O>(self, in_: I, out: O) -> PlanMem<I, O>
         where I: DerefMut<Target = [f64]>, O: DerefMut<Target = [Complex64]>
     {
@@ -182,11 +194,13 @@ impl Planner {
     }
 }
 
+/// Planner for plans that perform their operation in-place
 pub struct InPlacePlanner {
     plan: Planner
 }
 
 impl InPlacePlanner {
+    /// Create an in-place complex to complex plan
     pub fn c2c<I>(self, in_: I) -> PlanMem<I, I>
         where I: DerefMut<Target = [Complex64]>
     {
@@ -247,15 +261,21 @@ unsafe fn r2r(n: c_int, in_: *mut c_void, out: *mut c_void,
 }
 
 
+/// Represents a dimnsion along which to take a transformation.
 #[repr(C)]
 #[derive(Clone, Copy)]
 pub struct Dim {
+    /// The size of the dimension
     pub n: usize,
+    /// The stride of the dimension in the input array
     pub in_stride: usize,
+    /// The stride of the dimension in the output array
     pub out_stride: usize,
 }
 
+/// Represents the structure of a plan's input and output.
 pub struct PlanMem<I, O> {
+    /// A planner which can produce a plan which can 
     plan: Planner,
     dims: Vec<Dim>,
     #[allow(dead_code)]
@@ -266,6 +286,7 @@ pub struct PlanMem<I, O> {
 }
 
 impl<X, Y, I: DerefMut<Target = [X]>, O: DerefMut<Target = [Y]>> PlanMem<I, O> {
+    /// Produce a plan from a completed PlanMem
     pub fn plan(mut self) -> Result<Planned<I, O>, PlanMem<I, O>> {
         let plan;
         {
@@ -294,19 +315,24 @@ impl<X, Y, I: DerefMut<Target = [X]>, O: DerefMut<Target = [Y]>> PlanMem<I, O> {
     }
 }
 
+/// Represents a successful plan
 pub struct Planned<I, O> {
     mem: PlanMem<I, O>,
     plan: RawPlan,
 }
 
 impl<I: DerefMut, O: DerefMut> Planned<I, O> {
+    /// Get a mutable reference to our input storage.
     pub fn input(&mut self) -> &mut I::Target {
         &mut *self.mem.in_
     }
+
+    /// Get a mutable reference to our output storage.
     pub fn output(&mut self) -> Option<&mut O::Target> {
         self.mem.out.as_mut().map(|o| &mut **o)
     }
 
+    /// Run a completed plan
     pub fn execute(&mut self) {
         unsafe {
             self.plan.execute()

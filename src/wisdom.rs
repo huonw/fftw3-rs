@@ -1,3 +1,8 @@
+//! Utilities for managing `fftw3` wisdoms
+//!
+//! Wisdom is the name `fftw3` uses to describe information it has computed in
+//! the process of developing plans. Reusing wisdom can greatly reduce startup
+//! times.
 use std::path::{Path, PathBuf};
 use {ffi, lock};
 
