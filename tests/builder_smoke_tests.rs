@@ -1,4 +1,3 @@
-#![feature(clone_from_slice)]
 extern crate fftw3;
 extern crate num;
 extern crate rand;
@@ -46,7 +45,13 @@ macro_rules! smoke_test {
 
             plan.execute();
 
-            inv.input().clone_from_slice(plan.output().unwrap());
+            {
+                let invin = inv.input();
+                let pout = plan.output().unwrap();
+                for i in 0 .. invin.len() {
+                    invin[i] = pout[i];
+                }
+            }
             inv.execute();
             let scale = 1.0 / plan.input().len() as f64;
             for x in inv.output().unwrap().iter_mut() {
@@ -78,7 +83,12 @@ fn c2c_inplace_smoke_test() {
             .inplace()
             .c2c(a)
             .plan().ok().unwrap();
-        plan.input().clone_from_slice(&*data);
+        {
+            let pin = plan.input();
+            for i in 0 .. pin.len() {
+                pin[i] = data[i];
+            }
+        }
         plan.execute();
 
         let mut inv = Planner::new()
@@ -87,7 +97,14 @@ fn c2c_inplace_smoke_test() {
             .inplace()
             .c2c(b)
             .plan().ok().unwrap();
-        inv.input().clone_from_slice(plan.input());
+
+        {
+            let invin = inv.input();
+            let pout = plan.input();
+            for i in 0 .. invin.len() {
+                invin[i] = pout[i];
+            }
+        }
 
         inv.execute();
         for x in inv.input().iter_mut() {

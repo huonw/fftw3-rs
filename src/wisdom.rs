@@ -1,5 +1,6 @@
 use std::path::{Path, PathBuf};
 use {ffi, lock};
+use std::ffi::CString;
 
 /// Import and export FFTW wisdom implicitly.
 ///
@@ -41,6 +42,12 @@ macro_rules! wisdom {
     ($p: expr) => { let _guard = fftw3::wisdom::WisdomGuard::import($p); }
 }
 
+unsafe fn native_file_name(p: &Path) -> *const i8 {
+    CString::new(p.as_os_str().to_str()
+        .expect("fftw3: Path expected to be valid unicode"))
+        .unwrap() // should never panic since we just made the string
+        .as_ptr()
+}
 
 /// Attempt to load the system's wisdom.
 pub fn import_from_system() -> bool {
@@ -51,16 +58,16 @@ pub fn import_from_system() -> bool {
 
 /// Attempt to save wisdom to `p`.
 pub fn export_to_file(p: &Path) -> bool {
-    let v = p.as_os_str().to_cstring().unwrap();
     unsafe {
-        lock::run(|| ffi::fftw_export_wisdom_to_filename(v.as_ptr() as *const i8) != 0)
+        let v = native_file_name(p);
+        lock::run(|| ffi::fftw_export_wisdom_to_filename(v) != 0)
     }
 }
 
 /// Attempt to load wisdom from `p`.
 pub fn import_from_file(p: &Path) -> bool {
-    let v = p.as_os_str().to_cstring().unwrap();
     unsafe {
-        lock::run(|| ffi::fftw_import_wisdom_from_filename(v.as_ptr() as *const i8) != 0)
+        let v = native_file_name(p);
+        lock::run(|| ffi::fftw_import_wisdom_from_filename(v) != 0)
     }
 }

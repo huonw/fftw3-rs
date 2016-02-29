@@ -1,6 +1,7 @@
 #![crate_type="lib"]
-#![feature(raw, convert, static_mutex)]
 
+#[macro_use]
+extern crate lazy_static;
 #[macro_use]
 extern crate log;
 extern crate libc;
